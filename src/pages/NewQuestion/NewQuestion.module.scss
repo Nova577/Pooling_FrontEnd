@@ -1,0 +1,470 @@
+.NewQuestion {
+  width: 940px;
+  height: 890px;
+  background: #eaddd6;
+  border-radius: 15px 15px 15px 15px;
+  padding: 40px 50px;
+  padding-bottom: 0px;
+  margin: 55px auto 50px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  .NewQuestionTop {
+    display: flex;
+    flex-direction: row;
+    .NewQuestionTopLeft {
+      .NewQuestionTopLeftName {
+        width: 600px;
+        height: 60px;
+        background: #f6f1ee;
+        border-radius: 20px 20px 20px 20px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        .NewQuestionTopLeftNameInput {
+          border: none;
+          outline: none;
+          background-color: #f6f1ee;
+          width: 424px;
+          height: 33px;
+          font-size: 25px;
+          font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+          font-weight: normal;
+          color: #141414;
+          line-height: 25px;
+          margin-left: 30px;
+        }
+      }
+      .NewQuestionTopLeftList {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        justify-content: space-between;
+        .NewQuestionTopLeftItem {
+          width: 275px;
+          height: 50px;
+          background: #f6f1ee;
+          border-radius: 20px 20px 20px 20px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          .NewQuestionTopLeftItemCalendar {
+            height: 22px;
+            font-size: 20px;
+            font-family: ArialMT-, ArialMT;
+            font-weight: normal;
+            color: #a5a2a0;
+            line-height: 24px;
+          }
+          .NewQuestionTopLeftItemIcon {
+            color: #141515;
+            font-size: 35px;
+            margin-left: 20px;
+            margin-right: 20px;
+          }
+          .NewQuestionTopLeftItemInput {
+            border: none;
+            outline: none;
+            width: 170px;
+            height: 22px;
+            font-size: 20px;
+            font-family: ArialMT-, ArialMT;
+            font-weight: normal;
+            color: #b7b3b1;
+            line-height: 24px;
+            background-color: #f6f1ee;
+          }
+        }
+      }
+    }
+    .NewQuestionTopRight {
+      width: 100%;
+      height: 188px;
+      background: #f6f1ee;
+      border-radius: 11px 11px 11px 11px;
+      margin-left: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .NewQuestionTopRightImg {
+        width: 100px;
+        height: 93px;
+        background: #141515;
+      }
+      .NewQuestionTopRightText {
+        height: 17px;
+        font-size: 15px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #aeaaa8;
+        line-height: 18px;
+        margin-top: 10px;
+      }
+    }
+  }
+  .NewQuestionTitle {
+    height: 27px;
+    font-size: 20px;
+    font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+    font-weight: normal;
+    color: #141414;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .NewQuestionDetailList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .NewQuestionDetailItem {
+      width: 275px;
+      height: 50px;
+      background: #f6f1ee;
+      border-radius: 20px 20px 20px 20px;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      .NewQuestionDetailItemIcon {
+        font-size: 32px;
+        color: #141515;
+        margin: 0px 20px;
+        margin-right: 10px;
+      }
+      .NewQuestionDetailText {
+        height: 22px;
+        font-size: 20px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #6b6a69;
+        line-height: 22px;
+      }
+    }
+  }
+  .NewQuestionAdd {
+    padding-left: 20px;
+    height: 60px;
+    background: #f6f1ee;
+    border-radius: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .NewQuestionAddItem {
+      background: #ffffff;
+      border-radius: 20px 20px 20px 20px;
+      opacity: 1;
+      padding: 4px 10px;
+      font-size: 20px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #151515;
+      text-align: center;
+      margin-right: 10px;
+    }
+    .NewQuestionAddButton {
+      width: 35px;
+      height: 35px;
+      background: #ffffff;
+      border-radius: 20px 20px 20px 20px;
+      opacity: 1;
+      font-size: 16px;
+      font-family: ArialMT-, ArialMT;
+      font-weight: normal;
+      color: #151515;
+      line-height: 35px;
+      text-align: center;
+    }
+  }
+  .NewQuestionTextAreaDiv {
+    width: 940px;
+    height: 200px;
+    background: #f6f1ee;
+    border-radius: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    .NewQuestionTextArea {
+      width: 95%;
+      height: 150px;
+      font-size: 20px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #151515;
+      line-height: 16px;
+      margin-top: 10px;
+      margin-left: 20px;
+      background-color: #f6f1ee;
+      border: none;
+      outline: none;
+      resize: none;
+    }
+    .NewQuestionTextAreaTip {
+      height: 22px;
+      font-size: 20px;
+      font-family: ArialMT-, ArialMT;
+      font-weight: normal;
+      color: #dedad8;
+      line-height: 24px;
+      margin: 0px 20px 15px auto;
+    }
+  }
+  .NewQuestionButtonList {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 0px;
+    margin-top: 16px;
+    .NewQuestionButtonItem {
+      width: 80px;
+      height: 33px;
+      background: #ffffff;
+      border-radius: 20px 20px 20px 20px;
+      opacity: 1;
+      font-size: 16px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      line-height: 33px;
+      text-align: center;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+  .NewQuestion2BigTitle {
+    height: 86px;
+    font-size: 65px;
+    font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+    font-weight: normal;
+    color: #141414;
+    line-height: 78px;
+  }
+  .NewQuestion2SmallTitle {
+    height: 31px;
+    font-size: 23px;
+    font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+    font-weight: normal;
+    color: #141414;
+    line-height: 27px;
+  }
+  .NewQuestion2Item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    .NewQuestion2ItemLeft {
+      width: 580px;
+      height: 50px;
+      background: #f6f1ee;
+      border-radius: 20px 20px 20px 20px;
+      font-size: 21px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      line-height: 50px;
+      padding-left: 20px;
+    }
+    .NewQuestion2ItemOption {
+      display: flex;
+      flex-direction: row;
+      width: 380px;
+      height: 40px;
+      background: #f6f1ee;
+      border-radius: 20px 20px 20px 20px;
+      align-items: center;
+      padding-left: 20px;
+      margin-top: 10px;
+      .NewQuestion2ItemOptionTitle {
+        width: 65px;
+        height: 28px;
+        font-size: 21px;
+        font-family: PlayfairDisplay-Regular, PlayfairDisplay-Regular;
+        font-weight: normal;
+        color: #141414;
+        line-height: 26px;
+      }
+      .NewQuestion2ItemOptionButton {
+        width: 20px;
+        height: 20px;
+        background: #ffffff;
+        opacity: 1;
+        border-radius: 50%;
+        text-align: center;
+        margin-right: 20px;
+        margin-left: 20px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+    .NewQuestion2ItemRadio {
+      width: 437px;
+      height: 50px;
+      background: #f6f1ee;
+      border-radius: 20px 20px 20px 20px;
+      padding-left: 20px;
+      align-items: center;
+      display: flex;
+      margin-top: 10px;
+    }
+    .NewQuestion2ItemRight {
+      width: 250px;
+      height: 50px;
+      background: #f6f1ee;
+      border-radius: 20px 20px 20px 20px;
+      margin-left: auto;
+      .NewQuestion2ItemRightSelect {
+        font-size: 21px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #141414;
+        line-height: 25px;
+      }
+    }
+    .NewQuestion2ItemRequired {
+      margin-left: auto;
+      margin-top: 10px;
+    }
+  }
+  .NewQuestion2LastButton {
+    width: 99px;
+    height: 40px;
+    background: #fbf8f7;
+    border-radius: 20px 20px 20px 20px;
+    font-size: 21px;
+    font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+    font-weight: normal;
+    color: #141414;
+    line-height: 40px;
+    text-align: center;
+    margin-top: 25px;
+    cursor: pointer;
+  }
+}
+
+.NewQuestionShowDetailModal {
+  width: 450px;
+  height: 640px;
+  background: #ffffff;
+  border-radius: 40px 40px 40px 40px;
+  opacity: 1;
+  padding: 40px 35px;
+  .ShowDetailModalTitle {
+    display: flex;
+    align-items: start;
+    .ShowDetailModalTitleIcon {
+      font-size: 40px;
+    }
+    .ShowDetailModalTitleText {
+      min-width: 390px;
+      height: 89px;
+      font-size: 32px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      line-height: 42px;
+      margin-left: 15px;
+    }
+  }
+  .ShowDetailModalLabelList {
+    display: flex;
+    margin-top: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+    .ShowDetailModalLabelItem {
+      display: flex;
+      background: #eee5df;
+      border-radius: 10px 10px 10px 10px;
+      padding: 0.02604rem 10px;
+      align-items: center;
+      .ShowDetailModalLabelItemIcon {
+        font-size: 20px;
+        color: #dbc6b9;
+      }
+      .ShowDetailModalLabelItemText {
+        font-size: 16px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #141414;
+        margin-left: 12px;
+        align-items: center;
+        line-height: 100%;
+      }
+      .ShowDetailModalLabelItemInput {
+        width: 17px;
+        border: none;
+        border-bottom: 2px solid #736f6c;
+        background-color: #eee5df;
+        outline: none;
+        line-height: 0px;
+      }
+    }
+  }
+  .ShowDetailModalInformation {
+    height: 110px;
+    background: #f4eeea;
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 25px;
+    display: flex;
+    padding-top: 10px;
+    .ShowDetailModalInformationLeft {
+      margin-left: 20px;
+      .ShowDetailModalInformationLeftIcon {
+        font-size: 18px;
+      }
+    }
+    .ShowDetailModalInformationRight {
+      margin-left: 12px;
+      .ShowDetailModalInformationRightTitle {
+        height: 20px;
+        font-size: 15px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #040000;
+        line-height: 15px;
+        margin-bottom: 10px;
+      }
+      .ShowDetailModalInformationRightItem {
+        width: 370px;
+        font-size: 15px;
+        font-family: Playfair Display-Regular, Playfair Display;
+        font-weight: 400;
+        color: #707070;
+      }
+    }
+  }
+  .ShowDetailModalDeseription {
+    height: 195px;
+    background: #f4eeea;
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 10px;
+    padding: 15px 40px;
+    .ShowDetailModalDeseriptionTitle {
+      width: 133px;
+      height: 22px;
+      font-size: 17px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      line-height: 20px;
+    }
+    .ShowDetailModalDeseriptionContent {
+      width: 370px;
+      height: 158px;
+      font-size: 15px;
+      font-family: Playfair Display-Regular, Playfair Display;
+      font-weight: 400;
+      color: #707070;
+      line-height: 18px;
+      margin-top: 5px;
+      align-items: center;
+    }
+  }
+}
+
+.RadioItem {
+  height: 28px;
+  font-size: 21px;
+  font-family: PlayfairDisplay-Regular, PlayfairDisplay-Regular;
+  font-weight: normal;
+  color: #141414;
+  line-height: 26px;
+}

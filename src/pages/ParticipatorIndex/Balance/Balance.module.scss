@@ -1,0 +1,108 @@
+.Balance {
+  width: 650px;
+  height: 710px;
+  background: #f1e8e3;
+  padding: 45px 75px;
+  border-radius: 40px;
+  .BalanceTop {
+    display: flex;
+    .BalanceTopLeft {
+      height: 67px;
+      font-size: 50px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      line-height: 37px;
+      display: flex;
+    }
+    .BalanceTopRight {
+      margin-left: auto;
+      margin-right: 0px;
+      width: 150px;
+      height: 50px;
+      background: #ffffff;
+      border-radius: 30px 30px 30px 30px;
+      opacity: 1;
+      font-size: 25px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #040000;
+      line-height: 50px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+  .BalanceCenter {
+    margin-top: 37px;
+    display: flex;
+    .BalanceCenterCalendar {
+      width: 150px;
+      height: 50px;
+      background: #ffffff;
+      border-radius: 30px 30px 30px 30px;
+      opacity: 1;
+      font-size: 25px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #040000;
+      line-height: 50px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .BalanceCenterRight {
+      display: flex;
+      flex-direction: row;
+      height: 67px;
+      font-size: 50px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      line-height: 37px;
+      margin-left: auto;
+      margin-right: 0px;
+      // .BalanceCenterRightUnit {
+      // }
+      .BalanceCenterRightNumber {
+        display: flex;
+        text-align: right;
+        width: 160px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  .BalanceList {
+    // margin-top: 20px;
+    height: 520px;
+    overflow-y: scroll;
+    .BalanceItem {
+      width: 630px;
+      height: 70px;
+      background: #f9f5f3;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border-radius: 30px;
+      margin-bottom: 20px;
+      .BalanceItemName {
+        height: 33px;
+        font-size: 25px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #141414;
+        line-height: 30px;
+        margin-left: 20px;
+      }
+      .BalanceItemNumber {
+        margin-left: auto;
+        font-size: 27px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #040000;
+        line-height: 32px;
+        display: flex;
+        width: 200px;
+      }
+    }
+  }
+}

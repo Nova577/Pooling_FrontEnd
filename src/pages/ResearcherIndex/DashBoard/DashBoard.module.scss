@@ -1,0 +1,508 @@
+.DashBoard {
+  .DashBoardTop {
+    display: flex;
+    flex-direction: row;
+    .DashBoardTopLeft {
+      width: 460px;
+      height: 350px;
+      background: #f1e8e3;
+      border-radius: 40px 40px 40px 40px;
+      padding: 25px 40px;
+      padding-right: 0px;
+      .DashBoardTopLeftIcon {
+        font-size: 30px;
+        color: #040000;
+      }
+      .DashboardTopList {
+        overflow-y: scroll;
+        height: 300px;
+        margin-right: 10px;
+        margin-top: 10px;
+        .DashboardTopItem {
+          width: 395px;
+          height: 55px;
+          background: #f9f5f3;
+          border-radius: 20px 20px 20px 20px;
+          font-size: 16px;
+          font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+          font-weight: normal;
+          color: #141414;
+          line-height: 55px;
+          padding-left: 25px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .DashBoardTopRight {
+      margin-left: auto;
+      width: 480px;
+      height: 350px;
+      background: #f1e8e3;
+      border-radius: 40px 40px 40px 40px;
+      padding: 25px 30px;
+      padding-right: 0px;
+      .DashBoardTopRightIcon {
+        font-size: 30px;
+        color: #040000;
+      }
+      .ScheduleList {
+        display: flex;
+        height: 300px;
+        width: 96%;
+        overflow-y: scroll;
+        .ScheduleListLeft {
+          .ScheduleListItem {
+            width: 190px;
+            height: 55px;
+            background: #e9dbd3;
+            border-radius: 10px 10px 10px 10px;
+            margin-bottom: 33px;
+            padding-top: 10px;
+            padding-left: 13px;
+            .ScheduleListItemTitle {
+              height: 15px;
+              font-size: 11px;
+              font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+              font-weight: normal;
+              color: #141414;
+              line-height: 15px;
+            }
+            .ScheduleListItemLabelList {
+              display: flex;
+              flex-direction: row;
+              margin-top: 10px;
+              .ScheduleListItemLabel {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 0.02083rem 0.03109rem;
+                background: #ffffff;
+                border-radius: 20px 20px 20px 20px;
+                margin-right: 20px;
+                .ScheduleListItemLabelIcon {
+                  font-size: 10px;
+                  color: #141515;
+                }
+                .ScheduleListItemLabelText {
+                  font-size: 7px;
+                  font-family: ArialMT-, ArialMT;
+                  font-weight: normal;
+                  color: #141414;
+                  margin-left: 5px;
+                }
+              }
+            }
+          }
+        }
+        .ScheduleListCenter {
+          margin: 30px 10px 0px;
+          .SchedulePie {
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            margin-bottom: 34px;
+          }
+        }
+      }
+    }
+  }
+  .DashBoardBotton {
+    margin-top: 30px;
+    width: 1020px;
+    height: 350px;
+    background: #f1e8e3;
+    border-radius: 40px 40px 40px 40px;
+    padding: 25px 30px;
+    padding-right: 0px;
+    .DashBoardBottonTop {
+      display: flex;
+      flex-direction: row;
+      .DashBoardBottonTopIcon {
+        font-size: 35px;
+      }
+      .DashBoardBottonTopAdd {
+        margin-left: auto;
+        margin-right: 25px;
+        border-radius: 30px;
+        background: #ffffff;
+        height: 35px;
+        opacity: 1;
+        font-size: 16px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #141414;
+        line-height: 35px;
+        padding: 0px 9px;
+        cursor: pointer;
+      }
+    }
+    .DashBoardBottonList {
+      height: 280px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+      width: 99%;
+      .DiscoveryItem {
+        background: #e9dbd3;
+        border-radius: 30px 30px 30px 30px;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 15px;
+        width: 490px;
+        height: 135px;
+        .DiscoveryItemImg {
+          width: 145px;
+          height: 135px;
+          opacity: 1;
+          background-color: #000000;
+          border-radius: 30px 50% 50% 30px;
+        }
+        .DiscoveryItemRight {
+          margin-left: 10px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          .DiscoveryItemRightTitle {
+            height: 27px;
+            font-size: 20px;
+            font-family: Playfair Display-Regular, Playfair Display;
+            font-weight: 400;
+            color: #141414;
+            margin-top: 25px;
+            line-height: 35px;
+          }
+          .DiscoveryItemRightLabelList {
+            display: flex;
+            flex-direction: row;
+            margin-top: 18px;
+            .DiscoveryItemRightLabelItem {
+              background: #f6f0ed;
+              border-radius: 20px 20px 20px 20px;
+              font-size: 10px;
+              font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+              font-weight: normal;
+              color: #141414;
+              line-height: 15px;
+              margin-right: 10px;
+              padding: 0.01041rem 0.04167rem 0.005208rem;
+            }
+          }
+          .DiscoveryItemRightStatus {
+            height: 20px;
+            font-size: 15px;
+            font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+            font-weight: normal;
+            color: #141414;
+            line-height: 10px;
+            margin-top: 16px;
+            margin-left: auto;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ShowDetailModal {
+  width: 520px;
+  height: 640px;
+  background: #ffffff;
+  border-radius: 40px 40px 40px 40px;
+  opacity: 1;
+  user-select: none;
+  .ModalTop {
+    margin-top: 30px;
+    margin-left: 30px;
+    display: flex;
+    .ModalTopImg {
+      width: 180px;
+      height: 180px;
+      opacity: 1;
+      border-radius: 50%;
+      background-color: aqua;
+    }
+    .ModalTopRight {
+      margin-left: 25px;
+      margin-top: 12px;
+      .ModalTopRightTitle {
+        min-width: 240px;
+        height: 30px;
+        font-size: 27px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #141414;
+        line-height: 37px;
+        margin-bottom: 18px;
+      }
+      .ModalTopRightItem {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        .ModalTopRightItemIcon {
+          font-size: 22px;
+          color: #dbc6b9;
+        }
+        .ModalTopRightItemText {
+          height: 15px;
+          font-size: 13px;
+          font-family: ArialMT-, ArialMT;
+          font-weight: normal;
+          color: #141414;
+          margin-left: 25px;
+        }
+      }
+    }
+  }
+  .ModalLabelList {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 35px;
+    .ModalLabelItem {
+      font-size: 14px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      background: #e9ddd5;
+      border-radius: 20px 20px 20px 20px;
+      padding: 2px 8px 1px 9px;
+      margin-right: 15px;
+    }
+  }
+  .ModalDeseription {
+    margin-left: 35px;
+    margin-right: 35px;
+    height: 300px;
+    background: #f4eeea;
+    border-radius: 30px 30px 30px 30px;
+    margin-top: 10px;
+    overflow: hidden;
+    .ModalDeseriptionTitle {
+      height: 31px;
+      font-size: 23px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      line-height: 28px;
+      margin-top: 20px;
+      margin-left: 30px;
+    }
+    .ModalDeseriptionContent {
+      width: 380px;
+      height: 225px;
+      font-size: 20px;
+      font-family: Playfair Display-Regular, Playfair Display;
+      font-weight: 400;
+      color: #707070;
+      margin-left: 30px;
+    }
+  }
+  .ModalButtonList {
+    margin: 20px 35px 0px;
+    display: flex;
+    .ModalButtonLeft {
+      border: none;
+      padding: 3px 14px;
+      background: #dfdddc;
+      border-radius: 20px 20px 20px 20px;
+      font-size: 20px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      cursor: pointer;
+    }
+    .ModalButtonRight {
+      border: none;
+      width: 100px;
+      height: 33px;
+      background: #f1e8e3;
+      border-radius: 20px 20px 20px 20px;
+      font-size: 20px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      line-height: 24px;
+      margin-left: auto;
+      margin-right: 0px;
+      cursor: pointer;
+    }
+  }
+  .ModalDetailItem {
+    height: 95px;
+    background: #f4eeea;
+    border-radius: 20px 20px 20px 20px;
+    margin-left: 35px;
+    margin-top: 10px;
+    margin-right: 35px;
+    overflow: hidden;
+    .ModalDetailItemTop {
+      display: flex;
+      flex-direction: row;
+      margin-left: 20px;
+      margin-top: 10px;
+      .ModalDetailItemTopIcon {
+        font-size: 18px;
+      }
+      .ModalDetailItemTopTitle {
+        height: 20px;
+        font-size: 15px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #040000;
+        margin-left: 10px;
+      }
+    }
+    .ModalDetailItemContent {
+      height: 60px;
+      font-size: 10px;
+      font-family: Playfair Display-Regular, Playfair Display;
+      font-weight: 400;
+      color: #707070;
+      margin-left: 20px;
+      margin-right: 25px;
+    }
+    .ModalDetailItemDoc {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .ModalDetailItemDocIcon {
+        font-size: 44px;
+      }
+      .ModalDetailItemDocIconText {
+        height: 20px;
+        font-size: 15px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #040000;
+        line-height: 18px;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.ShowDetailModal2 {
+  width: 350px;
+  height: 640px;
+  background: #ffffff;
+  border-radius: 40px 40px 40px 40px;
+  opacity: 1;
+  padding: 40px 35px;
+  .ShowDetailModalTitle {
+    display: flex;
+    align-items: start;
+    .ShowDetailModalTitleIcon {
+      font-size: 40px;
+    }
+    .ShowDetailModalTitleText {
+      min-width: 400px;
+      height: 89px;
+      font-size: 32px;
+      font-family: PlayfairDisplay-Regular-, PlayfairDisplay-Regular;
+      font-weight: normal;
+      color: #141414;
+      line-height: 42px;
+      margin-left: 15px;
+    }
+  }
+  .ShowDetailModalLabelList {
+    display: flex;
+    margin-top: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+    .ShowDetailModalLabelItem {
+      display: flex;
+      background: #eee5df;
+      border-radius: 10px 10px 10px 10px;
+      padding: 5px 10px;
+      .ShowDetailModalLabelItemIcon {
+        font-size: 20px;
+        color: #dbc6b9;
+      }
+      .ShowDetailModalLabelItemText {
+        font-size: 16px;
+        font-family: ArialMT-, ArialMT;
+        font-weight: normal;
+        color: #141414;
+        margin-left: 12px;
+      }
+    }
+  }
+  .ShowDetailModalInformation {
+    height: 110px;
+    background: #f4eeea;
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 25px;
+    display: flex;
+    padding-top: 10px;
+    .ShowDetailModalInformationLeft {
+      margin-left: 20px;
+      .ShowDetailModalInformationLeftIcon {
+        font-size: 18px;
+      }
+    }
+    .ShowDetailModalInformationRight {
+      margin-left: 12px;
+      .ShowDetailModalInformationRightTitle {
+        height: 20px;
+        font-size: 15px;
+        font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+        font-weight: normal;
+        color: #040000;
+        line-height: 15px;
+        margin-bottom: 10px;
+      }
+      .ShowDetailModalInformationRightItem {
+        width: 370px;
+        font-size: 15px;
+        font-family: Playfair Display-Regular, Playfair Display;
+        font-weight: 400;
+        color: #707070;
+      }
+    }
+  }
+  .ShowDetailModalDeseription {
+    height: 195px;
+    background: #f4eeea;
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 10px;
+    padding: 15px 40px;
+    .ShowDetailModalDeseriptionTitle {
+      width: 133px;
+      height: 22px;
+      font-size: 17px;
+      font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+      font-weight: normal;
+      color: #141414;
+      line-height: 20px;
+    }
+    .ShowDetailModalDeseriptionContent {
+      width: 370px;
+      height: 158px;
+      font-size: 15px;
+      font-family: Playfair Display-Regular, Playfair Display;
+      font-weight: 400;
+      color: #707070;
+      line-height: 18px;
+      margin-top: 5px;
+    }
+  }
+  .ShowDetailModalLastStatus {
+    width: 100px;
+    height: 33px;
+    background: #dfdddc;
+    border-radius: 20px 20px 20px 20px;
+    font-size: 20px;
+    font-family: PlayfairDisplay-Bold-, PlayfairDisplay-Bold;
+    font-weight: normal;
+    color: #141414;
+    line-height: 33px;
+    text-align: center;
+    margin-top: 10px;
+  }
+}

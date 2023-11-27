@@ -1,0 +1,21 @@
+/* 修改 Checkbox 前面小方框的默认选中颜色为红色 */
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #eaddd6;
+  border-color: #e1d3ca;
+}
+
+ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+  border-color: #e1d3ca;
+}
+.ant-checkbox-inner {
+  border-color: #e1d3ca;
+  background-color: #eaddd6;
+}
+
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+  background-color: #707070;
+  border-color: #707070;
+}
+.ant-radio-wrapper .ant-radio-checked :hover {
+  border-color: #707070;
+}
