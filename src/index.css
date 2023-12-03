@@ -1,27 +1,4 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-/* 整个滚动条 */
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: #f1e8e3;
-}
-/* 滚动条上的箭头按钮 */
-::-webkit-scrollbar-button {
-  display: none;
-}
-/* 滚动条上的滚动滑块 */
-::-webkit-scrollbar-thumb {
-  background-color: #e9dbd3;
+@font-face {
+  font-family: Playfair Display;
+  src: url('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 }

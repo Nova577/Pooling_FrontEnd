@@ -1,9 +1,0 @@
-/* 修改 Checkbox 选中状态下的图形为小方块 */
-/* .ant-checkbox-checked::after {
-  content: '';
-  display: block;
-  width: 8px;
-  height: 8px;
-  background-color: #1890ff; /* 可根据需要修改颜色 */
-/* border-radius: 2px;
-} */
