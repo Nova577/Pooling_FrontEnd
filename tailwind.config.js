@@ -1,4 +1,5 @@
 import daisyui from 'daisyui'
+import daisyuiThemes from 'daisyui/src/theming/themes'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,14 +10,22 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      'playfair': 'Playfair Display'
+      'playfair': 'Playfair Display',
+      'st-song': 'STSong'
     }
   },
   plugins: [daisyui],
   daisyui: {
     base: false,
     // styled: false,
-    themes: ['light']
+    themes: [
+      {
+        light: {
+          ...daisyuiThemes["light"],
+          
+        }
+      }
+    ]
   }
 }
 

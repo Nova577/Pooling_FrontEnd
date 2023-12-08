@@ -6,7 +6,7 @@ const meta = {
   title: 'Example/PButton',
   component: PButton,
   parameters: {
-    // layout: 'centered',
+    layout: 'centered',
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof PButton>;
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Click me'
+    children: 'Click Me'
   },
 };
 

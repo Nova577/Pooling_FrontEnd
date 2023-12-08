@@ -2,3 +2,16 @@
   font-family: Playfair Display;
   src: url('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: STSong;
+  src: url('./assets//fonts/STSong.ttf') format('truetype');
+}
+
+/* FIXME: should not override like this, find another way if possible  */
+/* Force  */
+.btn:is(input[type="checkbox"]:checked), .btn:is(input[type="radio"]:checked) {
+  color: black;
+
+  border-color: black !important;
+}

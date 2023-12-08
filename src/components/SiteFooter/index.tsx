@@ -4,7 +4,7 @@ import PButton from "../common/PButton"
 
 const SiteFooter: FC = () => {
   return (
-    <div className="w-full h-[400px] flex justify-center bg-[#DBC6B9]">
+    <footer className="h-[25rem] w-full flex-shrink-0 flex justify-center bg-[#DBC6B9]">
       <div className="w-full max-w-7xl flex justify-between">
         <div className="mt-[78px]">
           <div className="text-2xl font-bold font-playfair leading-loose">Get freshest pooling News</div>
@@ -14,11 +14,11 @@ const SiteFooter: FC = () => {
           </div>
 
           <div className="mt-2">
-            <span className="text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Contact  Sales</span>
-            <span className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Sales</span>
-            <span className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">About Us</span>
-            <span className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Careers</span>
-            <span className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Legal Info</span>
+            <a className="text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Contact  Sales</a>
+            <a className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Sales</a>
+            <a className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">About Us</a>
+            <a className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Careers</a>
+            <a className="ml-[9px] text-neutral-900 text-[15px] font-normal font-playfair leading-tight">Legal Info</a>
           </div>
 
           <div className="mt-[50px] text-black text-sm font-bold font-playfair leading-[18.66px]">© Pooling 2023 All Rights Reserved</div>
@@ -40,9 +40,9 @@ const SiteFooter: FC = () => {
           <img src="" alt="" />
           <img src="" alt="" />
         </div>
-        </div> */}
+        </footer> */}
       </div>
-    </div>
+    </footer>
   )
 }
 

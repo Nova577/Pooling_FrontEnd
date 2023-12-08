@@ -8,9 +8,12 @@ const PSelect: FC<Props> = (props) => {
 
   return (
     <div className="flex-1 relative">
-      <select className="select h-[60px] w-full flex-1 pt-4 pl-[30px] rounded-[1.25rem] font-playfair bg-white opacity-60 border-none !outline-0">
-        <option disabled selected> test</option>
-        <option> test2</option>
+      <select
+        className="select h-[60px] w-full flex-1 pt-4 pl-[30px] rounded-[1.25rem] font-playfair bg-white opacity-60 border-none !outline-0"
+        defaultValue="_"
+      >
+        <option disabled value="_"> test</option>
+        <option>test2</option>
       </select>
 
       {
