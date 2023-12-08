@@ -7,6 +7,8 @@ import SiteFooter from "./components/SiteFooter"
 import SignIn from "./views/SignIn"
 import ResetPassword from "./views/ResetPassword"
 import Welcome from "./views/Welcome"
+import Participator from "./views/Participator"
+import Researcher from "./views/Researcher"
 
 const App: FC = () => {
   return (
@@ -21,6 +23,8 @@ const App: FC = () => {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/Welcome" element={<Welcome />} />
+            <Route path="/participator" element={<Participator />} />
+            <Route path="/researcher" element={<Researcher />} />
           </Routes>
         </main>
 
