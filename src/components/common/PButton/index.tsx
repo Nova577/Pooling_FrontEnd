@@ -35,10 +35,11 @@ const PButton: FC<PButtonProps> = (props) => {
           size === 'sm' && ['btn-sm'],
           size === 'xl' && ['h-[4.5rem]', 'px-8', 'text-[2rem]'],
           size === 'lg' && ['btn-lg'],
+          type === 'default' && ['bg-white'],
+          type === 'primary' && ['btn-primary'],
+          type === 'ghost' && ['btn-ghost'],
           type === 'neutral' && ['btn-neutral, bg-neutral-900', 'text-white', 'hover:bg-neutral-900'],
           {
-            'btn-primary': type === 'primary',
-            'btn-ghost': type === 'ghost',
             'rounded-full': round,
             'rounded-[1.25rem]': squareRound,
           },

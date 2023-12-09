@@ -4,10 +4,14 @@ import PCard from "@/components/common/PCard"
 import { FC } from "react"
 import { Link } from "react-router-dom"
 import FormRow from "../SignUp/FormRow"
+import { useRequest } from 'ahooks'
 import PInput from "@/components/common/PInput"
 import PTitle from "@/components/common/PTitle"
+import { loginUser } from "@/apis/user"
 
 const SignIn: FC = () => {
+  useRequest(loginUser.bind(null, { username: 'test', password: 'asdf' }))
+
   return (
     <div className="mt-[78px] mb-8 mx-auto max-w-[90rem] flex flex-col items-center">
       <div className="ml-12 self-start">
@@ -52,7 +56,7 @@ const SignIn: FC = () => {
           </div>
 
           <div className="pt-9 flex flex-col items-center gap-2">
-            <PButton className="w-[220px] text-[30px] bg-white" size="lg" round>Sign in</PButton>
+            <PButton className="w-[220px] text-[30px]" size="lg" round>Sign in</PButton>
 
             <Link className="text-2xl font-bold font-playfair underline leading-loose" style={{ color: 'rgb(107, 102, 99)' }} to="/reset-password">
               Forget Password?
