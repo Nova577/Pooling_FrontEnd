@@ -60,8 +60,8 @@ const TagsInput: FC<Props> = (props) => {
 
 
   return (
-    <div className="relative">
-      <PInput className="border border-black !border-solid bg-green-600 cursor-default" type="text" tabIndex={-1} onFocus={(e) => { e.target.blur() }} />
+    <div className="flex-1 relative">
+      <PInput className="border border-black cursor-default" type="text" tabIndex={-1} onFocus={(e) => { e.target.blur() }} />
 
       <div className="h-full w-full absolute top-0 left-0 pointer-events-none flex items-center ml-3">
         

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PRadioGroupItem from '.';
 
 const meta = {
-  title: 'Example/NewPRadioGroup',
+  title: 'Example/PRadioGroup',
   component: PRadioGroupItem,
   parameters: {
     // layout: 'centered',
@@ -16,6 +16,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    items: ['item1', 'item2', 'item3', 'item4'],
+    options: [
+      { label: 'item0', value: 'value0' },
+      { label: 'item1', value: 'value1' },
+      { label: 'item2', value: 'value2' },
+      { label: 'item3', value: 'value3' },
+    ],
   },
 };

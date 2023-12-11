@@ -1,5 +1,5 @@
 import {RadioGroup, useRadio, VisuallyHidden, cn} from "@nextui-org/react";
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import styles from './index.module.css'
 
 const PRadioGroupItem = (props: Parameters<typeof useRadio>[0]) => {
@@ -42,24 +42,34 @@ const PRadioGroupItem = (props: Parameters<typeof useRadio>[0]) => {
 };
 
 interface PRadioGroupProps {
-  items?: string[]
+  options?: {
+    key?: string
+    label: string
+    value: string
+  }[]
+
+  value?: string
+
+  onChange?: (e: React.FormEvent<HTMLDivElement>) => void
 }
 
 const PRadioGroup: FC<PRadioGroupProps> = (props) => {
-  const { items } = props;
+  const { options, value, onChange } = props;
 
   return (
     <RadioGroup
       classNames={{
-        base: 'flex-1 inline-flex bg-[#F6F2EF] rounded-2xl',
+        base: 'w-full flex-1 inline-flex bg-[#F6F2EF] rounded-2xl',
         wrapper: 'gap-0'
       }}
       orientation="horizontal"
+      value={value}
+      onChange={onChange}
     >
       {
-        items?.map((it) => {
+        options?.map((it) => {
           return (
-            <PRadioGroupItem key={it} value={it}>{ it }</PRadioGroupItem>
+            <PRadioGroupItem key={it.key ?? it.value} value={it.value}>{ it.label }</PRadioGroupItem>
           )
         })
       }

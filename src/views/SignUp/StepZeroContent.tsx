@@ -65,11 +65,11 @@ const StepZeroContent: FC = () => {
 
           <FormRow>
             <PRadioGroup
-              items={['Ms', 'Mr', 'Other']}
+              options={[{ label: 'Mr', value: 'Mr' }, { label: 'Ms', value: 'Ms' }, { label: 'Other', value: 'Other' }]}
               
             />
             <PRadioGroup
-              items={['DD', 'MM', 'YYYY']}
+              options={[{ label: 'DD', value: 'DD' }, { label: 'MM', value: 'MM' }, { label: 'YYYY', value: 'YYYY' }]}
               
             />
           </FormRow>
