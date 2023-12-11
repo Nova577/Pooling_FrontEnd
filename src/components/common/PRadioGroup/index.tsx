@@ -1,43 +1,69 @@
-import { FC, useId } from "react"
+import {RadioGroup, useRadio, VisuallyHidden, cn} from "@nextui-org/react";
+import { FC, Fragment } from "react";
+import styles from './index.module.css'
 
-interface PRadioGroupProps {
-  options?: {
-    label: string
-    value: string
-  }[]
-  // type: 'default' | 'button'
-}
-
-const initOptions: PRadioGroupProps['options'] = []
-
-const PRadioGroup: FC<PRadioGroupProps> = (props) => {
+const PRadioGroupItem = (props: Parameters<typeof useRadio>[0]) => {
   const {
-    options = initOptions,
-    // type = 'button'
-  } = props
-
-  const componentId = useId()
+    Component,
+    children,
+    getBaseProps,
+    getInputProps,
+    getLabelProps,
+    getLabelWrapperProps,
+  } = useRadio(props);
 
   return (
-    <div className="join h-[60px] flex-1 rounded-3xl font-playfair bg-white opacity-60">
+    <Component
+      {...getBaseProps()}
+      className={cn(
+        "flex-1 h-[3.75rem] inline-flex items-center relative justify-center border border-transparent",
+        "cursor-pointer border-default",
+        'first:rounded-l-2xl last:rounded-r-2xl',
+        "data-[selected=true]:border data-[selected=true]:border-[#707070] data-[selected=true]:bg-white",
+        styles.p_radio_group__item
+      )}
+    >
+      <VisuallyHidden>
+        <input {...getInputProps()} />
+      </VisuallyHidden>
+
+      <div {...getLabelWrapperProps()} className="ml-0">
+        {
+          children
+          && (
+            <span {...getLabelProps()} className="text-neutral-900 text-[17px] text-center font-normal font-playfair leading-snug opacity-60">
+              { children }
+            </span>
+          ) 
+        }
+      </div>
+    </Component>
+  );
+};
+
+interface PRadioGroupProps {
+  items?: string[]
+}
+
+const PRadioGroup: FC<PRadioGroupProps> = (props) => {
+  const { items } = props;
+
+  return (
+    <RadioGroup
+      classNames={{
+        base: 'flex-1 inline-flex bg-[#F6F2EF] rounded-2xl',
+        wrapper: 'gap-0'
+      }}
+      orientation="horizontal"
+    >
       {
-        options.map((it) => {
+        items?.map((it) => {
           return (
-            <input
-              key={it.value}
-              className="
-                join-item btn btn-lg box-border h-[3.75rem] min-h-[unset] flex-1 !bg-transparent border-[1px transparent]
-                hover:border hover:border-black hover:active:transform-none
-                active:border-black
-              "
-              type="radio"
-              name={componentId}
-              aria-label={it.label}
-            />
+            <PRadioGroupItem key={it} value={it}>{ it }</PRadioGroupItem>
           )
         })
       }
-    </div>
+    </RadioGroup>
   )
 }
 

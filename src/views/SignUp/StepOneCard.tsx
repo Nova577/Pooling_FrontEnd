@@ -17,12 +17,12 @@ const StepOneCard: FC = () => {
         <PTitle>You are</PTitle>
 
         <FormRow className="mr-[700px]">
-          <PRadioGroup options={customTypeRadioOptions} />
+          <PRadioGroup items={['RResearcher', 'Participator']} />
         </FormRow>
 
         <FormRow className="mr-[380px]">
-            <PSelect label="Institute" />
-            <PSelect label="Title" />
+            <PSelect label="Institute" placeholder=" " options={[{ key: 'k0', label: 'ins', value: 'v0' }]} />
+            <PSelect label="Title" placeholder=" " options={[{ key: 'k0', label: 'ins', value: 'v0' }]} />
         </FormRow>
 
         <FormRow>

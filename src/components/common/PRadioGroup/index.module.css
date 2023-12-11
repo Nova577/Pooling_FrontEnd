@@ -1,0 +1,14 @@
+.p_radio_group__item:not([data-selected=true]):not(:first-child)::before {
+  position: absolute;
+
+  content: '';
+
+  height: 20px;
+  border-right: 1px solid #707070;
+
+  left: -1px;
+}
+
+.p_radio_group__item[data-selected=true] + .p_radio_group__item::before {
+  display: none;
+}

@@ -1,29 +1,38 @@
 import { FC } from "react"
+import { Select, SelectItem } from '@nextui-org/select'
 
 interface Props {
   label?: string
+  placeholder?: string
+  options?: {
+    key: string
+    label: string
+    value: string
+  }[]
 }
 const PSelect: FC<Props> = (props) => {
-  const { label } = props
+  const { label, placeholder, options } = props
 
   return (
-    <div className="flex-1 relative">
-      <select
-        className="select h-[60px] w-full flex-1 pt-4 pl-[30px] rounded-[1.25rem] font-playfair bg-white opacity-60 border-none !outline-0"
-        defaultValue="_"
-      >
-        <option disabled value="_"> test</option>
-        <option>test2</option>
-      </select>
-
+    <Select
+      classNames={{
+        trigger: 'h-[3.75rem] rounded-[1.25rem] border border-transparent bg-[#F6F2EF] shadow-none data-[hover=true]:bg-[#F6F2EF] data-[open=true]:border-[#A6A29F]',
+        label: 'opacity-50 !text-neutral-900 text-sm font-bold font-playfair leading-[18px]'
+      }}
+      label={label}
+      placeholder={placeholder}
+    >
       {
-        label
-        && (
-          <label className="absolute left-[20px] top-[5px] opacity-50 text-neutral-900 text-sm font-bold font-playfair leading-[18.66px]">{ label }</label>
-        )
+        options?.map((it) => {
+          return (
+            <SelectItem key={it.key}>
+              { it.label }
+            </SelectItem>
+          )
+        // Just pass TS check
+        }) ?? []
       }
-    </div>
-
+    </Select>
   )
 }
 

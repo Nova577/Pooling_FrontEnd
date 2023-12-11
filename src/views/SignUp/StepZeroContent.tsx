@@ -5,6 +5,17 @@ import FormRow from "./FormRow"
 import PButton from "@/components/common/PButton"
 import PRadioGroup from "@/components/common/PRadioGroup"
 import PInput from "@/components/common/PInput"
+import PSelect from "@/components/common/PSelect"
+
+const countryOptions = [
+  { key: 'cn', value: 'cn', label: 'China' },
+  { key: 'us', value: 'us', label: 'U.S.A' },
+]
+
+const stateOptions = [
+  { key: 'cn', value: 'cn', label: 'China' },
+  { key: 'us', value: 'us', label: 'U.S.A' },
+]
 
 const StepZeroContent: FC = () => {
   return (
@@ -54,18 +65,12 @@ const StepZeroContent: FC = () => {
 
           <FormRow>
             <PRadioGroup
-              options={[
-                { label: 'Ms', value: 'Ms' },
-                { label: 'Mr', value: 'Mr' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              items={['Ms', 'Mr', 'Other']}
+              
             />
             <PRadioGroup
-              options={[
-                { label: 'MM', value: 'MM' },
-                { label: 'DD', value: 'DD' },
-                { label: 'YYYY', value: 'YYYY' },
-              ]}
+              items={['DD', 'MM', 'YYYY']}
+              
             />
           </FormRow>
           
@@ -81,11 +86,12 @@ const StepZeroContent: FC = () => {
           </div>
 
           <FormRow>
-            <PInput label="Country/Region" />
+            <PSelect label="Country/Region" placeholder=" " options={countryOptions} />
+            {/* <PInput label="Country/Region" /> */}
           </FormRow>
 
           <FormRow>
-            <PInput label="State" />
+            <PSelect label="State" placeholder=" " options={stateOptions} />
           </FormRow>
         </form>
       </PCard>
