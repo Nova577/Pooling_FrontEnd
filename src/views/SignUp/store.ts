@@ -7,7 +7,6 @@ interface SignUpStoreStore {
   switchToNextStep: () => void
 }
 
-
 const useSignUpStore = create<SignUpStoreStore>((set) => ({
   currentStep: 0,
   switchToPrevStep: () => set((state) => ({ currentStep: state.currentStep - 1 })),

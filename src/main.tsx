@@ -5,7 +5,7 @@ import './index.css'
 import { NextUIProvider } from '@nextui-org/system'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <NextUIProvider>
+  <NextUIProvider className='h-full'>
     <App />
   </NextUIProvider>
 )

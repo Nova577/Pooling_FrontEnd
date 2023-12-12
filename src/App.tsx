@@ -22,7 +22,7 @@ const App: FC = () => {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/Welcome" element={<Welcome />} />
+            <Route path="/welcome" element={<Welcome />} />
             <Route path="/participator" element={<Participator />} />
             <Route path="/researcher" element={<Researcher />} />
           </Routes>
