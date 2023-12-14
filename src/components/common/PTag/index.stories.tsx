@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PTag from '.';
 
 const meta = {
-  title: 'Example/PTag',
+  title: 'Components/PTag',
   component: PTag,
   parameters: {
     backgrounds: {

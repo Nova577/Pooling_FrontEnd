@@ -1,11 +1,12 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import clsx from "clsx";
 import styles from './index.module.css'
 
-interface Props extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'type' | 'size'> {
+interface Props extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'type' | 'size' | 'prefix'> {
   type?: 'text' | 'password'
   label?: string
   size?: 'md' | 'sm' | 'xs'
+  prefix?: React.ReactNode
 }
 
 const PInput = forwardRef<HTMLInputElement, Props>((props, ref) => {

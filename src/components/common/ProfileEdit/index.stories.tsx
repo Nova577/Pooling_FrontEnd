@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ProfileEdit from '.';
 
 const meta = {
-  title: 'Example/ProfileEdit',
+  title: 'Components/ProfileEdit',
   component: ProfileEdit,
   parameters: {
     // layout: 'centered',

@@ -5,11 +5,11 @@ import maleAvatarSrc from '@/assets/male_avatar.png'
 import PMenu from "@/components/common/PMenu"
 
 const menuItems = [
-  { label: 'Discovery' },
-  { label: 'Schedule' },
-  { label: 'History' },
-  { label: 'Balance' },
-  { label: 'Profile Edit' },
+  { key: 'Discovery', label: 'Discovery' },
+  { key: 'Schedule', label: 'Schedule' },
+  { key: 'History', label: 'History' },
+  { key: 'Balance', label: 'Balance' },
+  { key: 'Profile Edit', label: 'Profile Edit' },
 ]
 
 const MenuCard: FC = () => {
@@ -22,8 +22,8 @@ const MenuCard: FC = () => {
           <div className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">Will Edison</div>
         </div>
 
-        <div>
-          <PMenu items={menuItems} />
+        <div className="mt-6">
+          <PMenu className="box-content p-0" items={menuItems} activeItemKey="Discovery" />
         </div>
       </div>
     </PCard>
