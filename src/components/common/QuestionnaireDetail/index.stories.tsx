@@ -1,20 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ProfileEdit from '.';
+import QuestionnaireDetail from '.';
 
 const meta = {
-  title: 'Example/ProfileEdit',
-  component: ProfileEdit,
+  title: 'Example/QuestionnaireDetail',
+  component: QuestionnaireDetail,
   parameters: {
     // layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof ProfileEdit>;
+} satisfies Meta<typeof QuestionnaireDetail>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    options: [
+      { key: 'key0', label: 'label0', value: 'value0' }
+    ]
   },
 };

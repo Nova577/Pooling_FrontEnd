@@ -1,0 +1,13 @@
+.p_scrollwrap::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/* 滚动条里面小方块（即滑块) */
+.p_scrollwrap::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(219, 198, 185, 0.4);
+}
+/* 滚动条整体样式 */
+.p_scrollwrap::-webkit-scrollbar-track {
+  background-color: transparent; 
+}

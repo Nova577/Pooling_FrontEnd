@@ -10,7 +10,7 @@ import PTagsInput from '@/components/common/PTagsInput'
 
 const ResetPassword: FC = () => {
   return (
-    <div className="py-[300px] flex justify-center">
+    <div className="flex justify-center">
        <PCard className="h-[800px] w-[800px] px-[90px] py-[36px]" bodyClass="p-0">
         <form>
           <div className="flex">
