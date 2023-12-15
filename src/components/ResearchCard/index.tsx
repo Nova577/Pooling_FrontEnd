@@ -3,6 +3,7 @@ import PCard from "../common/PCard"
 import timeIconSrc from '@/assets/time_icon.svg'
 import walletIconSrc from '@/assets/wallet_icon.svg'
 import locationIconSrc from '@/assets/location_icon.svg'
+import PTag from "../common/PTag"
 
 
 interface Props {
@@ -49,9 +50,9 @@ const ResearchCard: FC<Props> = (props) => {
             { 
               tags?.map(it => {
                 return (
-                  <div className="badge">
+                  <PTag className="badge" size="sm" color="rosewater">
                     { it }
-                  </div>
+                  </PTag>
                 )
               })
             }

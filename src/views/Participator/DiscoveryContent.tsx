@@ -5,7 +5,7 @@ import searchIconSrc from '@/assets/search_icon.svg'
 import testPortraitImgSrc from '@/assets/portrait-dark-skinned.avif'
 
 const items = [
-  { key: 'k0', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title', imgSrc: testPortraitImgSrc },
+  { key: 'k0', fee: '30$', school: 'Harvard University', status: 'online', tags: ['Usability', 'High pay', 'Consumer Electronic'], time: '20-25Minutes', title: 'Usability Research', imgSrc: testPortraitImgSrc },
   { key: 'k1', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
   { key: 'k2', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
   { key: 'k3', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2', 'tag3'], time: 'time', title: 'title' },
