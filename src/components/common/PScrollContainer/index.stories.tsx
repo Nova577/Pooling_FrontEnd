@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import ProfileEdit from '.';
+import PScrollContainer from '.';
 
 const meta = {
-  title: 'Example/ProfileEdit',
-  component: ProfileEdit,
+  title: 'Example/PScrollContainer',
+  component: PScrollContainer,
   parameters: {
-    // layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof ProfileEdit>;
+} satisfies Meta<typeof PScrollContainer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
