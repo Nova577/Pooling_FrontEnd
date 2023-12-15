@@ -20,7 +20,7 @@ const PCard: FC<Props> = (props) => {
   } = props
 
   return (
-    <div className={clsx("card rounded-3xl bg-opacity-60 bg-[#DDC9BC]", className)} onClick={onClick}>
+    <div className={clsx("card rounded-3xl bg-[#DDC9BC]", className)} onClick={onClick}>
       {
         title
         && (

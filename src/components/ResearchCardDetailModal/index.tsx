@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import PModal from "../common/PModal"
 import PButton from "../common/PButton"
 import PTag from "../common/PTag"
@@ -8,7 +8,12 @@ import PDescriptions from "../common/PDescriptions"
 import walletIconSrc from '@/assets/wallet_icon.svg'
 import timeIconSrc from '@/assets/time_icon.svg'
 import ArrowLeftSimple from "../common/Icons/ArrowLeftSimple"
+import DetailContent from "./DetailContent"
 
+enum ModalStatus {
+  DESCRIPTION,
+  DETAIL
+}
 interface Props {
   isOpen?: boolean
 
@@ -37,6 +42,8 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
     onWillCauseClose
   } = props
 
+  const [currentStatus, setCurrentStatus] = useState<ModalStatus>(ModalStatus.DESCRIPTION)
+
   const descriptionsItems = [
     // TODO: icon
     { key: 'school', label: <img className="w-[22px]" src={timeIconSrc}/>, children: <span className="text-[13px]">{ school }</span> },
@@ -46,17 +53,45 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
     { key: 'fee', label: <img className="w-[22px]" src={walletIconSrc}/>, children: <span className="text-[13px]">{ fee }</span> },
   ]
 
+  const handleDetailButtonClick = () => {
+    setCurrentStatus(ModalStatus.DETAIL)
+  }
+
+  const handleConfirmButtonClick = () => {
+    onWillCauseClose?.()
+  }
+
+  const handleBackButtonClick = () => {
+    setCurrentStatus(ModalStatus.DESCRIPTION)
+  }
+
   return (
     <PModal
       footer={(
         <div className="flex-1 flex justify-between">
-          <PButton className="bg-[#DFDDDC]" size="sm" round>
-            <ArrowLeftSimple />
+          {
+            currentStatus === ModalStatus.DESCRIPTION
+            && (
+              <PButton className="bg-[#DFDDDC]" size="sm" round onClick={handleDetailButtonClick}>
+                <ArrowLeftSimple />
 
-            Detail
-          </PButton>
+                Detail
+              </PButton>
+            )
+          }
+          
+          {
+            currentStatus === ModalStatus.DETAIL
+            && (
+              <PButton className="bg-[#DFDDDC]" size="sm" round onClick={handleBackButtonClick}>
+                <ArrowLeftSimple />
 
-          <PButton className="bg-[#EFE8EE]" size="sm" round>I'm In</PButton>
+                Back
+              </PButton>
+            )
+          }
+
+          <PButton className="bg-[#EFE8EE]" size="sm" round onClick={handleConfirmButtonClick}>I'm In</PButton>
         </div>
       )}
       isOpen={isOpen}
@@ -97,13 +132,25 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
       </div>
 
       <div className="pt-[10px]">
-        <PCard bodyClass="pl-[30px] pr-[40px] py-[18px] gap-[10px]">
-          <span className="text-neutral-900 text-[23px] font-playfair font-bold leading-[30px]">Description</span>
-
-          <p className="text-neutral-500 text-xl font-normal font-playfair leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porta in libero convallis fringilla. Aenean pretium nunc in dolor porttitor consectetur. Nam nisl quam, tempor ut mollis tristique, sollicitudin quis leo. Suspendisse sed interdum justo. Vivamus a augue id lectus egestas interdum id ut dolor. Aenean 
-          </p>
-        </PCard>
+        {
+          currentStatus === ModalStatus.DESCRIPTION
+          && (
+            <PCard bodyClass="pl-[30px] pr-[40px] py-[18px] gap-[10px]">
+              <span className="text-neutral-900 text-[23px] font-playfair font-bold leading-[30px]">Description</span>
+    
+              <p className="text-neutral-500 text-xl font-normal font-playfair leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porta in libero convallis fringilla. Aenean pretium nunc in dolor porttitor consectetur. Nam nisl quam, tempor ut mollis tristique, sollicitudin quis leo. Suspendisse sed interdum justo. Vivamus a augue id lectus egestas interdum id ut dolor. Aenean 
+              </p>
+            </PCard>
+          )
+        }
+       
+        {
+          currentStatus === ModalStatus.DETAIL
+          && (
+            <DetailContent documents={[{ fileName: 'Document' }]} />
+          )
+        }
       </div>
     </PModal>
   )
