@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PButton from '.';
 
 const meta = {
-  title: 'Example/PButton',
+  title: 'Components/PButton',
   component: PButton,
   parameters: {
     layout: 'centered',

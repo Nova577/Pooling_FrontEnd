@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PCard from '.';
 
 const meta = {
-  title: 'Example/PCard',
+  title: 'Components/PCard',
   component: PCard,
   parameters: {
     // layout: 'centered',

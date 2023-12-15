@@ -1,23 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PSelect from '.';
+import PInput from '.';
 
 const meta = {
-  title: 'Components/PSelect',
-  component: PSelect,
+  title: 'Components/PInput2',
+  component: PInput,
   parameters: {
     // layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof PSelect>;
+} satisfies Meta<typeof PInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    options: [
-      { key: 'key0', label: 'label0', value: 'value0' }
-    ]
+    label:'asdf',
+    placeholder: ' '
   },
 };

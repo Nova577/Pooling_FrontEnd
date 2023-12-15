@@ -1,0 +1,4 @@
+.p_input:focus + label {
+  color: black;
+  opacity: 1;
+}

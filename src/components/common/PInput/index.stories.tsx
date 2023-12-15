@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PInput from '.';
 
 const meta = {
-  title: 'Example/PInput',
+  title: 'Components/PInput',
   component: PInput,
   parameters: {
     // layout: 'centered',

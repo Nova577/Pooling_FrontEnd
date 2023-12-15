@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import PRadioGroupItem from '.';
 
 const meta = {
-  title: 'Example/PRadioGroup',
+  title: 'Components/PRadioGroup',
   component: PRadioGroupItem,
   parameters: {
     // layout: 'centered',
