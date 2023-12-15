@@ -28,7 +28,7 @@ const DiscoveryContent: FC = () => {
     <div className="max-w-5xl">
       <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
 
-      <div className="mt-[20px] pr-[20px] grid grid-cols-2 gap-y-5 gap-x-[30px] max-h-[680px] overflow-y-scroll">
+      <div className="mt-[20px] pr-[20px] grid grid-cols-1 gap-y-5 gap-x-[30px] max-h-[680px] overflow-y-scroll xl:grid-cols-2">
         {
           items.map((it) => {
             return (

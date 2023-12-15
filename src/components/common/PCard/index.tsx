@@ -5,6 +5,8 @@ interface Props extends PropsWithChildren {
   className?: string
   bodyClass?: string
   title?: ReactNode
+
+  onClick?: () => void
 }
 
 const PCard: FC<Props> = (props) => {
@@ -12,11 +14,13 @@ const PCard: FC<Props> = (props) => {
     className = '',
     bodyClass = '',
     title,
-    children
+    children,
+
+    onClick
   } = props
 
   return (
-    <div className={clsx("card rounded-3xl bg-opacity-60 bg-[#DDC9BC]", className)}>
+    <div className={clsx("card rounded-3xl bg-opacity-60 bg-[#DDC9BC]", className)} onClick={onClick}>
       {
         title
         && (
