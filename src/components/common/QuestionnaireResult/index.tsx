@@ -34,7 +34,7 @@ const data1 = [
   },
 ]
 
-const ResetPassword: FC = () => {
+const QuestionnaireResult: FC = () => {
   return (
     <div className="flex justify-center">
        <PCard className="w-[1060px] h-[734px] px-[80px] pr-[20px] py-[24px]" bodyClass="p-0">
@@ -60,4 +60,4 @@ const ResetPassword: FC = () => {
   )
 }
 
-export default ResetPassword
+export default QuestionnaireResult
