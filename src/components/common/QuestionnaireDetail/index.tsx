@@ -2,6 +2,7 @@ import PCard from "@/components/common/PCard"
 import PTitle from "@/components/common/PTitle"
 import { FC } from "react"
 import PScrollContainer from '@/components/common/PScrollContainer'
+import PProgress from '@/components/common/PProgress'
 
 interface dataItem {
   name?: string; 
@@ -117,10 +118,7 @@ const QuestionnaireDetail: FC = () => {
                             </PTitle>
 
                             <div className="w-[200px] mr-[143px]">
-                              <div 
-                                style={{ width: `${item.value}%` }}
-                                className='h-[25px] bg-white rounded-lg'>
-                              </div>
+                              <PProgress value={item.value} />
                             </div>
 
                             <span className="text-[21px] leading-[28px] text-[#141414] font-playfair">
