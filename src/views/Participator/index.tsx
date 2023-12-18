@@ -1,8 +1,13 @@
 import { FC } from "react";
 import MenuCard from "./MenuCard";
 import DiscoveryContent from "./DiscoveryContent";
+import useParticipatorStore, { ParticipatorMenuItemType } from "./store";
+import ScheduleContent from "./ScheduleContent";
+import HistoryContent from "./HistoryContent";
 
 const Participator: FC = () => {
+  const { currentMenu } = useParticipatorStore()
+
   return (
     <div className="py-24 px-6 flex justify-center">
       <div className="w-full max-w-[1920px] flex gap-[100px]">
@@ -11,7 +16,17 @@ const Participator: FC = () => {
         </div>
 
         <div className="flex-1">
-          <DiscoveryContent />
+          {
+            currentMenu === ParticipatorMenuItemType.DISCOVERY && <DiscoveryContent />
+          }
+
+          {
+            currentMenu === ParticipatorMenuItemType.SCHEDULE && <ScheduleContent />
+          }
+
+          {
+            currentMenu === ParticipatorMenuItemType.HISTORY && <HistoryContent />
+          }
         </div>
       </div>
     </div>

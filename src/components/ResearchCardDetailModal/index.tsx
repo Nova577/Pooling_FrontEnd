@@ -25,6 +25,8 @@ interface Props {
   fee?: string
   imgSrc?: string
 
+  type?: 'pending' | 'in_progress' | 'closed'
+
   onWillCauseClose?: () => void
 }
 
@@ -39,6 +41,7 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
     time = '',
     tags = [],
     imgSrc = "",
+    type: modalStatus = 'pending',
     onWillCauseClose
   } = props
 
@@ -72,7 +75,7 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
           {
             currentStatus === ModalStatus.DESCRIPTION
             && (
-              <PButton className="bg-[#DFDDDC]" size="sm" round onClick={handleDetailButtonClick}>
+              <PButton className="!bg-[#DFDDDC]" size="sm" round onClick={handleDetailButtonClick}>
                 <ArrowLeftSimple />
 
                 Detail
@@ -83,7 +86,7 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
           {
             currentStatus === ModalStatus.DETAIL
             && (
-              <PButton className="bg-[#DFDDDC]" size="sm" round onClick={handleBackButtonClick}>
+              <PButton className="!bg-[#DFDDDC]" size="sm" round onClick={handleBackButtonClick}>
                 <ArrowLeftSimple />
 
                 Back
@@ -91,7 +94,26 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
             )
           }
 
-          <PButton className="bg-[#EFE8EE]" size="sm" round onClick={handleConfirmButtonClick}>I'm In</PButton>
+          {
+            modalStatus === 'pending'
+            && (
+              <PButton className="!bg-[#EFE8EE]" size="sm" round onClick={handleConfirmButtonClick}>I'm In</PButton>
+            )
+          }
+
+          {
+            modalStatus === 'closed'
+            && (
+              <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">Closed</span>
+            )
+          }
+
+{
+            modalStatus === 'in_progress'
+            && (
+              <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">In Progress</span>
+            )
+          }
         </div>
       )}
       isOpen={isOpen}
@@ -135,7 +157,7 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
         {
           currentStatus === ModalStatus.DESCRIPTION
           && (
-            <PCard bodyClass="pl-[30px] pr-[40px] py-[18px] gap-[10px]">
+            <PCard bodyClass="pl-[30px] pr-[40px] py-[18px] gap-[10px] bg-[#F3EEEA] rounded-3xl">
               <span className="text-neutral-900 text-[23px] font-playfair font-bold leading-[30px]">Description</span>
     
               <p className="text-neutral-500 text-xl font-normal font-playfair leading-relaxed">
