@@ -21,9 +21,10 @@ const PTag: FC<Props> = (props) => {
   return (
     <div
       className={clsx(
-        "h-9 px-2 min-w-[2.25rem] flex-shrink-0 inline-flex justify-center items-center rounded-full bg-white text-neutral-900 font-playfair text-sm leading-tight truncate",
+        "h-9 px-2 min-w-[2.25rem] flex-shrink-0 inline-flex justify-center items-center rounded-full text-neutral-900 font-playfair text-sm leading-tight truncate",
         size === 'sm' && 'h-[22px]',
         size === 'xs' && 'h-[15px] !px-[5px] text-[10px] font-normal',
+        color === 'default' && 'bg-white',
         color === 'rosewater' && 'bg-[#E1D5CB]',
         className
       )}

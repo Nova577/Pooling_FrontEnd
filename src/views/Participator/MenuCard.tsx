@@ -3,16 +3,24 @@ import PCard from "@/components/common/PCard"
 import { FC } from "react"
 import maleAvatarSrc from '@/assets/male_avatar.png'
 import PMenu from "@/components/common/PMenu"
+import useParticipatorStore, { ParticipatorMenuItemType } from "./store"
+
 
 const menuItems = [
-  { key: 'Discovery', label: 'Discovery' },
-  { key: 'Schedule', label: 'Schedule' },
-  { key: 'History', label: 'History' },
-  { key: 'Balance', label: 'Balance' },
-  { key: 'Profile Edit', label: 'Profile Edit' },
+  { key: ParticipatorMenuItemType.DISCOVERY, label: 'Discovery' },
+  { key: ParticipatorMenuItemType.SCHEDULE, label: 'Schedule' },
+  { key: ParticipatorMenuItemType.HISTORY, label: 'History' },
+  { key: ParticipatorMenuItemType.BALANCE, label: 'Balance' },
+  { key: ParticipatorMenuItemType.PROFILE_EDIT, label: 'Profile Edit' },
 ]
 
 const MenuCard: FC = () => {
+  const { currentMenu, setCurrentMenu } = useParticipatorStore()
+
+  const handleMenuItemClick = (menuKey: string) => {
+    setCurrentMenu(menuKey as ParticipatorMenuItemType)
+  }
+
   return (
     <PCard className="w-[350px]" bodyClass="p-[40px]">
       <div className="mt-[20px]">
@@ -23,7 +31,7 @@ const MenuCard: FC = () => {
         </div>
 
         <div className="mt-6">
-          <PMenu className="box-content p-0" items={menuItems} activeItemKey="Discovery" />
+          <PMenu className="box-content p-0" items={menuItems} activeItemKey={currentMenu} onItemClick={handleMenuItemClick} />
         </div>
       </div>
     </PCard>

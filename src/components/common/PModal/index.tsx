@@ -14,7 +14,8 @@ const PModal: FC<Props> = (props) => {
   return (
     <Modal
       classNames={{
-        base: '!mt-40 max-w-[520px] p-0 rounded-[30px] shadow-none',
+        wrapper: '!items-start',
+        base: '!mt-72 max-w-[520px] p-0 rounded-[30px] shadow-none',
         body: 'pt-7 gap-0',
         backdrop: 'bg-transparent'
       }}

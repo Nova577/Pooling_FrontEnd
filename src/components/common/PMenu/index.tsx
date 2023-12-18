@@ -9,17 +9,19 @@ interface Props {
     label: React.ReactNode
   }[]
   activeItemKey?: string
+
+  onItemClick?: (key: string) => void
 }
 
 const PMenu: FC<Props> = (props) => {
-  const { className, items, activeItemKey } = props
+  const { className, items, activeItemKey, onItemClick } = props
 
   return (
     <ul className={clsx('menu gap-2', className)}>
       {
         items?.map((it) => {
           return (
-            <li key={it.key} className="h-14">
+            <li key={it.key} className="h-14" onClick={onItemClick?.bind(null, it.key)}>
               <div
                 className={clsx(
                   "flex h-full rounded-[20px] text-[22px] text-[#54514E] font-bold font-playfair leading-7",

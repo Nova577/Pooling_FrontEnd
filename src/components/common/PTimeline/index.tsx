@@ -1,5 +1,11 @@
 import { FC } from "react"
 
+const DefaultTimelineMiddleCircle = () => {
+  return (
+    <div className="h-[30px] w-[30px] rounded-full bg-white" />
+  )
+}
+
 interface TimelineItem {
   key: string
   left?: React.ReactNode
@@ -29,7 +35,7 @@ const PTimeline: FC<Props> = (props) => {
               }
 
               {
-                it.middle && <div className="timeline-middle">{ it.middle }</div>
+                <div className="timeline-middle">{ it.middle ?? <DefaultTimelineMiddleCircle /> }</div>
               }
 
               {
