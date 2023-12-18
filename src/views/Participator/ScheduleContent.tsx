@@ -9,7 +9,7 @@ const ScheduleContent = () => {
     <div className="max-w-5xl min-w-[768px]">
       <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
 
-      <div className="pt-[50px]">
+      <div className="pt-[20px]">
         <PCard className="bg-[#F7F4F1]" bodyClass="py-0 px-6 my-9 max-h-[680px] overflow-auto">
           <PTimeline
             items={[

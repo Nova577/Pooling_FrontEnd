@@ -3,6 +3,7 @@ import MenuCard from "./MenuCard";
 import DiscoveryContent from "./DiscoveryContent";
 import useParticipatorStore, { ParticipatorMenuItemType } from "./store";
 import ScheduleContent from "./ScheduleContent";
+import HistoryContent from "./HistoryContent";
 
 const Participator: FC = () => {
   const { currentMenu } = useParticipatorStore()
@@ -21,6 +22,10 @@ const Participator: FC = () => {
 
           {
             currentMenu === ParticipatorMenuItemType.SCHEDULE && <ScheduleContent />
+          }
+
+          {
+            currentMenu === ParticipatorMenuItemType.HISTORY && <HistoryContent />
           }
         </div>
       </div>
