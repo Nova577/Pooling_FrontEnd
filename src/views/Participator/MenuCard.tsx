@@ -22,7 +22,7 @@ const MenuCard: FC = () => {
   }
 
   return (
-    <PCard className="w-[350px]" bodyClass="p-[40px]">
+    <PCard className="w-[350px] bg-[#E8DED7]" bodyClass="p-[40px]">
       <div className="mt-[20px]">
         <div className="flex justify-between items-center">
           <PAvatar imgSrc={maleAvatarSrc} />
