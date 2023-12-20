@@ -4,6 +4,7 @@ import DiscoveryContent from "./DiscoveryContent";
 import useParticipatorStore, { ParticipatorMenuItemType } from "./store";
 import ScheduleContent from "./ScheduleContent";
 import HistoryContent from "./HistoryContent";
+import BalanceContent from "./BalanceContent";
 
 const Participator: FC = () => {
   const { currentMenu } = useParticipatorStore()
@@ -26,6 +27,10 @@ const Participator: FC = () => {
 
           {
             currentMenu === ParticipatorMenuItemType.HISTORY && <HistoryContent />
+          }
+
+          {
+            currentMenu === ParticipatorMenuItemType.BALANCE && <BalanceContent />
           }
         </div>
       </div>
