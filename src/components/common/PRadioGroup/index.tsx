@@ -59,7 +59,7 @@ const PRadioGroup: FC<PRadioGroupProps> = (props) => {
   return (
     <RadioGroup
       classNames={{
-        base: 'w-full flex-1 inline-flex bg-[#F6F2EF] rounded-2xl',
+        base: 'w-full flex-1 inline-flex bg-[#F6F2EF] rounded-[1.25rem]',
         wrapper: 'gap-0'
       }}
       orientation="horizontal"

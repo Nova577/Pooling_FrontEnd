@@ -1,5 +1,7 @@
-import { FC } from "react"
-import { Select, SelectItem } from '@nextui-org/select'
+import { FC, ComponentProps } from "react"
+import { Select, SelectItem } from '@nextui-org/react'
+
+export type OnSelectionChangeKeys = Parameters<Exclude<ComponentProps<typeof Select>['onSelectionChange'], undefined>>[0]
 
 interface Props {
   label?: string
@@ -9,9 +11,19 @@ interface Props {
     label: string
     value: string
   }[]
+  value?: string
+
+  onSelectionChange?: (keys: OnSelectionChangeKeys) => void
 }
 const PSelect: FC<Props> = (props) => {
-  const { label, placeholder, options } = props
+  const {
+    label,
+    placeholder,
+    options,
+    value,
+
+    onSelectionChange
+  } = props
 
   return (
     <Select
@@ -21,6 +33,8 @@ const PSelect: FC<Props> = (props) => {
       }}
       label={label}
       placeholder={placeholder}
+      value={value}
+      onSelectionChange={onSelectionChange}
     >
       {
         options?.map((it) => {

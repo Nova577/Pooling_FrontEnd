@@ -6,7 +6,6 @@ interface Props extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<H
   type?: 'text' | 'password'
   label?: string
   size?: 'md' | 'sm' | 'xs'
-  prefix?: React.ReactNode
 }
 
 const PInput = forwardRef<HTMLInputElement, Props>((props, ref) => {

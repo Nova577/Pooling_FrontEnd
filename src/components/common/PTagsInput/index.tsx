@@ -2,10 +2,13 @@ import { FC, useRef } from "react"
 import PInput from "../PInput"
 import PTag from "../PTag"
 import { useBoolean, useClickAway, useUpdateEffect } from "ahooks"
+import clsx from "clsx"
 
 type Value = string[]
+
 interface Props {
   value?: Value
+  disabled?: boolean
   onChange?: (newValue: Value) => void
 }
 
@@ -13,13 +16,23 @@ const initValue = [] as string[]
 const TagsInput: FC<Props> = (props) => {
   const { 
     value = initValue,
+    disabled = false,
     onChange
   } = props
 
   const [isEditing, { setTrue: setIsEditingTrue, setFalse: setIsEditingFalse }]  = useBoolean(false)
 
+  const latestDisabled = useRef(disabled)
   const editingContentRef = useRef<HTMLDivElement>(null)
   const tagInputRef = useRef<HTMLInputElement>(null)
+
+  if (latestDisabled.current !== disabled) {
+    latestDisabled.current = disabled
+
+    if (disabled) {
+      setIsEditingFalse()
+    }
+  }
 
   // When start editing, focus input
   useUpdateEffect(() => {
@@ -42,6 +55,8 @@ const TagsInput: FC<Props> = (props) => {
 
   const handleAddTagButtonClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation()
+
+    if(disabled) return
 
     setIsEditingTrue()
   }
@@ -83,7 +98,7 @@ const TagsInput: FC<Props> = (props) => {
             && (
               <div ref={editingContentRef}>
                 <PTag className="cursor-pointer">
-                  <PInput ref={tagInputRef} className="!bg-white" size="xs" onKeyUp={handleInputKeyUp} />
+                  <PInput ref={tagInputRef} className="!bg-white" size="xs" disabled={disabled} onKeyUp={handleInputKeyUp} />
                 </PTag>
               </div>
             )
@@ -92,7 +107,7 @@ const TagsInput: FC<Props> = (props) => {
           {
             !isEditing
             && (
-              <PTag className="cursor-pointer" onClick={handleAddTagButtonClick}>
+              <PTag className={clsx(disabled ? 'cursor-not-allowed' : 'cursor-pointer')} onClick={handleAddTagButtonClick}>
                 <span className="text-base font-['Arial'] -translate-y-1 opacity-50">
                   +
                 </span>
