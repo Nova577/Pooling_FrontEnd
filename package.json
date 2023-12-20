@@ -12,6 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@flaticon/flaticon-uicons": "^3.0.0",
     "@nextui-org/radio": "^2.0.25",
     "@nextui-org/react": "^2.2.9",
     "@nextui-org/select": "^2.1.20",
@@ -20,6 +21,7 @@
     "ahooks": "^3.7.8",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

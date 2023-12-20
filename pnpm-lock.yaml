@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@flaticon/flaticon-uicons':
+    specifier: ^3.0.0
+    version: registry.npmmirror.com/@flaticon/flaticon-uicons@3.0.0
   '@nextui-org/radio':
     specifier: ^2.0.25
     version: registry.npmmirror.com/@nextui-org/radio@2.0.25(@nextui-org/system@2.0.15)(@nextui-org/theme@2.1.17)(react-dom@18.2.0)(react@18.2.0)
@@ -29,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: registry.npmmirror.com/clsx@2.0.0
+  dayjs:
+    specifier: ^1.11.10
+    version: registry.npmmirror.com/dayjs@1.11.10
   framer-motion:
     specifier: ^10.16.16
     version: registry.npmmirror.com/framer-motion@10.16.16(react-dom@18.2.0)(react@18.2.0)
@@ -2348,6 +2354,14 @@ packages:
     name: '@fal-works/esbuild-plugin-global-externals'
     version: 2.1.2
     dev: true
+
+  registry.npmmirror.com/@flaticon/flaticon-uicons@3.0.0:
+    resolution: {integrity: sha512-dHBQN8vpn+04uLzsMLmK9dW0Fk+28A6809/PAteKVtXrAaZ6R2VOtqXoy9PqkrFIvFj7HOMDh1zFLKTCspz5Ug==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@flaticon/flaticon-uicons/-/flaticon-uicons-3.0.0.tgz}
+    name: '@flaticon/flaticon-uicons'
+    version: 3.0.0
+    optionalDependencies:
+      esbuild-linux-64: registry.npmmirror.com/esbuild-linux-64@0.14.54
+    dev: false
 
   registry.npmmirror.com/@floating-ui/core@1.5.0:
     resolution: {integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@floating-ui/core/-/core-1.5.0.tgz}
@@ -9771,6 +9785,17 @@ packages:
     name: es-module-lexer
     version: 1.4.1
     dev: true
+
+  registry.npmmirror.com/esbuild-linux-64@0.14.54:
+    resolution: {integrity: sha512-EgjAgH5HwTbtNsTqQOXWApBaPVdDn7XcK+/PtJwZLT1UmpLoznPd8c5CxqsH2dQK3j05YsB3L17T8vE7cp4cCg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/esbuild-linux-64/-/esbuild-linux-64-0.14.54.tgz}
+    name: esbuild-linux-64
+    version: 0.14.54
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
 
   registry.npmmirror.com/esbuild-plugin-alias@0.2.1:
     resolution: {integrity: sha512-jyfL/pwPqaFXyKnj8lP8iLk6Z0m099uXR45aSN8Av1XD4vhvQutxxPzgA2bTcAwQpa1zCXDcWOlhFgyP3GKqhQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/esbuild-plugin-alias/-/esbuild-plugin-alias-0.2.1.tgz}

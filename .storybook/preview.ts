@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/react";
 import '../src/styles/tailwind.css'
 import '../src/index.css'
+import '@flaticon/flaticon-uicons/css/all/all.css'
 
 const preview: Preview = {
   parameters: {
