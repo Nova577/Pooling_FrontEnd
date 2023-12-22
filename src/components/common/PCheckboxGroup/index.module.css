@@ -1,0 +1,8 @@
+.p_checkbox_group__item:not([data-selected=true]):not(:first-child)::before {
+  border: 0 !important;
+  background: #fff;
+}
+
+.p_checkbox_group__item:not([data-selected=true]):not(:first-child)::after {
+  background: #fff;
+}
