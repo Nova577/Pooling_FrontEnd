@@ -1,50 +1,51 @@
-import { FC, useState, useEffect } from "react"
-import PInput from "@/components/common/PInput"
+import { FC, useState, useRef } from "react"
+import PInput from "@/components/common/PInput2"
 import PSelect, { OnSelectionChangeKeys } from "@/components/common/PSelect"
-import PAdderSubractor from '@/components/common/PAdderSubractor'
+import PAdderSubtractor from '@/components/common/PAdderSubtractor'
 
 interface Props {
   id: string
   title?: string
   type?: string
-  onTitleChange?: (value: string) => void
-  onTypeChange?: (params: { id: string; type: string }) => void
+  
+  onChange?: (params: { id: string; type?: string, title?: string }) => void
 }
 
 const QuestionnaireCreateItem: FC<Props> = (props) => {
   const { 
     id,
-    title, 
+    title='', 
     type='text',
-    onTitleChange,
-    onTypeChange
+    onChange
   } = props
+
+  const latestType = useRef(type)
+  const latestTitle = useRef(type)
 
   const [titleValue, setTitleValue] = useState<string>('')
   const [typeValue, setTypeValue] = useState<string>('text')
 
-  useEffect(() => {
-    setTitleValue(title ?? '')
-  }, [title])
-
-  useEffect(() => {
+  if (latestType.current !== type) {
+    latestType.current = type
     setTypeValue(type)
-  }, [type])
+  }
+
+  if (latestTitle.current !== title) {
+    latestTitle.current = title
+    setTitleValue(title)
+  }
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value || ''
     setTitleValue(value)
-    onTitleChange?.(value)
+    onChange?.({ id, title: value })
   }
 
   const handleTypeChange = (keys: OnSelectionChangeKeys) => {
     const value = Array.from(keys).join(",")
 
     setTypeValue(value)
-    onTypeChange?.({
-      id,
-      type: value
-    })
+    onChange?.({ id, type: value })
   }
 
   return (
@@ -79,8 +80,8 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
         {
           type === 'choice' ? <>
             <div className="flex justify-center w-[400px] h-[40px] bg-[#F9F5F3] mt-[10px] rounded-3xl">
-              <PAdderSubractor label="Option" className="mr-[30px]" defaultValue={3} />
-              <PAdderSubractor label="Select" defaultValue={1} />
+              <PAdderSubtractor label="Option" className="mr-[30px]" defaultValue={3} />
+              <PAdderSubtractor label="Select" defaultValue={1} />
             </div>
             <div className="w-[400px] h-[40px] bg-[#F9F5F3] mt-[10px] rounded-3xl">
 

@@ -41,6 +41,14 @@ const PSelect: FC<Props> = (props) => {
       placeholder={placeholder}
       selectedKeys={new Set([value])}
       onSelectionChange={onSelectionChange}
+      listboxProps={{
+        itemClasses: {
+          base: [
+            "dark:data-[hover=true]:bg-[#F6F2EF]",
+            "data-[selectable=true]:focus:bg-[#F6F2EF]",
+          ]
+        }
+      }}
     >
       {
         options?.map((it) => {

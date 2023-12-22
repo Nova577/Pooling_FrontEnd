@@ -47,14 +47,16 @@ const QuestionnaireCreate: FC = () => {
     ])
   }
 
-  const handleOnTypeChange = (params: { id: string, type: string }) => {
-    const { id, type } = params
-    const index = items.findIndex(it => it.id ===id)
+  const handleQuestionItemChange = (params: { id: string; title?: string; type?: string }) => {
+    const { id } = params
+    const index = items.findIndex(it => it.id === id)
     if (index < 0) return
     const newItems = items.map(it => {
+      const item = it.id === id ? params : {}
+
       return {
         ...it,
-        type: it.id === id ? type : it.type
+        ...item
       }
     })
     setItems(newItems)
@@ -75,7 +77,7 @@ const QuestionnaireCreate: FC = () => {
                   return <QuestionnaireCreateItem
                     key={it.id}
                     {...it}
-                    onTypeChange={handleOnTypeChange}
+                    onChange={handleQuestionItemChange}
                   />
                 })
               }

@@ -5,7 +5,7 @@ import PScrollContainer from '@/components/common/PScrollContainer'
 import PButton from '@/components/common/PButton'
 import PRadioRegularGroup from "@/components/common/PRadioRegularGroup"
 import PCheckboxGroup, { CheckboxChangeProps } from "@/components/common/PCheckboxGroup"
-import PInput from "@/components/common/PInput"
+import PInput from "@/components/common/PInput2"
 
 const radioOptions = [
   {
@@ -35,7 +35,7 @@ const QuestionnaireFill: FC = () => {
        <PCard className="w-[1060px] h-[900px] px-[80px] pr-[40px] py-[24px] pb-[30px] bg-[#E9DDD5]" bodyClass="p-0">
           <PTitle className="text-[65px] leading-[86px] text-[#141414] font-normal opacity-[1]">Daily sugar consumption</PTitle>
           <p className="w-[693px] text-[20px] leading-[27px] font-playfair text-[#141414] font-bold opacity-[0.7]">
-          Lorem ipsum dolor sit amet,consectetur adipiscing elit.Nuncporta in libero convallis fringilla.Aenean pretium nunc in dolor porttitor consectetur,
+            Lorem ipsum dolor sit amet,consectetur adipiscing elit.Nuncporta in libero convallis fringilla.Aenean pretium nunc in dolor porttitor consectetur,
           </p>
 
           <PScrollContainer className="mt-[32px] h-[600px] pr-[15px]">

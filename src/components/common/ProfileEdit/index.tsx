@@ -4,7 +4,7 @@ import PAvatar from "@/components/common/PAvatar"
 import maleAvatarSrc from '@/assets/male_avatar.png'
 import { FC } from "react"
 import FormRow from "@/views/SignUp/FormRow"
-import PInput from "@/components/common/PInput"
+import PInput from "@/components/common/PInput2"
 import PSelect from "@/components/common/PSelect"
 import PTagsInput from '@/components/common/PTagsInput'
 

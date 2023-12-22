@@ -12,7 +12,7 @@ interface Props {
   label?: string
 }
 
-const PAdderSubractor: FC<Props> = (props) => {
+const PAdderSubtractor: FC<Props> = (props) => {
   const { defaultValue, className, minValue = 1, maxValue, onValueChange, label } = props
 
   let newDefaultValue = minValue
@@ -70,4 +70,4 @@ const PAdderSubractor: FC<Props> = (props) => {
   )
 }
 
-export default PAdderSubractor
+export default PAdderSubtractor
