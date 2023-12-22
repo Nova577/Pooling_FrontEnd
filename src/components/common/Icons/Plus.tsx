@@ -8,8 +8,12 @@ const Plus: FC = (props: Props) => {
   const { color='#888989' } = props
 
   return (
-    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="10" height="10">
-      <path d="M576 64H448v384H64v128h384v384h128V576h384V448H576z" fill={color} p-id="2368"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path 
+        fill-rule="evenodd" 
+        clip-rule="evenodd" d="M5.1792 6.91163H0.765137V5.05419H5.1792V0.620117H7.17651V5.05419H11.5903V6.91163H7.17651V11.3657H5.1792V6.91163V6.91163Z" 
+        fill={color}
+      />
     </svg>
   )
 }
