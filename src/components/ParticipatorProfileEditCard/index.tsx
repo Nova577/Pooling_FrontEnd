@@ -1,5 +1,4 @@
 import PCard from "@/components/common/PCard"
-import PTitle from "@/components/common/PTitle"
 import PAvatar from "@/components/common/PAvatar"
 import maleAvatarSrc from '@/assets/male_avatar.png'
 import { FC, useState } from "react"

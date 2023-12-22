@@ -37,11 +37,11 @@ const data1 = [
 const QuestionnaireResult: FC = () => {
   return (
     <div className="flex justify-center">
-       <PCard className="w-[1060px] h-[734px] px-[80px] pr-[20px] py-[24px]" bodyClass="p-0">
+       <PCard className="w-[1060px] h-[734px] px-[80px] pr-[20px] py-[24px] bg-[#DBC6B9]" bodyClass="p-0">
           <PTitle className="text-[65px] leading-[86px] text-[#141414] font-normal opacity-[1]">Daily sugar consumption</PTitle>
-          <PTitle className="w-[670px] text-[20px] leading-[27px] text-[#141414] font-bold opacity-[0.7]">
-            Lorem ipsum dolor sit amet,consectetur adipiscing elit.Nuncporta in libero convallis fringilla.Aenean pretium nunc in dolor porttitor consectetur,
-          </PTitle>
+          <p className="w-[693px] text-[20px] leading-[27px] font-playfair text-[#141414] font-bold opacity-[0.7]">
+          Lorem ipsum dolor sit amet,consectetur adipiscing elit.Nuncporta in libero convallis fringilla.Aenean pretium nunc in dolor porttitor consectetur,
+          </p>
           
           <PScrollContainer className="mt-[18px] h-[468px] pr-[15px]">
             {

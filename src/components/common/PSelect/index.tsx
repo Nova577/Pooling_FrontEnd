@@ -1,8 +1,7 @@
 import { FC, ComponentProps } from "react"
-import { Select, SelectItem } from '@nextui-org/react'
+import { Select, SelectItem, SlotsToClasses, cn } from '@nextui-org/react'
 
 export type OnSelectionChangeKeys = Parameters<Exclude<ComponentProps<typeof Select>['onSelectionChange'], undefined>>[0]
-
 interface Props {
   label?: string
   placeholder?: string
@@ -12,7 +11,7 @@ interface Props {
     value: string
   }[]
   value?: string
-
+  classNames?: SlotsToClasses<"description" | "errorMessage" | "label" | "base" | "value" | "mainWrapper" | "trigger" | "innerWrapper" | "selectorIcon" | "spinner" | "listboxWrapper" | "listbox" | "popoverContent" | "helperWrapper"> | undefined
   onSelectionChange?: (keys: OnSelectionChangeKeys) => void
 }
 const PSelect: FC<Props> = (props) => {
@@ -20,21 +19,36 @@ const PSelect: FC<Props> = (props) => {
     label,
     placeholder,
     options,
-    value,
-
+    value = '',
+    classNames,
     onSelectionChange
   } = props
 
   return (
     <Select
       classNames={{
-        trigger: 'h-[3.75rem] rounded-[1.25rem] border border-transparent bg-[#F6F2EF] shadow-none data-[hover=true]:bg-[#F6F2EF] data-[open=true]:border-[#A6A29F]',
-        label: 'opacity-50 !text-neutral-900 text-sm font-bold font-playfair leading-[18px]'
+        ...classNames,
+        trigger: cn(
+          'h-[3.75rem] rounded-[1.25rem] border border-transparent bg-[#F6F2EF] shadow-none data-[hover=true]:bg-[#F6F2EF] data-[open=true]:border-[#A6A29F]',
+          classNames?.trigger
+        ),
+        label: cn(
+          'opacity-50 !text-neutral-900 text-sm font-bold font-playfair leading-[18px]',
+          classNames?.label
+        )
       }}
       label={label}
       placeholder={placeholder}
-      value={value}
+      selectedKeys={new Set([value])}
       onSelectionChange={onSelectionChange}
+      listboxProps={{
+        itemClasses: {
+          base: [
+            "dark:data-[hover=true]:bg-[#F6F2EF]",
+            "data-[selectable=true]:focus:bg-[#F6F2EF]",
+          ]
+        }
+      }}
     >
       {
         options?.map((it) => {
