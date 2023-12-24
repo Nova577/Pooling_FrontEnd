@@ -54,7 +54,7 @@ const ResearchCard: FC<Props> = (props) => {
           }
 
           <div className="pt-6 pr-6">
-            <p className="text-neutral-900 text-[25px] font-bold font-playfair leading-8">
+            <p className="text-neutral-900 text-[20px] font-bold font-playfair leading-8">
               { title }
             </p>
 
@@ -62,14 +62,14 @@ const ResearchCard: FC<Props> = (props) => {
               {
                 tags.map((it, index) => {
                   return (
-                    <PTag key={it + index} size="sm">{ it }</PTag>
+                    <PTag key={it + index} size="sm" className="text-[14px]">{ it }</PTag>
                   )
                 })
               }
             </div>
 
             <div className="pt-2 flex justify-end">
-              <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
+              <span className="text-neutral-900 text-xl font-bold font-playfair !text-[15px]">
                 { status }
               </span>
             </div>

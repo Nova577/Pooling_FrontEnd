@@ -39,13 +39,19 @@ const ResearcherPaymentCard: FC = () => {
         <PButton className="text-[25px]" size="md" round>Add New</PButton>
       </div>
 
-      <div className="pr-[25px] flex justify-between items-center">
-        <PInput className="w-[500px]">Payment Methods</PInput>
+      <div className="pr-[25px] flex justify-between items-end">
+        <PCard className="w-[500px] h-[70px] bg-[#F9F6F4]" bodyClass="flex flex-row px-[30px] py-[10px]">
+          <h3 className="w-[100px] font-playfair text-[25px] text-[#141414] font-bold leading-[33.32px]">Visa</h3>
+          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-['Arial']">7657 9878 8678 9878</span>
+        </PCard>
         <PButton className="text-[25px]" size="md" round>Delete</PButton>
       </div>
 
-      <div className="pr-[25px] flex justify-between items-center mt-[10px]">
-        <PInput className="w-[500px]">Payment Methods</PInput>
+      <div className="pr-[25px] flex justify-between items-end mt-[10px]">
+        <PCard className="w-[500px] h-[70px] bg-[#F9F6F4]" bodyClass="flex flex-row px-[30px] py-[10px]">
+          <h3 className="w-[100px] font-playfair text-[25px] text-[#141414] font-bold leading-[33.32px]">Master</h3>
+          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-['Arial']">7657 9878 8678 9878</span>
+        </PCard>
         <PButton className="text-[25px]" size="md" round>Delete</PButton>
       </div>
 
