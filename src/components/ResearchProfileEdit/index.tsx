@@ -7,10 +7,12 @@ import FormRow from "@/views/SignUp/FormRow"
 import PInput from "@/components/common/PInput2"
 import PSelect from "@/components/common/PSelect"
 import PTagsInput from '@/components/common/PTagsInput'
+import PTextarea from '@/components/common/PTextarea'
+import PButton from "@/components/common/PButton"
 
 const ResearchProfileEdit: FC = () => {
   return (
-    <PCard className="h-[800px] w-[800px] px-[90px] py-[36px]" bodyClass="p-0">
+    <PCard className="h-[800px] w-[800px] px-[90px] py-[36px] bg-[#F1E8E3]" bodyClass="p-0">
       <form>
         <div className="flex">
           <PAvatar imgSrc={maleAvatarSrc} className="w-[160px] h-[160px] shrink-0" />
@@ -33,22 +35,25 @@ const ResearchProfileEdit: FC = () => {
           <PSelect label="Title" placeholder=" " options={[{ key: 'k0', label: 'ins', value: 'v0' }]} />
         </FormRow>
         
-        <FormRow>
+        <FormRow className="pt-[32px]" label="Research Fields">
           <PTagsInput />
         </FormRow>
 
-        <FormRow>
+        <FormRow  className="pt-[32px]" label="Related Links">
           <PTagsInput />
         </FormRow>
 
-        <FormRow>
+        <FormRow  className="pt-[32px]" label="Other related tags">
           <PTagsInput />
         </FormRow>
 
-        <FormRow>
-          <PInput />
+        <FormRow  className="pt-[32px]" label="Describe Yourself">
+          <PTextarea minRows={4} />
         </FormRow>
         
+        <div className="flex justify-end mt-[10px]">
+          <PButton className="w-[100px] h-[40px] text-[15px] bg-white" squareRound size="sm">Save</PButton>
+        </div>
       </form>
     </PCard>
   )
