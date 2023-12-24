@@ -1,6 +1,6 @@
 import PCard from "@/components/common/PCard"
 import PTitle from "@/components/common/PTitle"
-import { FC } from "react"
+import { FC, useState } from "react"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import PProgress from '@/components/common/PProgress'
 
@@ -23,10 +23,10 @@ const result = [
     title: '1. Question 1 Text type',
     data: [
       {
-        text: '· Question 1 Text type answer one hkjahlskjalsclmalksnlksnxnslxaaksbxajknksnxsxsaml Jakmslk knkjnk nkjnlkn knlmaspo oknlk oljmklmlk mllm lmllm mllm mll smallkmlsxm Jaknskj knjnkjnas knjnkj',
+        text: 'Question 1 Text type answer one akmslk knkjnk nkjnlkn knlmaspo oknlk oljmklmlk mllm lmllm mllm mll smallkmlsxm Jaknskj knjnkjnas knjnkj',
       },
       {
-        text: '· Question 1 Text type answer one hkjahlskjalsclmalksnlksnxnslxaaksbxajknksnxsxsaml Jakmslk knkjnk nkjnlkn knlmaspo oknlk oljmklmlk mllm lmllm mllm mll smallkmlsxm Jaknskj knjnkjnas knjnkj',
+        text: 'Question 1 Text type answer one Jakmslk knkjnk nkjnlkn knlmaspo oknlk oljmklmlk mllm lmllm mllm mll smallkmlsxm Jaknskj knjnkjnas knjnkj',
       },
     ],
   },
@@ -86,11 +86,14 @@ const result = [
 ]
 
 const QuestionnaireDetail: FC = () => {
+  const [data, setData] = useState(result)
+  
+
+
   return (
-    <div className="flex justify-center">
-       <PCard className="w-[1060px] h-[900px] px-[80px] pr-[40px] py-[24px]" bodyClass="p-0">
+    <div>
+       <PCard className="w-[1060px] h-[900px] px-[80px] pr-[40px] py-[24px] !bg-[#E9DDD5]" bodyClass="p-0">
           <PTitle className="text-[65px] leading-[86px] text-[#141414] font-normal opacity-[1]">Daily sugar consumption</PTitle>
-         
 
           <PScrollContainer className="mt-[33px] h-[700px] pr-[15px]">
             {
@@ -99,34 +102,43 @@ const QuestionnaireDetail: FC = () => {
                   <PTitle className="mb-[20px] text-[21px] leading-[28px] text-[#141414] font-normal opacity-[1]">
                     {it.title}
                   </PTitle>
+
                   {
-                    it.data.map((item: dataItem, tindex) => {
-                      return it.type === 'text' ? <>
-                          <PCard 
-                            key={tindex}
-                            className="bg-white/60 w-full mb-[30px]"
-                            bodyClass="pl-[30px] pr-[48px] pt-[6px] pb-[25px]"
-                          >
-                            <p className="text-[21px] leading-[26px] text-[#141414] font-playfair">
-                              {item.text}
+                    it.type === 'text' ? <PCard 
+                      className="bg-white/60 w-full mb-[30px]"
+                      bodyClass="pl-[30px] pr-[50px] pt-[6px] pb-[25px] relative"
+                    >
+                      <i 
+                        className="fi fi-ss-angle-down text-[20px] text-[#B2AFAE] absolute right-[20px] rop-[20px] cursor-pointer"
+                      >
+                      </i>
+                      {
+                        it.data.map((item: dataItem, itemIndex) => {
+                          return (
+                            <p key={itemIndex} className="text-[21px] leading-[26px] text-[#141414] font-playfair">
+                              · {item.text}
                             </p>
-                          </PCard>
-                        </> : it.type === 'voice' ? <>
-                          <div className="flex items-center mb-[20px]">
-                            <PTitle className="w-[110px] text-[21px] leading-[28px] text-[#141414] font-normal opacity-[1]">
-                              {item.name}
-                            </PTitle>
+                          )
+                        })
+                      }
+                    </PCard> 
+                    : it.type === 'voice' ? it.data.map((item: dataItem, itemIndex) => {
+                      return (
+                        <div key={itemIndex} className="flex items-center mb-[20px]">
+                          <PTitle className="w-[110px] text-[21px] leading-[28px] text-[#141414] font-normal opacity-[1]">
+                            {item.name}
+                          </PTitle>
 
-                            <div className="w-[200px] mr-[143px]">
-                              <PProgress value={item.value} />
-                            </div>
-
-                            <span className="text-[21px] leading-[28px] text-[#141414] font-playfair">
-                              {item.percentText}
-                            </span>
+                          <div className="w-[200px] mr-[143px]">
+                            <PProgress value={item.value} />
                           </div>
-                        </> : ''
-                      })
+
+                          <span className="text-[21px] leading-[28px] text-[#141414] font-playfair">
+                            {item.percentText}
+                          </span>
+                        </div>
+                      )
+                    }) : ''
                   }
                 </div>
               })

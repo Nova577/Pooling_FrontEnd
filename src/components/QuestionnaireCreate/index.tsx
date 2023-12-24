@@ -4,29 +4,35 @@ import { FC, useState } from "react"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import PButton from '@/components/common/PButton'
 
-import QuestionnaireCreateItem from '@/components/QuestionnaireCreateItem'
+import QuestionnaireCreateItem, { dataItemProps } from '@/components/QuestionnaireCreateItem'
 
-interface dataItemProps {
-  title: string
-  type: string
-  id: string
-}
+
+const defaultOptionNum = 3
+const defaultSelectNum = 1
 
 const defaultOptions = [
   {
     id: `${+new Date()}1`,
     title: '',
     type: 'text',
+    optionNum: defaultOptionNum,
+    selectNum: defaultSelectNum,
   },
   {
     id: `${+new Date()}2`,
     title: '',
     type: 'choice',
+    optionNum: 2,
+    selectNum: defaultSelectNum,
+    optionList: ['option1', 'option2'],
   },
   {
     id: `${+new Date()}3`,
     title: '',
-    type: 'text',
+    type: 'choice',
+    optionNum: defaultOptionNum,
+    selectNum: 2,
+    optionList: ['option1', 'option2', 'option3'],
   },
 ]
 
@@ -43,28 +49,50 @@ const QuestionnaireCreate: FC = () => {
         id,
         title: '',
         type: 'text',
+        optionNum: defaultOptionNum,
+        selectNum: defaultSelectNum,
       }
     ])
   }
 
-  const handleQuestionItemChange = (params: { id: string; title?: string; type?: string }) => {
-    const { id } = params
+  const handleQuestionItemChange = (params: dataItemProps) => {
+    const { id, type, optionNum, optionList } = params
     const index = items.findIndex(it => it.id === id)
-    if (index < 0) return
-    const newItems = items.map(it => {
-      const item = it.id === id ? params : {}
 
-      return {
-        ...it,
-        ...item
+    if (index < 0) return
+    const newItems = items.map((item, originIndex) => {
+      if (index !== originIndex) return item
+      
+      let newOptionList: string[] = [...(item.optionList || [])]
+
+      if (type && type === 'choice') {
+        newOptionList = [...Array(item.optionNum)].map((_, index) => `option${index + 1}`)
+        
+      } else if (typeof optionNum !== 'undefined' && optionNum >= 0) {
+        if (optionNum > item.optionNum!) {
+          newOptionList.push(`option${optionNum}`)
+        } else if (newOptionList.length) {
+          newOptionList.pop()
+        }
+
+      } else if (optionList) {
+        newOptionList = [...optionList]
       }
+
+      return { ...item, ...params, optionList: newOptionList }
     })
+
+    setItems(newItems)
+  }
+
+  const handleDelete = (id: string) => {
+    const newItems = items.filter(item => item.id !== id)
     setItems(newItems)
   }
 
   return (
     <div className="flex justify-center">
-       <PCard className="w-[1060px] h-[900px] px-[80px] pr-[40px] py-[24px] pb-[30px] bg-[#E9DDD5]" bodyClass="p-0">
+       <PCard className="w-[1060px] h-[900px] px-[80px] pr-[20px] py-[24px] pb-[30px] bg-[#E9DDD5]" bodyClass="p-0">
           <PTitle className="text-[65px] leading-[86px] text-[#141414] font-normal opacity-[1]">Untitled Questionnairen</PTitle>
           <p className="w-[693px] text-[20px] leading-[27px] font-playfair text-[#141414] font-bold opacity-[0.7]">
             Description starts here...
@@ -78,6 +106,7 @@ const QuestionnaireCreate: FC = () => {
                     key={it.id}
                     {...it}
                     onChange={handleQuestionItemChange}
+                    onDelete={handleDelete}
                   />
                 })
               }

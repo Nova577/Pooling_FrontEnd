@@ -22,18 +22,19 @@ const PAdderSubtractor: FC<Props> = (props) => {
 
   const [curValue, setValue] = useState<number>(newDefaultValue)
 
-  useEffect(() => {
-    onValueChange && onValueChange(curValue)
-  }, [curValue, onValueChange])
 
   const handleMinus = () => {
     if (curValue <= minValue) return
-    setValue(curValue - 1)
+    const newValue = curValue - 1
+    setValue(newValue)
+    onValueChange?.(newValue)
   }
 
   const handlePlus = () => {
     if (maxValue && curValue >= maxValue) return
-    setValue(curValue + 1)
+    const newValue = curValue + 1
+    setValue(newValue)
+    onValueChange?.(newValue)
   }
 
   return (
