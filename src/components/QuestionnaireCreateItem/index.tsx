@@ -17,6 +17,8 @@ export interface dataItemProps {
 interface Props extends dataItemProps {
   onChange?: (params: dataItemProps) => void
   onDelete?: (id: string) => void
+  onAddItem?: () => void
+  showAdd?: boolean
 }
 
 const QuestionnaireCreateItem: FC<Props> = (props) => {
@@ -27,7 +29,9 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
     optionList = [],
     required,
     onDelete,
-    onChange
+    onChange,
+    onAddItem,
+    showAdd,
   } = props
 
   const [deleteStep, setDeleteStep] = useState(0)
@@ -95,7 +99,13 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
 
         <div className="mt-[20px] ml-[30px] flex absolute right-0 w-[80px]">
           {
-            deleteStep ? <PButton 
+            showAdd ? <button 
+              className="w-[30px] h-[30px] bg-[#F9F5F3] rounded-full flex justify-center items-center"
+              onClick={() => onAddItem?.()}
+            >
+              <i className="fi fi-br-plus text-[15px] h-[18px] text-[#414040]"></i>
+            </button>
+            : deleteStep ? <PButton 
               size="sm" round className="!w-[80px] !h-[30px] !bg-[#F9F5F3]"
               onClick={() => handleDelete()}
             >
@@ -108,6 +118,7 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
               <i className="fi fi-br-minus text-[15px] h-[18px] text-[#414040]"></i>
             </button>
           }
+          
         </div>
       </div>
 

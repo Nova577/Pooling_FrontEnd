@@ -4,7 +4,6 @@ import PButton from "../common/PButton"
 import PMonthPicker from "../common/PMonthPicker"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import PTitle from "@/components/common/PTitle"
-import PInput from "@/components/common/PInput2"
 import dayjs from 'dayjs'
 
 const balanceItems = [
@@ -42,7 +41,7 @@ const ResearcherPaymentCard: FC = () => {
       <div className="pr-[25px] flex justify-between items-end">
         <PCard className="w-[500px] h-[70px] bg-[#F9F6F4]" bodyClass="flex flex-row px-[30px] py-[10px]">
           <h3 className="w-[100px] font-playfair text-[25px] text-[#141414] font-bold leading-[33.32px]">Visa</h3>
-          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-['Arial']">7657 9878 8678 9878</span>
+          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-playfair">7657 9878 8678 9878</span>
         </PCard>
         <PButton className="text-[25px]" size="md" round>Delete</PButton>
       </div>
@@ -50,7 +49,7 @@ const ResearcherPaymentCard: FC = () => {
       <div className="pr-[25px] flex justify-between items-end mt-[10px]">
         <PCard className="w-[500px] h-[70px] bg-[#F9F6F4]" bodyClass="flex flex-row px-[30px] py-[10px]">
           <h3 className="w-[100px] font-playfair text-[25px] text-[#141414] font-bold leading-[33.32px]">Master</h3>
-          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-['Arial']">7657 9878 8678 9878</span>
+          <span className="text-[27px] text-[#7F7B7A] leading-[31px] font-playfair">7657 9878 8678 9878</span>
         </PCard>
         <PButton className="text-[25px]" size="md" round>Delete</PButton>
       </div>

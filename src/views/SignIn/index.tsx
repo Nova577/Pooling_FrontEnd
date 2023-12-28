@@ -37,7 +37,7 @@ const SignIn: FC = () => {
         </div>
       </div>
 
-      <PCard className="h-[500px] w-[1000px] p-[50px] pt-[76px] pr-[70px] mt-20" bodyClass="p-0">
+      <PCard className="h-[500px] w-[1000px] p-[50px] pt-[76px] pr-[70px] mt-20 !bg-[#EADED7]" bodyClass="p-0">
         <form>
           <div>
             <PTitle>Email Or Account Number</PTitle>

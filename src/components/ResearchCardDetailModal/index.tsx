@@ -131,7 +131,7 @@ const ResearchCardDetailModal: FC<Props> = (props) => {
         }
 
         <div>
-          <h4 className="text-neutral-900 text-[27px] font-normal font-['Arial'] leading-[30px]">
+          <h4 className="text-neutral-900 text-[27px] font-normal font-playfair leading-[30px]">
             { title }
           </h4>
 

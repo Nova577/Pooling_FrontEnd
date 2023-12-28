@@ -2,13 +2,13 @@ import PCard from "@/components/common/PCard"
 import PTitle from "@/components/common/PTitle"
 import { FC } from "react"
 import FormRow from "../SignUp/FormRow"
-import PInput from "@/components/common/PInput"
+import PInput from "@/components/common/PInput2"
 import PButton from "@/components/common/PButton"
 
 const ResetPassword: FC = () => {
   return (
     <div className="py-[300px] flex justify-center">
-       <PCard className="h-[550px] w-[800px] p-[50px] pr-[70px]" bodyClass="p-0">
+       <PCard className="h-[550px] w-[800px] p-[50px] pr-[70px] !bg-[#EADED7]" bodyClass="p-0">
         <form>
           <PTitle>Email Or Account Number</PTitle>
 
@@ -24,11 +24,11 @@ const ResetPassword: FC = () => {
           </FormRow>
 
           <FormRow>
-            <PInput />
+            <PInput label="Password" />
           </FormRow>
 
           <FormRow>
-            <PInput />
+            <PInput label="Repeat password" />
           </FormRow>
 
           <div className="mt-6 flex justify-center">

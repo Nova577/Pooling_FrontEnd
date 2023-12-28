@@ -6,6 +6,8 @@ import PButton from "@/components/common/PButton"
 import PRadioGroup from "@/components/common/PRadioGroup"
 import PInput from "@/components/common/PInput"
 import PSelect from "@/components/common/PSelect"
+import styles from './index.module.css'
+import { cn } from '@nextui-org/react'
 
 const countryOptions = [
   { key: 'cn', value: 'cn', label: 'China' },
@@ -20,7 +22,7 @@ const stateOptions = [
 const StepZeroContent: FC = () => {
   return (
     <>
-      <PCard className="h-[550px] w-[660px] p-[50px]" bodyClass="p-0 gap-0">
+      <PCard className="h-[550px] w-[660px] p-[50px] !bg-[#EADED7]" bodyClass="p-0 gap-0">
         <form>
           <div className="pt-2">
             <PTitle>Create your email account</PTitle>
@@ -57,7 +59,7 @@ const StepZeroContent: FC = () => {
         </form>
       </PCard>
 
-      <PCard className="h-[550px] w-[660px] p-[50px]" bodyClass="p-0 gap-0">
+      <PCard className="h-[550px] w-[660px] p-[50px] !bg-[#EADED7]" bodyClass="p-0 gap-0">
         <form>
           <div className="pt-2">
             <PTitle>Personal details</PTitle>
@@ -68,10 +70,21 @@ const StepZeroContent: FC = () => {
               options={[{ label: 'Mr', value: 'Mr' }, { label: 'Ms', value: 'Ms' }, { label: 'Other', value: 'Other' }]}
               
             />
-            <PRadioGroup
+            {/* <PRadioGroup
               options={[{ label: 'DD', value: 'DD' }, { label: 'MM', value: 'MM' }, { label: 'YYYY', value: 'YYYY' }]}
-              
-            />
+            /> */}
+            <div className="w-[270px] h-[60px] bg-[#F6F2EF] rounded-2xl relative">
+              <label className="absolute left-[20px] top-[5px] opacity-50 text-neutral-900 text-sm font-bold font-playfair leading-[18px]">
+                Date
+              </label>
+              <div className="w-[270px] h-full flex items-center justify-center pt-[18px] font-playfair text-[20px] text-[#151515]">
+                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
+                <span className="mx-[10px]">/</span>
+                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
+                <span className="mx-[10px]">/</span>
+                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
+              </div>
+            </div>
           </FormRow>
           
           <FormRow>
