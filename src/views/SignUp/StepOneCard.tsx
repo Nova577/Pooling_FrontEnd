@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import PCard from "../../components/common/PCard"
 import PTitle from "../../components/common/PTitle"
-import PInput from "../../components/common/PInput"
+import PInput from "../../components/common/PInput2"
 import FormRow from "./FormRow"
 import PSelect from "../../components/common/PSelect"
 import PRadioGroup from "@/components/common/PRadioGroup"
@@ -20,15 +20,15 @@ const ResearcherFormFragment = () => {
         <PSelect label="Title" placeholder=" " options={[{ key: 'k0', label: 'ins', value: 'v0' }]} />
       </FormRow>
 
-      <FormRow>
-        <PInput />
-      </FormRow>
-
-      <FormRow>
+      <FormRow label="Research Fields" className="pt-[32px]">
         <PTagsInput />
       </FormRow>
 
-      <FormRow>
+      <FormRow label="Related Links" className="pt-[32px]">
+        <PTagsInput />
+      </FormRow>
+
+      <FormRow label="Other related tags" className="pt-[32px]">
         <PTagsInput />
       </FormRow>
     </>
@@ -36,6 +36,14 @@ const ResearcherFormFragment = () => {
 }
 
 const ParticipatorFormFragment = () => {
+  const [petsTags, setPetsTags] = useState(['# Sociology'])
+
+  const handleInputTagDel = (value: string[]) => {
+    console.log('handleInputTagDel', value);
+    
+    setPetsTags(value)
+  }
+
   return (
     <>
       <FormRow className="mr-[380px]">
@@ -43,15 +51,15 @@ const ParticipatorFormFragment = () => {
         <PSelect label="Position" placeholder=" " options={[{ key: 'k0', label: 'ins', value: 'v0' }]} />
       </FormRow>
 
-      <FormRow>
-        <PInput />
+      <FormRow label="Pets" className="pt-[32px]">
+        <PTagsInput value={petsTags} onChange={handleInputTagDel} />
       </FormRow>
 
-      <FormRow>
-        <PInput />
+      <FormRow label="Medical history" className="pt-[32px]">
+        <PTagsInput />
       </FormRow>
 
-      <FormRow>
+      <FormRow label="Other related tags" className="pt-[32px]">
         <PTagsInput />
       </FormRow>
     </>
@@ -66,7 +74,7 @@ const StepOneCard: FC = () => {
   }
 
   return (
-    <PCard className="h-[550px] w-[1120px] p-[50px] pr-[70px]" bodyClass="p-0">
+    <PCard className="h-[550px] w-[1120px] p-[50px] pr-[70px] !bg-[#EADED7]" bodyClass="p-0">
       <form>
         <PTitle>You are</PTitle>
 

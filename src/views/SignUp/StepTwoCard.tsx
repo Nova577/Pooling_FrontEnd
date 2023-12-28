@@ -5,7 +5,7 @@ import PButton from "@/components/common/PButton"
 
 const StepTwoCard: FC = () => {
   return (
-    <PCard className="h-[550px] w-[1120px] p-[50px] pr-[70px]" bodyClass="p-0">
+    <PCard className="h-[550px] w-[1120px] p-[50px] pr-[70px] !bg-[#EADED7]" bodyClass="p-0">
       <div className="flex items-center">
         <img src={lockIcon} />
         <h5 className="ml-5 opacity-50 text-neutral-900 text-[23px] font-bold font-playfair leading-[30px]">We protect your information</h5>

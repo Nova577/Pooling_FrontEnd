@@ -3,6 +3,7 @@ import PTitle from "@/components/common/PTitle"
 import { FC, useState } from "react"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import PButton from '@/components/common/PButton'
+import Calender from '@/components/common/Icons/Calendar'
 
 import QuestionnaireCreateItem, { dataItemProps } from '@/components/QuestionnaireCreateItem'
 
@@ -94,28 +95,55 @@ const QuestionnaireCreate: FC = () => {
     <div className="flex justify-center">
        <PCard className="w-[1060px] h-[900px] px-[80px] pr-[20px] py-[24px] pb-[30px] bg-[#E9DDD5]" bodyClass="p-0">
           <PTitle className="text-[65px] leading-[86px] text-[#141414] font-normal opacity-[1]">Untitled Questionnairen</PTitle>
-          <p className="w-[693px] text-[20px] leading-[27px] font-playfair text-[#141414] font-bold opacity-[0.7]">
+          <div className="w-[693px] text-[20px] leading-[27px] font-playfair text-[#141414] font-bold opacity-[0.7]">
             Description starts here...
-          </p>
+          </div>
 
-          <PScrollContainer className="mt-[32px] h-[600px] pr-[15px]">
+          <PScrollContainer className="mt-[5px] h-[600px] pr-[15px]">
             <form>
+              <div className="flex">
+                <div className="mr-[20px]">
+                  <PTitle className="text-[20px] leading-[28px] text-[#141414] opacity-[1] pb-[7px]">Due Date</PTitle>
+                  <PButton className="!bg-[#F9F5F3] rounded-full !h-[50px] px-[20px]">
+                    <Calender />
+                    <span className="text-[20px] font-normal">Dec 25th</span>
+                  </PButton>
+                </div>
+                <div className="mr-[20px]">
+                  <PTitle className="text-[20px] leading-[28px] text-[#141414] opacity-[1] pb-[7px]">Due Time</PTitle>
+                  <PButton className="!bg-[#F9F5F3] rounded-full !h-[50px] px-[20px]">
+                    <Calender />
+                    <span className="text-[20px] font-normal">23 : 59</span>
+                  </PButton>
+                </div>
+                <div>
+                  <PTitle className="text-[20px] leading-[28px] text-[#141414] opacity-[1] pb-[7px]">Time Limit</PTitle>
+                  <PButton className="!bg-[#F9F5F3] rounded-full !h-[50px] px-[20px]">
+                    <Calender />
+                    <span className="text-[20px] font-normal">15 min</span>
+                  </PButton>
+                </div>
+              </div>
+
+              <PTitle className="text-[20px] leading-[28px] text-[#141414] opacity-[1] pb-[7px] mt-[10px]">Questions</PTitle>
               {
-                items.map(it => {
+                items.map((it, index) => {
                   return <QuestionnaireCreateItem
                     key={it.id}
                     {...it}
+                    showAdd={index === items.length - 1}
                     onChange={handleQuestionItemChange}
                     onDelete={handleDelete}
+                    onAddItem={handleAddQuestion}
                   />
                 })
               }
             </form>
-            <PButton 
+            {/* <PButton 
               className="text-[20px] h-[40px] mt-[15px]" 
               size="sm" round
               onClick={() => handleAddQuestion()}
-            >Add New Question</PButton>
+            >Add New Question</PButton> */}
           </PScrollContainer>
 
           <div className="flex justify-end">

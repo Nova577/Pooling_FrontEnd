@@ -73,6 +73,10 @@ const TagsInput: FC<Props> = (props) => {
     onChange?.(value.concat(inputValue))
   }
 
+  const handleDelete = (index: number) => {
+    const newValue = value.filter((_, i) => i !== index)
+    onChange?.(newValue)
+  }
 
   return (
     <div className="flex-1 relative">
@@ -84,11 +88,22 @@ const TagsInput: FC<Props> = (props) => {
           {
             value.map((it, i) => {
               return (
-                <PTag key={i}>
-                  <span className="opacity-50">
-                    { it }
-                  </span>
-                </PTag>
+                <div key={i} className="relative">
+                  <PTag>
+                    <span className="opacity-50">
+                      { it }
+                    </span>
+                    
+                  </PTag>
+                  {
+                    <span 
+                      className="absolute right-[-2px] top-[-2px] w-[15px] h-[15px] bg-[#EADED6] rounded-full leading-[10px] text-center cursor-pointer"
+                      onClick={() => handleDelete(i)}
+                    >
+                      <i className="fi fi-bs-cross text-[#ffffff] text-[7px] font-bold"></i>
+                    </span>
+                  }
+                </div>
               )
             })
           }
@@ -97,7 +112,7 @@ const TagsInput: FC<Props> = (props) => {
             isEditing
             && (
               <div ref={editingContentRef}>
-                <PTag className="cursor-pointer">
+                <PTag className="cursor-pointer" >
                   <PInput ref={tagInputRef} className="!bg-white" size="xs" disabled={disabled} onKeyUp={handleInputKeyUp} />
                 </PTag>
               </div>
@@ -108,7 +123,7 @@ const TagsInput: FC<Props> = (props) => {
             !isEditing
             && (
               <PTag className={clsx(disabled ? 'cursor-not-allowed' : 'cursor-pointer')} onClick={handleAddTagButtonClick}>
-                <span className="text-base font-['Arial'] -translate-y-1 opacity-50">
+                <span className="text-base font-playfair -translate-y-1 opacity-50">
                   +
                 </span>
               </PTag>
