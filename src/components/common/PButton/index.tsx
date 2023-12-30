@@ -21,6 +21,7 @@ const PButton: FC<PButtonProps> = (props) => {
     round = false,
     squareRound = false,
     children,
+    htmlType,
     ...otherProps
   } = props
 
@@ -48,6 +49,7 @@ const PButton: FC<PButtonProps> = (props) => {
         )
       }
       style={style}
+      type={htmlType}
       {...otherProps}
     >
       { children }

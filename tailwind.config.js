@@ -14,13 +14,23 @@ export default {
       height: {
         '15': '3.75rem'
       },
+      flexGrow: {
+        2: '2'
+      }
     },
     fontFamily: {
       'playfair': 'Playfair Display',
       'st-song': 'STSong'
-    }
+    },
   },
-  plugins: [daisyui, nextui()],
+  plugins: [
+    daisyui,
+    nextui({
+      layout: {
+        spacingUnit: 5
+      }
+    })
+  ],
   daisyui: {
     base: false,
     // styled: false,
