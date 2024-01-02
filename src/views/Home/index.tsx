@@ -37,10 +37,9 @@ const Home: FC = ()  => {
           </div>
         </div>
 
+        {/* Note that all the cards need to be replaced with images */}
         <div className="pt-[150px] flex">
           <PCard className="flex-1 h-[444px]"></PCard>
-          {/* <div className="h-[444px] flex-1 bg-[#DBC6B9]" /> */}
-
           <div className="relative -top-2 flex-1">
             <div className="pl-24">
               <div className="w-[423px] text-[45px] font-bold font-playfair leading-[53px]">Describe your target group to distribute. We do the rest.</div>
@@ -49,31 +48,85 @@ const Home: FC = ()  => {
           </div>
         </div>
 
-        {/* <div className="pt-[75px] flex gap-[100px]">
+        <div className="pt-[75px] flex">
           <div className="flex-1 flex flex-col items-center">
             <div className="w-[423px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">Your ideal participants are one click away.</div>
-            
             <div className="w-[423px] text-[22px] font-normal font-playfair leading-[25px]"> Our algorithm pushes your research to the correct persons.<br></br>Get instant answers with real-time follow.No third-party involved.</div>
           </div>
-          <div className="flex-1 bg-[#DBC6B9]"> </div>
+          <PCard className="flex-1 h-[444px] w-[666px]"></PCard>
         </div>
 
         <div className="pt-[75px] flex">
-            <div className="flex-1 bg-[#DBC6B9]"> </div>
-              <div className="flex-1 pl-[100px]">
-                <div className="w-[423px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">Monitor your research progress closely with your team.</div>
-            
-                <div className="w-[378px] text-[22px] font-normal font-playfair leading-[25px]">Under teamwork mode.you and your teammates can check interview bookings and surveys collected anywhere anytime.</div>  
+            <PCard className="flex-1 h-[444px]"></PCard>
+            <div className="relative -top-2 flex-1">
+              <div className="pl-24">
+                <div className="w-[465px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">Monitor your research progress closely with your team.</div>
+                <div className="w-[453px] text-[22px] font-normal font-playfair leading-[25px]">Under teamwork mode, you and your teammates can check interview bookings and surveys collected anywhere anytime.</div>  
               </div>
+            </div>
         </div>
-        <div className="pt-[75px] flex ">
+
+        <div className="pt-[75px] flex pb-[164px]">
           <div className="flex-1 flex flex-col items-center">
             <div className="w-[423px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">You and your participants' data are safe with us.</div>
-          
             <div className="w-[423px] text-[22px] font-normal font-playfair leading-[25px]"> Our data security algorithm safeguards your and your participants privacy.</div>
           </div>
-          <div className="flex-1 bg-[#DBC6B9]"> </div>
-        </div> */}
+          <PCard className="flex-1 h-[444px]"></PCard>
+        </div> 
+      </div>
+
+
+      <div className="bg-[#302929]">
+        <div className="max-w-7xl mx-auto text-white">
+
+          <div className="pt-[48px] flex justify-center">
+            {/* Bubble background image needs to be changed */}
+            <div className="pt-[16px] h-[160px] w-[940px] flex flex-col justify-center items-start bg-[url('src/assets/bg_circles2.svg')]">
+              <div className="font-playfair text-[52px] font-bold leading-[69.32px]">
+                Our offering
+              </div>
+              <div className="pl-[20px] font-playfair text-[40px] font-bold leading-[53.32px]">
+                Streamline your insight-gaining process.
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-[150px] flex">
+            <PCard className="flex-1 h-[444px]"></PCard>
+            <div className="relative -top-2 flex-1">
+              <div className="pl-24">
+                <div className="w-[423px] text-[45px] font-bold font-playfair leading-[53px]">AI Assistant</div>
+                <div className="w-[442px] mt-[31px] text-[22px] font-normal font-playfair leading-[25px]">
+                  Unleash your research potential: AI-powered precision at every step.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-[75px] flex">
+            <div className="flex-1 flex flex-col items-center">
+              <div className="w-[423px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">AR Interview</div>
+              <div className="w-[423px] text-[22px] font-normal font-playfair leading-[25px]"> Real and private dialogues.</div>
+            </div>
+            <PCard className="flex-1 h-[444px] w-[666px]"></PCard>
+          </div>
+
+          <div className="pt-[75px] flex pb-[164px]">
+              <PCard className="flex-1 h-[444px]"></PCard>
+              <div className="relative -top-2 flex-1">
+                <div className="pl-24">
+                  <div className="w-[465px] my-[32px] text-[45px] font-bold font-playfair leading-[53px]">Data Analytics</div>
+                  <div className="w-[437px] text-[22px] font-normal font-playfair leading-[25px]">From raw data to invaluable insights: data analytics elevates your research game.</div>  
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto h-[680px] pt-[48px] flex justify-center items-center">
+        <div className="w-[1096px] text-[115px] font-bold font-playfair">Book a Beta product Now.</div>
+        {/* Arrow logo */}
       </div>
     </div>
   )
