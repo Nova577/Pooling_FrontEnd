@@ -3,25 +3,24 @@ import {RadioGroup, Radio } from "@nextui-org/react";
 
 interface Props {
   options?: {
-    key?: string
+    key?: string | number
     label: string
     value: string
   }[]
 
   value?: string
-
-  onChange?: (e: React.FormEvent<HTMLDivElement>) => void
+  onValueChange?: (value: string) => void
 }
 
 const PRadioRegularGroup: FC<Props> = (props) => {
-  const { options, value, onChange } = props;
+  const { options, value, onValueChange } = props;
 
   return (
     <RadioGroup
       label=""
       value={value}
       orientation="horizontal"
-      onChange={onChange}
+      onValueChange={onValueChange}
     >
       {
         options?.map((it) => {

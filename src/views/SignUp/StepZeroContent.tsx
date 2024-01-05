@@ -6,8 +6,7 @@ import PButton from "@/components/common/PButton"
 import PRadioGroup from "@/components/common/PRadioGroup"
 import PInput from "@/components/common/PInput"
 import PSelect from "@/components/common/PSelect"
-import styles from './index.module.css'
-import { cn } from '@nextui-org/react'
+import PPlainInput from "@/components/common/PPlainInput"
 
 const countryOptions = [
   { key: 'cn', value: 'cn', label: 'China' },
@@ -77,12 +76,12 @@ const StepZeroContent: FC = () => {
               <label className="absolute left-[20px] top-[5px] opacity-50 text-neutral-900 text-sm font-bold font-playfair leading-[18px]">
                 Date
               </label>
-              <div className="w-[270px] h-full flex items-center justify-center pt-[18px] font-playfair text-[20px] text-[#151515]">
-                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
-                <span className="mx-[10px]">/</span>
-                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
-                <span className="mx-[10px]">/</span>
-                <input className={cn("w-[50px] h-[27px] bg-transparent outline-0 text-center", styles.date_input)} type="number" />
+              <div className="w-[270px] h-full flex items-center justify-center pt-[10px] font-playfair text-[20px] text-[#151515]">
+                <PPlainInput value={'00'} />
+                <span className="mx-[10px] mt-[8px]">/</span>
+                <PPlainInput value={'00'} />
+                <span className="mx-[10px] mt-[8px]">/</span>
+                <PPlainInput value={'00'} />
               </div>
             </div>
           </FormRow>

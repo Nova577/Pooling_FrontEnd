@@ -5,9 +5,10 @@ import PAdderSubtractor from '@/components/common/PAdderSubtractor'
 import PButton from "@/components/common/PButton"
 
 export interface dataItemProps {
-  title?: string
+  number?: number
+  question?: string
   type?: string
-  id: string
+  id?: string
   optionNum?: number
   selectNum?: number
   optionList?: string[]
@@ -24,7 +25,7 @@ interface Props extends dataItemProps {
 const QuestionnaireCreateItem: FC<Props> = (props) => {
   const { 
     id,
-    title = '', 
+    question = '', 
     type = 'text',
     optionList = [],
     required,
@@ -32,13 +33,15 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
     onChange,
     onAddItem,
     showAdd,
+    optionNum,
+    selectNum
   } = props
 
   const [deleteStep, setDeleteStep] = useState(0)
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value || ''
-    onChange?.({ id, title: value })
+    onChange?.({ id, question: value })
   }
 
   const handleTypeChange = (keys: OnSelectionChangeKeys) => {
@@ -58,7 +61,16 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
   }
 
   const handleDelete = () => {
-    onDelete?.(id)
+    id && onDelete?.(id)
+  }
+
+  const handleSelectChange = (value: number) => {
+    if (value > optionNum!) {
+      return
+    } 
+    console.log(555);
+    
+    onChange?.({ id, selectNum: value })
   }
 
   return (
@@ -67,8 +79,9 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
         <div className="w-[600px] mr-[50px]">
           <PInput 
             className='!h-[50px]'
-            onChange={handleTitleChange}
-            value={title}
+            onChange={handleQuestionChange}
+            value={question}
+            placeholder="Please enter question..."
           />
         </div>
 
@@ -99,12 +112,12 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
 
         <div className="mt-[20px] ml-[30px] flex absolute right-0 w-[80px]">
           {
-            showAdd ? <button 
+            showAdd ? <div 
               className="w-[30px] h-[30px] bg-[#F9F5F3] rounded-full flex justify-center items-center"
               onClick={() => onAddItem?.()}
             >
               <i className="fi fi-br-plus text-[15px] h-[18px] text-[#414040]"></i>
-            </button>
+            </div>
             : deleteStep ? <PButton 
               size="sm" round className="!w-[80px] !h-[30px] !bg-[#F9F5F3]"
               onClick={() => handleDelete()}
@@ -129,10 +142,14 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
               <PAdderSubtractor 
                 label="Option" 
                 className="mr-[30px]" 
-                defaultValue={3}
+                value={optionNum}
                 onValueChange={(value: number) => onChange?.({ id, optionNum: value })}
               />
-              <PAdderSubtractor label="Select" defaultValue={1} onValueChange={(value: number) => onChange?.({ id, selectNum: value })} />
+              <PAdderSubtractor 
+                label="Select" 
+                value={selectNum}
+                onValueChange={(value: number) => handleSelectChange(value)} 
+              />
             </div>
             <div className="w-[600px] mt-[10px] grid grid-cols-2 gap-[12.69px]">
               {
