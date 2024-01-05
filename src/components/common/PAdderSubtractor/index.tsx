@@ -1,39 +1,29 @@
-import { FC, useState, useEffect } from "react"
+import { FC } from "react"
 import clsx from 'clsx'
 import PlusIcon from '@/components/common/Icons/Plus'
 import MinusIcon from '@/components/common/Icons/Minus'
 
 interface Props {
-  defaultValue?: number;
   minValue?: number;
   maxValue?: number;
+  value?: number
   className?: string;
   onValueChange?: (value: number) => void;
   label?: string
 }
 
 const PAdderSubtractor: FC<Props> = (props) => {
-  const { defaultValue, className, minValue = 1, maxValue, onValueChange, label } = props
-
-  let newDefaultValue = minValue
-  if (defaultValue && (!minValue || defaultValue >= minValue) &&  (!maxValue || maxValue >= defaultValue)) {
-    newDefaultValue = defaultValue
-  }
-
-  const [curValue, setValue] = useState<number>(newDefaultValue)
-
+  const { className, minValue = 1, maxValue, onValueChange, label, value=0 } = props
 
   const handleMinus = () => {
-    if (curValue <= minValue) return
-    const newValue = curValue - 1
-    setValue(newValue)
+    if (value <= minValue) return
+    const newValue = value - 1
     onValueChange?.(newValue)
   }
 
   const handlePlus = () => {
-    if (maxValue && curValue >= maxValue) return
-    const newValue = curValue + 1
-    setValue(newValue)
+    if (maxValue && value >= maxValue) return
+    const newValue = value + 1
     onValueChange?.(newValue)
   }
 
@@ -58,7 +48,7 @@ const PAdderSubtractor: FC<Props> = (props) => {
         <MinusIcon />
       </span>
       <span className="px-[10px] w-[50px] flex justify-center box-border font-playfair text-[#141414] text-[21px] pb-[6px]">
-        {curValue}
+        {value}
       </span>
       <span 
         className="flex justify-center items-center bg-[#fff] w-[20px] h-[20px] rounded-full cursor-pointer"

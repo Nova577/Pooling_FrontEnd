@@ -9,6 +9,9 @@ import ResetPassword from "./views/ResetPassword"
 import Welcome from "./views/Welcome"
 import Participator from "./views/Participator"
 import Researcher from "./views/Researcher"
+import QuestionnaireCreatePage from './views/Questionnaire/Create'
+import QuestionnaireFillPage from './views/Questionnaire/Fill'
+
 
 const App: FC = () => {
   return (
@@ -25,6 +28,8 @@ const App: FC = () => {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/participator" element={<Participator />} />
             <Route path="/researcher" element={<Researcher />} />
+            <Route path="/create-questionnaire/:id" element={<QuestionnaireCreatePage />} />
+            <Route path="/fill-questionnaire/:id" element={<QuestionnaireFillPage />} />
           </Routes>
         </main>
 

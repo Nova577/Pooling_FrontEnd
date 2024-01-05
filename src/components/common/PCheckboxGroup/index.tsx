@@ -6,7 +6,7 @@ export type CheckboxChangeProps =  FormEvent<HTMLDivElement> | string[]
 
 interface Props {
   options?: {
-    key?: string
+    key?: string | number
     label: string
     value: string
   }[]
