@@ -10,7 +10,8 @@ export default defineConfig({
     proxy: {
       '/api': {
         // 测试环境
-        target: 'http://test.pooling.tools',
+        // target: 'http://test.pooling.tools',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
       },

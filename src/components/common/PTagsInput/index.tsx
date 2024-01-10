@@ -3,6 +3,7 @@ import PInput from "../PInput"
 import PTag from "../PTag"
 import { useBoolean, useClickAway, useUpdateEffect } from "ahooks"
 import clsx from "clsx"
+import styles from './index.module.css'
 
 type Value = string[]
 
@@ -82,16 +83,18 @@ const TagsInput: FC<Props> = (props) => {
     <div className="flex-1 relative">
       <PInput className="border border-black cursor-default" type="text" tabIndex={-1} onFocus={(e) => { e.target.blur() }} />
 
-      <div className="h-full w-full absolute top-0 left-0 pointer-events-none flex items-center ml-3">
+      <div className={clsx(
+        "h-full w-full absolute top-0 left-0 pointer-events-none flex items-center ml-3 pl-[5px] pr-[25px]",
+      )}>
         
-        <div className="flex gap-[10px] pointer-events-auto">
+        <div className={clsx("flex h-full gap-[10px] items-center pointer-events-auto  overflow-x-auto box-border",  styles.p_tags_input_box)}>
           {
             value.map((it, i) => {
               return (
                 <div key={i} className="relative">
                   <PTag>
                     <span className="opacity-50">
-                      { it }
+                      # { it }
                     </span>
                     
                   </PTag>

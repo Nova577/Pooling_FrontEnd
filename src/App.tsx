@@ -11,9 +11,58 @@ import Participator from "./views/Participator"
 import Researcher from "./views/Researcher"
 import QuestionnaireCreatePage from './views/Questionnaire/Create'
 import QuestionnaireFillPage from './views/Questionnaire/Fill'
+import useSignInStore, { USER_TYPE } from '@/views/SignIn/store'
 
+interface IRouterItem {
+  path: string
+  element: JSX.Element
+  access?: string[]
+}
+
+const routersMap: IRouterItem[] = [
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />
+  },
+  {
+    path: '/sign-in',
+    element: <SignIn />
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />
+  },
+  {
+    path: '/welcome',
+    element: <Welcome />
+  },
+  {
+    path: '/participator',
+    element: <Participator />,
+    access: [USER_TYPE.PARTICIPATOR]
+  },
+  {
+    path: '/researcher',
+    element: <Researcher />,
+    access: [USER_TYPE.RESEARCHER]
+  },
+  {
+    path: '/fill-questionnaire/:id',
+    element: <QuestionnaireFillPage />
+  },
+  {
+    path: '/create-questionnaire/:id',
+    element: <QuestionnaireCreatePage />
+  },
+]
 
 const App: FC = () => {
+  const userInfo = useSignInStore((state) => state.userInfo)
+
   return (
     <BrowserRouter>
       <div className="h-full flex flex-col">
@@ -21,15 +70,16 @@ const App: FC = () => {
 
         <main className="pt-[45px] flex-auto">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/participator" element={<Participator />} />
-            <Route path="/researcher" element={<Researcher />} />
-            <Route path="/create-questionnaire/:id" element={<QuestionnaireCreatePage />} />
-            <Route path="/fill-questionnaire/:id" element={<QuestionnaireFillPage />} />
+            {
+              routersMap.map((router: IRouterItem) => {
+                const { path, element, access } = router
+                
+                return (
+                  (!access || (userInfo?.type && access.includes(userInfo.type))) 
+                    && <Route path={path} element={element} key={path} />
+                )
+              })
+            }
           </Routes>
         </main>
 

@@ -22,15 +22,15 @@ export interface IQuestionnaireData {
 }
 
 export const getQuestionnaireApi = async (id: string): Promise<IQuestionnaireData> => {
-  return await request.get( `/api/V1/questionnaire/${id}`)
+  return request.get( `/api/V1/questionnaire/${id}`)
 }
 
 export const createQuestionnaireApi = async (params: IQuestionnaireData) => {
-  return await request.post( `/api/V1/questionnaire`, params)
+  return request.post( `/api/V1/questionnaire`, params)
 }
 
 
 export const updateQuestionnaireApi = async (params: IQuestionnaireData) => {
   const { id, ...otherParams } = params
-  return await request.put( `/api/V1/questionnaire/${id}`, otherParams)
+  return request.put( `/api/V1/questionnaire/${id}`, otherParams)
 }

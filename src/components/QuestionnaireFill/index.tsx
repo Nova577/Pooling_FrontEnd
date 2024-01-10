@@ -41,8 +41,7 @@ const QuestionnaireFill: FC = () => {
   
 
   useRequest(() => getQuestionnaireApi(id!), {
-    onSuccess: (res: IQuestionnaireData, params) => {
-      console.log('res', res, params);
+    onSuccess: (res: IQuestionnaireData) => {
       const { name, desc, eassayQuestions = [], choiceQuestions = [] } = res
       let newItems: IQuestionItemProps[] = []
       eassayQuestions.forEach(item => {

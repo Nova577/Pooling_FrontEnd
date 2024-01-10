@@ -56,7 +56,7 @@ const  PSteps: FC<Props> = (props) => {
         {
           isNextButtonShow
           && (
-            <button className="btn h-full w-full p-0 rounded-full bg-[#302929]" onClick={onNextButtonClick}><ArrowRight /></button>
+            <button className="btn h-full w-full p-0 rounded-full bg-[#302929]" onClick={onNextButtonClick} type="button"><ArrowRight /></button>
           )
         }
       </div>

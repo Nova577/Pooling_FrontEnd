@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import DatePicker from "react-datepicker";
 import { useParams } from 'react-router-dom';
 import { useRequest } from 'ahooks'
+import { judgeInputNumber } from '@/utils/util'
 import { getQuestionnaireApi, IQuestionnaireData, createQuestionnaireApi, updateQuestionnaireApi } from '@/apis/questionnaire'
 import "react-datepicker/dist/react-datepicker.css";
 // import Datepicker1 from "react-tailwindcss-datepicker"; 
@@ -78,8 +79,7 @@ const QuestionnaireCreate: FC = () => {
   }, [id])
 
    useRequest(() => getQuestionnaireApi(id!), {
-    onSuccess: (res: IQuestionnaireData, params) => {
-      console.log('res', res, params);
+    onSuccess: (res: IQuestionnaireData) => {
       const { name, timeInfo, eassayQuestions = [], choiceQuestions = [] } = res
       let newItems: dataItemProps[] = []
       eassayQuestions.forEach(item => {
@@ -167,16 +167,6 @@ const QuestionnaireCreate: FC = () => {
     setItems(newItems)
   }
 
-  const judgeInputNumber = (value: string) => {
-    const regex = /^\d+$/
-    let newValue = value
-
-    if (!regex.test(value) || value.length > 2) {
-      newValue = value.slice(0, -1)
-    }
-    return newValue
-  }
-
   const changeCreateFrom = (values: ICreateForm) => {
     setCreateForm({
       ...createForm,
@@ -235,7 +225,6 @@ const QuestionnaireCreate: FC = () => {
         })
     }
 
-    console.log('params', params);
     // http://test.pooling.tools/api/V1/questionnaire
 
     try {
@@ -244,9 +233,7 @@ const QuestionnaireCreate: FC = () => {
       } else {
         await updateQuestionnaireApi({ id, ...params })
       }
-    } catch(e) {
-      console.log('e', e);
-    }
+    } catch(e) {}
   }
   
   return (

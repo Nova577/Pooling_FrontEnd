@@ -23,13 +23,13 @@ export const Default: Story = {
 export const Primary: Story = {
   args: {
     children: 'Click me',
-    type: 'primary'
+    styleType: 'primary'
   },
 };
 
 export const Ghost: Story = {
   args: {
     children: 'Click me',
-    type: 'ghost'
+    styleType: 'ghost'
   },
 };

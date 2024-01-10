@@ -68,8 +68,6 @@ const QuestionnaireCreateItem: FC<Props> = (props) => {
     if (value > optionNum!) {
       return
     } 
-    console.log(555);
-    
     onChange?.({ id, selectNum: value })
   }
 
