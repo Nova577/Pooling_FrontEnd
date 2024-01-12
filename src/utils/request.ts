@@ -26,8 +26,8 @@ request.interceptors.response.use(
   },
   (error) => {
     const { response, config } = error 
-    const message = response.data.message 
-    if (response.status === 401) {
+    const message = response?.data?.message 
+    if (response?.status === 401) {
       if (message === 'short token expired') {
         const refreshToken = ls.get('refreshToken')
 

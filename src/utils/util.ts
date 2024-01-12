@@ -23,10 +23,15 @@ export const judgeInputNumber = (value: string, length?: number) => {
   return newValue
 }
 
+export const sleep = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 
 export const ls = {
   lsKey: 5,
-  set: (key: string, value: string): boolean => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set: (key: string, value: any): boolean => {
     try {
       localStorage.setItem(encryptedString(key, ls.lsKey), JSON.stringify(value));
       return true;
@@ -45,10 +50,14 @@ export const ls = {
   },
   remove: (key: string): boolean => {
     try {
-      localStorage.removeItem(key);
+      localStorage.removeItem(decryptedString(key, ls.lsKey));
       return true;
     } catch (error) {
       return false;
     }
   }
+}
+
+export const formatDirectoryOption = (arr?: Array<{name: string; number: string}>) => {
+  return arr ? arr.map(it => ({ value: it.number, key: it.number, label: it.name })) : []
 }

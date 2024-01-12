@@ -16,6 +16,7 @@ interface Props {
   selectedKeys?: "all" | Iterable<string> 
   defaultSelectedKeys?: "all" | Iterable<string> 
   selectionMode?: 'single' | 'multiple'
+  errorMessage?: string
 }
 
 
@@ -29,7 +30,8 @@ const PSelect= forwardRef<HTMLSelectElement, Props>((props, ref) => {
     onChange,
     onSelectionChange,
     defaultSelectedKeys,
-    selectionMode
+    selectionMode,
+    errorMessage
   } = props
 
   return (
@@ -53,6 +55,7 @@ const PSelect= forwardRef<HTMLSelectElement, Props>((props, ref) => {
       onChange={onChange}
       defaultSelectedKeys={defaultSelectedKeys}
       selectionMode={selectionMode}
+      errorMessage={errorMessage}
       listboxProps={{
         itemClasses: {
           base: [

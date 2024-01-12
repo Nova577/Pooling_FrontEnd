@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SiteNav from "./components/SiteNav"
 import Home from "./views/Home"
@@ -11,8 +11,9 @@ import Participator from "./views/Participator"
 import Researcher from "./views/Researcher"
 import QuestionnaireCreatePage from './views/Questionnaire/Create'
 import QuestionnaireFillPage from './views/Questionnaire/Fill'
-import useSignInStore, { USER_TYPE } from '@/views/SignIn/store'
-
+import useSignInStore from '@/views/SignIn/store'
+import Toast from '@/components/Toast'
+import { USER_TYPE } from "@/types/user"
 interface IRouterItem {
   path: string
   element: JSX.Element
@@ -58,11 +59,20 @@ const routersMap: IRouterItem[] = [
     path: '/create-questionnaire/:id',
     element: <QuestionnaireCreatePage />
   },
+  {
+    path: '/create-questionnaire',
+    element: <QuestionnaireCreatePage />
+  },
 ]
 
 const App: FC = () => {
-  const userInfo = useSignInStore((state) => state.userInfo)
+  const getInitUserInfo = useSignInStore((state) => state.getInitUserInfo)
+  const userInfo = useSignInStore(state=> state.userInfo)
 
+  useEffect(() => {
+    getInitUserInfo()
+  }, [])
+  
   return (
     <BrowserRouter>
       <div className="h-full flex flex-col">
@@ -83,6 +93,8 @@ const App: FC = () => {
           </Routes>
         </main>
 
+
+        <Toast />
         <SiteFooter />
       </div>
     </BrowserRouter>

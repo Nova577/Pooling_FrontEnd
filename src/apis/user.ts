@@ -1,26 +1,18 @@
 import request from '@/utils/request'
-import { USER_TYPE } from '@/views/SignIn/store'
-interface LoginUserReq {
-  username: string
-  password: string
-}
+import { 
+  ILoginUserRes, 
+  IRefreshTokenReq, 
+  LoginUserReq, 
+  IParticipantUserProps, 
+  IResearcherUserProps 
+} from '@/types/user'
 
-interface ILoginUserRes {
-  id: string
-  type: USER_TYPE
-  token: string
-  refreshToken: string
-}
 
 export const loginUser = async (reqParams: LoginUserReq) => {
   return request.post<{ token: string }, ILoginUserRes, LoginUserReq>(
     '/api/v1/login',
     reqParams
   )
-}
-
-interface IRefreshTokenReq {
-  freshToken: string 
 }
 
 export const refreshTokenApi = async (reqParams: IRefreshTokenReq): Promise<{ token: string }> => {
@@ -32,4 +24,65 @@ export const refreshTokenApi = async (reqParams: IRefreshTokenReq): Promise<{ to
 
 export const signOutApi = async () => {
   return  request.post('/api/V1/auth/signOut')
+}
+
+export const sendSignUpCodeApi = async (params: { email: string }) => {
+  return request.post(
+    '/api/V1/signUp/sendCode',
+    params
+  )
+}
+
+export const checkSignUpCodeApi = async (params: { email: string; code: string }) => {
+  return request.post(
+    '/api/V1/signUp/checkCode',
+    params
+  )
+}
+
+export const sendResetPsdCodeApi = async (params: { email: string }) => {
+  return request.post(
+    '/api/V1/resetPassword/sendCode',
+    params
+  )
+}
+
+export const checkResetPsdCodeApi = async (params: { email: string; code: string }) => {
+  return request.post(
+    '/api/V1/resetPassword/checkCode',
+    params
+  )
+}
+
+export const resetPsdApi = async (params: { username: string; password: string }) => {
+  return request.post(
+    '/api/V1/resetPassword',
+    params
+  )
+}
+
+export const participantSignUpApi = async (params: IParticipantUserProps) => {
+  return request.post(
+    '/api/V1/signUp/participant',
+    params
+  )
+}
+
+export const researcherSignUpApi = async (params: IResearcherUserProps) => {
+  return request.post(
+    '/api/V1/signUp/researcher',
+    params
+  )
+}
+
+export const getParticipantUserApi = async (id: string): Promise<IParticipantUserProps> => {
+  return request.get(
+    `/api/V1/participant/${id}`,
+  )
+}
+
+export const getResearcherUserApi = async (id: string): Promise<IResearcherUserProps> => {
+  return request.get(
+    `/api/V1/researcher/${id}`,
+  )
 }

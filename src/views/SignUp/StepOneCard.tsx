@@ -7,15 +7,16 @@ import PRadioGroup from "@/components/common/PRadioGroup"
 import PTagsInput from '@/components/common/PTagsInput'
 import { useFormContext, Controller } from 'react-hook-form'
 import clsx from "clsx"
-import { ChARACTER_ENUM } from './index'
+import { ChARACTER_ENUM } from '@/types/user'
+import { formatDirectoryOption } from '@/utils/util'
+import { useRequest } from "ahooks"
+import { getDictionaryApi } from '@/apis/dictionary'
+import { ISelectOptionItem } from '@/types/global'
 
 const customTypeRadioOptions = [
   { label: 'Researcher', value: 'researcher' },
   { label: 'Participator', value: 'participator' }
 ]
-
-const instituteOptions = [{ key: 'k0', label: 'ins', value: 'k0' }]
-const titleOptions = [{ key: 't1', label: 'title', value: 't1' }]
 
 export interface IResearcherProps {
   institute: string
@@ -31,17 +32,41 @@ interface IStepOneCardProps {
   className?: string
 }
 
-// const rules = {
-//   institute: {
-//     required: 'Please enter institute'
-//   },
-//   title: {
-//     required: 'Please enter institute'
-//   },
-// }
+const rules = {
+  institute: {
+    required: 'Please select institute'
+  },
+  title: {
+    required: 'Please select title'
+  },
+  section: {
+    required: 'Please select section'
+  },
+  occupation: {
+    required: 'Please select occupation'
+  },
+}
 
 const ResearcherFormFragment = () => {
-  const {control, setValue } = useFormContext<IResearcherProps>()
+  const {control, setValue, formState: { errors } } = useFormContext<IResearcherProps>()
+  const [instituteOptions, setInstituteOptions] = useState<ISelectOptionItem[]>([])
+  const [titleOptions, setTitleOptions] = useState<ISelectOptionItem[]>([])
+
+  useRequest(() => getDictionaryApi('Institute'), {
+    onSuccess(data) {
+      if (data?.institute) {
+        setInstituteOptions(formatDirectoryOption(data.institute))
+      }
+    }
+  })
+
+  useRequest(() => getDictionaryApi('Title'), {
+    onSuccess(data) {
+      if (data?.title) {
+        setTitleOptions(formatDirectoryOption(data.title))
+      }
+    }
+  })
 
   return (
     <>
@@ -49,13 +74,19 @@ const ResearcherFormFragment = () => {
         <Controller
           control={control}
           name="institute"
-          defaultValue={instituteOptions[0].value}
+          defaultValue={''}
+          rules={rules.institute}
           render={({ field }) => (
             <PSelect 
               label="Institute" 
               placeholder="" 
+              classNames={{
+                mainWrapper: 'relative',
+                helperWrapper: 'absolute bottom-[-24px]'
+              }}
               options={instituteOptions}
               selectedKeys={new Set([field.value])}
+              errorMessage={errors.institute && errors.institute?.message}
               onChange={(e) => {
                 const value = e.target.value
                 if (!value) return
@@ -67,26 +98,31 @@ const ResearcherFormFragment = () => {
         <Controller
           control={control}
           name="title"
-          defaultValue={titleOptions[0].value}
+          rules={rules.title}
+          defaultValue={''}
           render={({ field }) => (
             <PSelect 
               selectionMode="single"
               label="Title" 
               placeholder="" 
               options={titleOptions}
+              classNames={{
+                mainWrapper: 'relative',
+                helperWrapper: 'absolute bottom-[-24px]'
+              }}
               selectedKeys={new Set([field.value])}
+              errorMessage={errors.title && errors.title?.message}
               onChange={(e) => {
                 const value = e.target.value
                 if (!value) return
                 setValue('title', value)
-                // console.log('onSelectionChange',  e);
               }}
             />
           )}
         />
       </FormRow>
 
-      <FormRow label="Research Fields" className="pt-[32px]">
+      <FormRow label="Research Fields" className="pt-[32px] mt-[12px]">
         <Controller
           control={control}
           name="researchFields"
@@ -135,62 +171,90 @@ const ResearcherFormFragment = () => {
 }
 
 export interface IParticipatorProps {
-  industry: string
-  position: string
+  section: string
+  occupation: string
   pets: string[]
   medicalHistory: string[]
   other: string[]
 }
 
-const industryOptions = [{ key: 'k0', label: 'ins', value: 'k0' }]
-const positionOptions = [{ key: 't1', label: 'title', value: 't1' }]
 
 const ParticipatorFormFragment = () => {
+  const {control, setValue, formState: { errors } } = useFormContext<IParticipatorProps>()
+  const [sectionOptions, setSectionOptions] = useState<ISelectOptionItem[]>([])
+  const [occupationOptions, setOccupationOptions] = useState<ISelectOptionItem[]>([])
 
-  const {control, setValue } = useFormContext<IParticipatorProps>()
+  useRequest(() => getDictionaryApi('Section'), {
+    onSuccess(data) {
+      if (data?.section) {
+        setSectionOptions(formatDirectoryOption(data.section))
+      }
+    }
+  })
+
+  useRequest(() => getDictionaryApi('Occupation'), {
+    onSuccess(data) {
+      if (data?.occupation) {
+        setOccupationOptions(formatDirectoryOption(data.occupation))
+      }
+    }
+  })
 
   return (
     <>
       <FormRow className="mr-[380px]">
         <Controller
           control={control}
-          name="industry"
-          defaultValue={industryOptions[0].value}
+          name="section"
+          defaultValue={''}
+          rules={rules.section}
+          
           render={({ field }) => (
             <PSelect 
-              label="Industry" 
+              label="Section" 
               placeholder="" 
-              options={industryOptions}
+              options={sectionOptions}
               selectedKeys={new Set([field.value])}
+              classNames={{
+                mainWrapper: 'relative',
+                helperWrapper: 'absolute bottom-[-24px]'
+              }}
+              errorMessage={errors.section && errors.section?.message}
               onChange={(e) => {
                 const value = e.target.value
                 if (!value) return
-                setValue('industry', value)
+                setValue('section', value)
               }}
             />
           )}
         />
         <Controller
           control={control}
-          name="position"
-          defaultValue={positionOptions[0].value}
+          name="occupation"
+          defaultValue={''}
+          rules={rules.occupation}
           render={({ field }) => (
             <PSelect 
-              label="Position" 
+              label="Occupation" 
               placeholder="" 
-              options={positionOptions}
+              options={occupationOptions}
               selectedKeys={new Set([field.value])}
+              classNames={{
+                mainWrapper: 'relative',
+                helperWrapper: 'absolute bottom-[-24px]'
+              }}
+              errorMessage={errors.occupation && errors.occupation?.message}
               onChange={(e) => {
                 const value = e.target.value
                 if (!value) return
-                setValue('position', value)
+                setValue('occupation', value)
               }}
             />
           )}
         />
       </FormRow>
 
-      <FormRow label="Pets" className="pt-[32px]">
+      <FormRow label="Pets" className="pt-[32px] mt-[12px]">
         <Controller
           control={control}
           name="pets"

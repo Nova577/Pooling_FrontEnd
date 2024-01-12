@@ -101,7 +101,6 @@ const QuestionnaireFill: FC = () => {
   }
 
   const handleSingleSelectChange = (value: string, index: number) => {
-    console.log('handleSingleSelectChange,', value);
     setAnswerInfo({ singleChoiceValue: value }, index)
   }
 

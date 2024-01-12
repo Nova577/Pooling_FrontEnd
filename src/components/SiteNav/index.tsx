@@ -4,28 +4,32 @@ import logoSrc from '../../assets/logo.png'
 import PButton from "../common/PButton"
 import useSignInStore from '@/views/SignIn/store'
 import { signOutApi } from '@/apis/user'
-import { ls } from '@/utils/util'
+import { ls, sleep } from '@/utils/util'
+import { toast } from '@/components/Toast/index'
 
 const SiteNav: FC = () => {
-  const userInfo = useSignInStore(state => state.userInfo)
   const navigate = useNavigate()
+  const userInfo = useSignInStore(state => state.userInfo)
   const removeUserInfo = useSignInStore(state => state.removeUserInfo)
 
-  const resetUserInfo = () => {
+  const afterSignOut = async () => {
+    toast.current?.info('Sign out success')
+    await sleep(1000)
     ls.remove('token')
     ls.remove('refreshToken')
     removeUserInfo()
-    navigate('/sign-in')
+    navigate(`/sign-in`, {
+      replace: true
+    })
   }
 
   const signOut = async () => {
     try {
       await signOutApi()
-      resetUserInfo()
+      afterSignOut()
     } catch(e) {
-      resetUserInfo()
+      afterSignOut()
     }
-   
   }
 
   return (

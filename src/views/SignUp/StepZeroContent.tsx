@@ -6,20 +6,15 @@ import PButton from "@/components/common/PButton"
 import PRadioGroup from "@/components/common/PRadioGroup"
 import PInput from "@/components/common/PInput2"
 import PSelect from "@/components/common/PSelect"
-import PPlainInput from "@/components/common/PPlainInput"
 import { Controller, useFormContext } from 'react-hook-form'
 import { cn } from '@nextui-org/react'
-import { judgeInputNumber } from '@/utils/util'
-
-const countryOptions = [
-  { key: 'cn', value: 'cn', label: 'China' },
-  { key: 'us', value: 'us', label: 'U.S.A' },
-]
-
-const stateOptions = [
-  { key: 'sh', value: 'sh', label: 'ShangHai' },
-  { key: 'bj', value: 'bj', label: 'BeiJing' },
-]
+import { sendSignUpCodeApi, checkSignUpCodeApi } from '@/apis/user'
+import PMultiPlainInput from "@/components/common/PMultiPlainInput"
+import { getDictionaryApi } from '@/apis/dictionary'
+import { toast } from "@/components/Toast"
+import { useRequest } from "ahooks"
+import { ISelectOptionItem } from '@/types/global'
+import { formatDirectoryOption } from '@/utils/util'
 
 export interface ISignUpZeroFrom {
   email: string
@@ -28,8 +23,8 @@ export interface ISignUpZeroFrom {
   repeatPassword: string
   sex: string
   birthData: string[]
-  ["first name"]: string
-  ["last name"]: string
+  firstName: string
+  lastName: string
   country: string
   state: string
 }
@@ -40,8 +35,8 @@ const rules = {
     message: 'Please enter a valid email'
   }},
   code: { required: 'Please enter the code you received', pattern: {
-    value: /^.{4,}$/,
-    message: 'Code at least 6 characters'
+    value: /^\d{4}$/,
+    message: 'Please enter a 4-digit verification code'
   }},
   password: { required: 'Please enter your password', pattern: {
     value: /^.{8,24}$/,
@@ -52,19 +47,27 @@ const rules = {
     validate: (value: string, formValues: ISignUpZeroFrom) => {
     return !!value.trim().length && value === formValues.password || 'The two passwords are inconsistent'
   }},
-  "first name": {
+  firstName: {
     required: 'Please enter your first name', 
   },
-  "last name": {
+  lastName: {
     required: 'Please enter your last name', 
   },
   birthData: {
-    validate: (value: string) => {
+    required: true,
+    validate: (value: string[]) => {
       const newValues = [value[2], value[0], value[1]]
+      
       const birthStr = newValues.join('-')
-      const birthReg = /^(19|20)\d{2}-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])$/
+      const birthReg = /^[1|2][1-9]\d{2}-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])$/
       return birthReg.test(birthStr) || 'Please enter a valid birth time'
     }
+  },
+  country: {
+    required: 'Please select country'
+  },
+  state: {
+    required: 'Please select state'
   }
 }
 
@@ -74,48 +77,54 @@ interface IStepZeroProps {
 }
 
 const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) => {
-  const { register, getValues, setValue, control, setError, trigger, setFocus, formState: { errors } } = useFormContext<ISignUpZeroFrom>()
-  const [birthError, setBirthError] = useState('')
+  const { register, getValues, setValue, control, trigger, setFocus, formState: { errors } } = useFormContext<ISignUpZeroFrom>()
+  const [countryOption, setCountryOption] = useState<ISelectOptionItem[]>([])
+  const [stateOption, setStateOption] = useState<ISelectOptionItem[]>([])
+  
+  useRequest(() => getDictionaryApi('Country'), {
+    onSuccess(countryData) {
+      if (countryData?.country) {
+        setCountryOption(formatDirectoryOption(countryData.country))
+      }
+    }
+  })
+
+  const getDictionaryOptions = async (country: string) => {
+    try {
+      const data = await getDictionaryApi(country, 'State')
+      setStateOption(formatDirectoryOption(data?.state))
+    } catch(e) {
+      setStateOption([])
+    }
+  }
+  
 
   const sendEmailCode = async () => {
     const verifySuccess = await trigger('email')
-    if (!getValues('code').trim().length || !verifySuccess) {
+    const email = getValues('email')
+    if (!verifySuccess) {
       setFocus("email")
       return
     }
-    // TODO send code api
+    await sendSignUpCodeApi({  email })
+    toast.current?.info('The verification code has been sent to your email')
   }
 
   const checkEmailCode = async () => {
-    const verifySuccess = await trigger('code')
-    if (!getValues('code').trim().length || !verifySuccess) {
-      setFocus("code")
-      return
-    }
-    // TODO check code api
-
-    setCodeIsCorrect(true)
-  }
-
-  const handleBirthChange = (value: string, index: number, birthData: string[]) => {
-    console.log('value, index, birthData', value, index, birthData);
-    value = judgeInputNumber(value)
-    const newBirthData = birthData.slice()
-    newBirthData.splice(index, 1, value)
-    setValue('birthData', newBirthData)
-  }
+    const verifyEmail = await trigger('email')
+    const verifyCode = await trigger('code')
+    
+    if (!verifyCode) return setFocus("code")
+    if (!verifyEmail) return setFocus("email")
   
-  const onBirthBlur = async () => {
-    const value = getValues('birthData')
-    
-    const birthStr = value.join('-')
-    const birthReg = /^(19|20)\d{2}-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])$/
-    setError('birthData', {
-      type: 'manual',
-      message: 'Please enter a valid birth time'
+    const { email, code } = getValues()
+
+    await checkSignUpCodeApi({
+      email,
+      code
     })
-    
-    setBirthError(birthReg.test(birthStr) ? '' : 'Please enter a valid birth time')
+    setCodeIsCorrect(true)
+    toast.current?.info('Verification code correct')
   }
 
   return (
@@ -211,46 +220,32 @@ const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) =>
               />
             )}
           />
-          {/* <PRadioGroup
-            options={[{ label: 'DD', value: 'DD' }, { label: 'MM', value: 'MM' }, { label: 'YYYY', value: 'YYYY' }]}
-          /> */}
-          <Controller
-              control={control}
-              name="birthData"
-              defaultValue={['', '12', '01']}
-              render={({ field }) => (
-                <div className="relative" ref={field.ref}>
-                  <div className="w-[270px] h-[60px] bg-[#F6F2EF] rounded-2xl relative">
-                    <label className="absolute left-[20px] top-[5px] opacity-50 text-neutral-900 text-sm font-bold font-playfair leading-[18px]">
-                      Date
-                    </label>
 
-            
-                  <div className="w-[270px] h-full flex items-center justify-center pt-[10px] font-playfair text-[20px] text-[#151515]">
-                    <PPlainInput 
-                      value={field.value[1]} 
-                      maxLength={2} 
-                      onValueChange={(value: string) => handleBirthChange(value, 1, field.value)}
-                      onBlur={onBirthBlur}
-                    />
-                    <span className="mx-[10px] mt-[8px]">/</span>
-                    <PPlainInput 
-                      value={field.value[2]} 
-                      maxLength={2} 
-                      onValueChange={(value: string) => handleBirthChange(value, 2, field.value)}
-                      onBlur={onBirthBlur}
-                    />
-                    <span className="mx-[10px] mt-[8px]">/</span>
-                    <PPlainInput 
-                      className="w-[50px]"  
-                      value={field.value[0]}
-                      maxLength={4}
-                      onValueChange={(value: string) => handleBirthChange(value, 0, field.value)}
-                      onBlur={onBirthBlur}
-                    />
-                  </div>
+          <Controller
+            control={control}
+            name="birthData"
+            defaultValue={['12', '12', '1802']}
+            rules={rules.birthData}
+            render={({ field }) => (
+              <div className="relative" ref={field.ref}>
+                <div className="w-[270px] h-[60px] bg-[#F6F2EF] rounded-2xl relative">
+                  <label className="absolute left-[20px] top-[5px] opacity-50 text-neutral-900 text-sm font-bold font-playfair leading-[18px]">
+                    Date of Birth
+                  </label>
+
+                  <PMultiPlainInput 
+                    {...field}
+                    type='number'
+                    config={[{
+                      maxLength: 2,
+                    }, {
+                      maxLength: 2,
+                    }, {
+                      maxLength: 4,
+                      className: 'w-[50px]',
+                    }]}
+                  />
                 </div>
-                {/* {birthError && <span className="absolute text-tiny text-danger p-[4px]">{birthError}</span>} */}
                 <span className="absolute text-tiny text-danger p-[4px]">{errors.birthData?.message}</span>
               </div>
             )}
@@ -262,14 +257,14 @@ const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) =>
           <PInput 
             label="First name" 
             isRequired
-            errorMessage={errors['first name'] && errors['first name'].message}
-            {...register("first name", rules['first name'])}
+            errorMessage={errors.firstName && errors.firstName.message}
+            {...register("firstName", rules.firstName)}
           />
           <PInput 
             label="Last name" 
             isRequired
-            errorMessage={errors['last name'] && errors['last name'].message}
-            {...register("last name", rules['last name'])}
+            errorMessage={errors.lastName && errors.lastName.message}
+            {...register("lastName", rules.lastName)}
           />
         </FormRow>
 
@@ -281,18 +276,27 @@ const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) =>
           <Controller
             control={control}
             name="country"
-            defaultValue={countryOptions[0].value}
+            defaultValue={''}
+            rules={rules.country}
             render={({ field }) => (
               <PSelect 
                 selectionMode="single"
                 label="Country/Region" 
                 placeholder="" 
-                options={countryOptions}
+                classNames={{
+                  mainWrapper: 'relative',
+                  helperWrapper: 'absolute bottom-[-24px]'
+                }}
+                options={countryOption}
                 selectedKeys={new Set([field.value])}
+                errorMessage={errors.country && errors.country?.message}
                 onChange={(e) => {
                   const value = e.target.value
                   if (!value) return
+                  
                   setValue('country', value)
+                  setValue('state', '')
+                  getDictionaryOptions(value)
                 }}
               />
             )}
@@ -303,13 +307,15 @@ const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) =>
           <Controller
             control={control}
             name="state"
-            defaultValue={stateOptions[0].value}
+            defaultValue={''}
+            rules={rules.state}
             render={({ field }) => (
               <PSelect 
                 label="State" 
                 placeholder=" " 
-                options={stateOptions} 
+                options={stateOption} 
                 selectedKeys={new Set([field.value])}
+                errorMessage={errors.state && errors.state?.message}
                 onChange={(e) => {
                   const value = e.target.value
                   if (!value) return

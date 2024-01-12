@@ -1,18 +1,11 @@
 import PCard from "@/components/common/PCard"
-import { useCountDown } from 'ahooks'
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import hugeIcon from '@/assets/pooling_logo_huge.svg'
+import useSignUpStore from '@/views/SignUp/store'
+import useSignInStore from '@/views/SignIn/store'
 
 const Welcome = () => {
-  const navigate = useNavigate()
-
-  const [countDown] = useCountDown({
-    leftTime: 10000,
-    onEnd: () => {
-      // navigate('/')
-    }
-  })
+  const liveInLeftDays = useSignUpStore(state => state.liveInLeftDays)
+  const userInfo = useSignInStore(state => state.userInfo)
 
   return (
     <div className="py-72 flex justify-center">
@@ -23,12 +16,11 @@ const Welcome = () => {
           </span>
 
           <span className="text-center text-zinc-800 text-[80px] font-bold font-playfair leading-[106px]">
-            { Math.round(countDown / 1000) }
+            { liveInLeftDays > 0 ? liveInLeftDays : 0 }
           </span>
 
-          {/* TODO: real account */}
           <span className="mt-3 text-zinc-800 text-[29px] font-bold font-playfair leading-9">
-            Your Account:&nbsp;&nbsp;<span className="underline">support@pooling.tools</span>
+            Your Account:&nbsp;&nbsp;<span className="underline">{userInfo?.email}</span>
           </span>
 
           <div className="mt-9 text-center text-black text-[25px] font-normal font-playfair leading-[30px]">

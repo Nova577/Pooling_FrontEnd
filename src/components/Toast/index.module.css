@@ -1,0 +1,25 @@
+.my_toast {
+  /* transition: height 500px linear */
+}
+.my_toast_msg {
+  opacity: 0;
+}
+:global(.my-toast-msg-enter) {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+:global(.my-toast-msg-enter-active) {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 200ms cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}
+:global(.my-toast-msg-exit) {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 500ms cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}
+:global(.my-toast-msg-exit-active) {
+  opacity: 0;
+  transform: translateY(-100%);
+}

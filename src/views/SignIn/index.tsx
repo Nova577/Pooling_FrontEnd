@@ -1,7 +1,7 @@
 import ArrowUpRight from "@/components/common/Icons/ArrowUpRight"
 import PButton from "@/components/common/PButton"
 import PCard from "@/components/common/PCard"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { Link } from "react-router-dom"
 import FormRow from "../SignUp/FormRow"
 import PInput from "@/components/common/PInput2"
@@ -9,9 +9,10 @@ import PTitle from "@/components/common/PTitle"
 import { loginUser } from "@/apis/user"
 import { useForm } from "react-hook-form"
 import { ls } from '@/utils/util'
-import useSignInStore, { USER_TYPE } from './store'
+import useSignInStore from './store'
 import { useNavigate } from 'react-router-dom'
- 
+import { USER_TYPE } from '@/types/user'
+import useSignUpStore from "../SignUp/store"
 interface ISignInProps {
   username: string
   password: string
@@ -34,8 +35,9 @@ const SignIn: FC = () => {
   // const [isLoading, setIsLoading] = useState(false)
   const setUserInfo = useSignInStore(state => state.setUserInfo)
   const navigate = useNavigate()
+  const liveInLeftDays = useSignUpStore(state => state.liveInLeftDays)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ISignInProps>({
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<ISignInProps>({
     mode: 'onBlur',
     defaultValues: {
       username: '',
@@ -44,23 +46,25 @@ const SignIn: FC = () => {
   })
 
   const signSubmit = async (data: ISignInProps) => {
+    const res = await loginUser(data)
+    const { id, type, token, refreshToken } = res
+    
+    ls.set('refreshToken', refreshToken)
+    ls.set('token', token)
+    setUserInfo({ id, type, email: getValues('username') })
 
-    try {
-      const res = await loginUser(data)
-      const { id, type, token, refreshToken } = res
-      
-      ls.set('refreshToken', refreshToken)
-      ls.set('token', token)
-      setUserInfo({ id, type })
-
-      let path = '/'
-      if (type === USER_TYPE.PARTICIPATOR) {
-        path = '/participator'
-      } else if (type === USER_TYPE.RESEARCHER) {
-        path = '/researcher'
-      }
-      navigate(path)
-    } catch(e) {}
+    if (liveInLeftDays > 0 ) {
+      navigate('/welcome')
+      return
+    }
+    
+    let path = ''
+    if (type === USER_TYPE.PARTICIPATOR) {
+      path = '/participator'
+    } else if (type === USER_TYPE.RESEARCHER) {
+      path = '/researcher'
+    }
+    navigate(path)
   }
 
   return (
