@@ -3,3 +3,9 @@ export interface ISelectOptionItem {
   value: string
   label: string
 }
+
+export enum HISTORY_STATUS_MAP {
+  'Draft',
+  'In Progress',
+  'Close'
+}

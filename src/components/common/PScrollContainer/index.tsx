@@ -1,6 +1,6 @@
 import styles from './index.module.css'
 import clsx from 'clsx'
-import { FC, PropsWithChildren } from "react"
+import { PropsWithChildren, forwardRef } from "react"
 
 
 interface Props extends PropsWithChildren {
@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
   size?: 'sm' | 'md'
 }
 
-const ResetPassword: FC<Props> = (props) => {
+const ResetPassword = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { children, className, size = "md" } = props
 
   return (
@@ -24,10 +24,11 @@ const ResetPassword: FC<Props> = (props) => {
         size === 'md' && styles.p_scroll_bar_md,
         className
       )}
+      ref={ref}
     >
       { children }
     </div>
   )
-}
+})
 
 export default ResetPassword

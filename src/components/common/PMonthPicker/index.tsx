@@ -1,4 +1,4 @@
-import { Divider, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react"
+import { Divider, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react"
 import { FC, useState } from "react"
 import PButton from "../PButton2"
 import dayjs from 'dayjs'
@@ -45,7 +45,7 @@ const PMonthPicker: FC<Props> = (props) => {
   return (
     <Popover
       classNames={{
-        base: 'w-[360px] opacity-95',
+        base: 'w-[360px]',
         content: 'shadow-none',
         trigger: '!scale-100'
       }}

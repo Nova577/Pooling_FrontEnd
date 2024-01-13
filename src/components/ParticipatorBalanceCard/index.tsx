@@ -1,29 +1,29 @@
-import { FC, useState } from "react"
+import { FC, useMemo, useState, useRef } from "react"
 import PCard from "../common/PCard"
 import PButton from "../common/PButton"
 import PMonthPicker from "../common/PMonthPicker"
 import dayjs from 'dayjs'
+import { useRequest } from "ahooks"
+import { getBalanceApi, ICheckItem } from '@/apis/balance'
+import PScrollContainer from '@/components/common/PScrollContainer'
 
-const balanceItems = [
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 8.00' },
-  { label: 'Withdraw - PayPal', payload: '+$ 5.40' },
-  { label: 'Color Preference', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-  { label: 'Withdraw - PayPal', payload: '+$ 47.35' },
-]
 const ParticipatorBalanceCard: FC = () => {
+  const balanceRef = useRef(null);
   const [filterMonthPickValue, setMonthPickValue] = useState(dayjs()) 
+  const [balanceItems, setBalanceItems] = useState<ICheckItem[]>([])
+  // const [total, setTotal] = useState(0)
 
+  const { run } = useRequest(getBalanceApi, {
+    manual: true,
+    onSuccess(data) {
+      setBalanceItems(data.check || [])
+    },
+  })
+
+  useMemo(() => {
+    const date = dayjs(filterMonthPickValue).format('YYYY-MM')
+    run(date)
+  }, [filterMonthPickValue, run])
 
   const handleFilterMonthPickerChange = (newValue: dayjs.Dayjs) => {
     setMonthPickValue(newValue)
@@ -44,23 +44,26 @@ const ParticipatorBalanceCard: FC = () => {
         <p className="text-end text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;85.77</p>
       </div>
 
-      <div className="mt-[12px] px-[25px] max-h-[520px] flex flex-col gap-[20px] overflow-y-auto">
-        {
-          balanceItems.map((it, index) => {
-            return (
-              <div key={index} className="h-[70px] py-[15px] px-[20px] rounded-3xl flex justify-between items-center bg-[#F9F6F4]">
-                <div className="text-neutral-900 text-[25px] font-bold font-playfair leading-[40px]">
-                  { it.label }
-                </div>
+      <PScrollContainer ref={balanceRef} className="mt-[12px] px-[25px] h-[520px]">
+        <div className="flex flex-col gap-[20px]">
+          {
+            balanceItems.map((it, index) => {
+              return (
+                <div key={index} className="h-[70px] py-[15px] px-[20px] rounded-3xl flex justify-between items-center bg-[#F9F6F4]">
+                  <div className="text-neutral-900 text-[25px] font-bold font-playfair leading-[40px]">
+                    { it.message }
+                  </div>
 
-                <div className="w-40 opacity-80 text-black text-[27px] font-normal leading-[30px]">
-                  { it.payload }
+                  <div className="w-40 opacity-80 text-black text-[27px] font-normal leading-[30px]">
+                    {it.amount >= 0 ? '+' : '-'}$ { String(it.amount).replace(/^[+-]/, '') }
+                  </div>
                 </div>
-              </div>
-            )
-          })
-        }
-      </div>
+              )
+            })
+          }
+        </div>
+      </PScrollContainer>
+      
     </PCard>
   )
 }

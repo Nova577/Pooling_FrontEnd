@@ -16,7 +16,7 @@ interface ParticipatorStore {
 }
 
 const useParticipatorStore = create<ParticipatorStore>((set) => ({
-  currentMenu: ParticipatorMenuItemType.DISCOVERY,
+  currentMenu: ParticipatorMenuItemType.HISTORY,
   setCurrentMenu: (newCurrentMenu) => set(() => ({ currentMenu:  newCurrentMenu }))
 }))
 

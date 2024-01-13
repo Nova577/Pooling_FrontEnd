@@ -1,46 +1,83 @@
 import PInput from "@/components/common/PInput2"
-import { FC } from "react"
+import { FC, useCallback, useMemo, useRef, useState } from "react"
 import searchIconSrc from '@/assets/search_icon.svg'
 import PCard from "@/components/common/PCard"
 import ParticipatorHistoryCard from "@/components/ParticipatorHistoryCard"
-import testPortraitImgSrc from '@/assets/portrait-dark-skinned.avif'
+import PScrollContainer from '@/components/common/PScrollContainer'
+import { useRequest, useScroll } from "ahooks"
+import { getHistoryApi, IResearchItem } from '@/apis/project'
 
-const items = [
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'Closed' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'Closed' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'Closed' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'Closed' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-  { imgSrc: testPortraitImgSrc, title: 'Daily Sugar Consumption', tags: ['Usability', 'High pay', 'Consumer Electronic'], status: 'In Progress' },
-]
+const DEFAULT_LIMIT = 10
 
 const HistoryContent: FC = () => {
+  const historyRef = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState(0)
+  const [isBottom, setIsBottom] = useState(false)
+  const [historyList, setHistoryList] = useState<IResearchItem[]>([])
+  const [isAll, setIsAll] = useState(false)  
+  
+  const { run } = useRequest(() => getHistoryApi({ offset, limit: DEFAULT_LIMIT }), {
+    onSuccess(data) {
+      const list = data?.researchList || []
+      
+      setIsAll(list.length < DEFAULT_LIMIT)
+      if (offset === 0) {
+        setHistoryList(list)
+      } else {
+        setHistoryList((originList) => [...originList, ...list])
+      }
+
+      setOffset(offset + DEFAULT_LIMIT)
+    },
+    cacheKey: `history_list_${offset}`,
+  })
+
+  const scroll = useScroll(historyRef, () => {
+    return !isAll
+  })
+
+  const scrollMethod = useCallback((top: number) => {
+    if (!historyRef.current) return
+
+    const scrollHeight = historyRef.current?.scrollHeight
+    const clientHeight = historyRef.current?.clientHeight
+
+    if (top + clientHeight >= scrollHeight - 50) {
+      if (isBottom) return
+      setIsBottom(true)
+      run()
+    } else {
+      setIsBottom(false)
+    }
+  }, [isBottom, run])
+
+  useMemo(() => {
+    if (!isAll && scroll?.top) {
+      scrollMethod(scroll.top)
+    }
+  }, [scroll?.top, scrollMethod, isAll])
+
+
   return (
     <div>
       <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
 
       <div className="pt-[20px]">
-        <PCard className="bg-[#F7F4F1]" bodyClass="pr-2">
-          <div className="pr-[20px] max-h-[680px] grid grid-cols-2 gap-[15px] overflow-y-auto">
-            {
-              items.map((it, index) => {
-                return (
-                  <ParticipatorHistoryCard key={index} imgSrc={it.imgSrc} title={it.title} tags={it.tags} status={it.status} />
-                )
-              })
-            }
-          </div>
+        <PCard className="bg-white" bodyClass="p-0">
+          <PScrollContainer 
+            ref={historyRef} 
+            className="h-[680px] mr-[20px] !pr-[15px]"
+          >
+            <div className="grid grid-cols-2 gap-[25px]">
+              {
+                historyList.map((it, index) => {
+                  return (
+                    <ParticipatorHistoryCard key={index} {...it} />
+                  )
+                })
+              }
+            </div>
+          </PScrollContainer>
         </PCard>
       </div>
     </div>

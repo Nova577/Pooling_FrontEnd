@@ -3,22 +3,24 @@ import PCard from "../common/PCard"
 import PTag from "../common/PTag"
 import ResearchCardDetailModal from "../ResearchCardDetailModal"
 import { useBoolean } from "ahooks"
+import { HISTORY_STATUS_MAP } from '@/types/global'
 
 interface Props {
-  imgSrc?: string
-  title?: string
-  tags?: string[]
+  img?: string
+  name?: string
+  preference?: string[]
   status?: string
 }
 
-const defaultTags = [] as string[]
+const defaultPreferences = [] as string[]
 const ParticipatorHistoryCard: FC<Props> = (props) => {
   const {
-    imgSrc = '',
-    title = '',
-    tags = defaultTags,
+    img = '',
+    name = '',
+    preference = defaultPreferences,
     status = '',
   } = props
+
 
   const [
     detailModalIsOpen,
@@ -38,28 +40,28 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
   
   return (
     <>
-      <PCard className="bg-[#EAECDC] overflow-hidden" bodyClass="p-0" onClick={handleClick}>
+      <PCard className="bg-[#F1E8E3] overflow-hidden" bodyClass="p-0" onClick={handleClick}>
         <div className="flex gap-[10px]">
           {
-            imgSrc
+            img
             ? (
-              <img className="h-[155px] w-[165px] rounded-r-full" src={imgSrc} />
+              <img className="h-[155px] w-[165px] rounded-r-full" src={img} />
             )
             : (
               <div className="h-[155px] w-[165px] rounded-r-full" />
             )
           }
 
-          <div className="pt-6 pr-6">
+          <div className="pt-6 pr-6 flex-1">
             <p className="text-neutral-900 text-[25px] font-bold font-playfair leading-8">
-              { title }
+              { name }
             </p>
 
             <div className="pt-[15px] flex gap-[10px]">
               {
-                tags.map((it, index) => {
+                preference.map((it, index) => {
                   return (
-                    <PTag key={it + index} size="sm">{ it }</PTag>
+                    <PTag key={it + index} size="sm" className="bg-[#E3D3C9]">{ it }</PTag>
                   )
                 })
               }
@@ -67,7 +69,7 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
 
             <div className="pt-2 flex justify-end">
               <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
-                { status }
+                { HISTORY_STATUS_MAP[+status as number] }
               </span>
             </div>
           </div>

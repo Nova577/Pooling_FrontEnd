@@ -78,7 +78,7 @@ const App: FC = () => {
       <div className="h-full flex flex-col">
         <SiteNav />
 
-        <main className="pt-[45px] flex-auto">
+        <main className="pt-[45px] flex-auto w-[1500px] mx-auto">
           <Routes>
             {
               routersMap.map((router: IRouterItem) => {
