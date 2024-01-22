@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { USER_TYPE } from '@/types/user'
 import useSignUpStore from "../SignUp/store"
 import { useRequest } from "ahooks"
-import { toast } from "@/components/Toast"
+import { toast } from "@/components/common/PToast"
 
 interface ISignInProps {
   username: string

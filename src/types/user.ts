@@ -26,6 +26,8 @@ export interface ILoginUserRes {
 
 
 export interface IParticipantUserProps {
+  id?: string
+  avatar?: string
   email?: string
   firstName?: string
   lastName?: string
@@ -41,10 +43,13 @@ export interface IParticipantUserProps {
     other?: string[]
   },
   password?: string
+  description?: string
 }
 
 export interface IResearcherUserProps {
+  id?: string
   email?: string
+  avatar?: string
   firstName?: string
   lastName?: string
   sex?: string
@@ -82,4 +87,9 @@ export interface IUserInfo {
   relatedLinks?: string[]
   section?: string
   occupation?: string
+}
+
+
+export interface balanceBasic {
+  balance: number
 }

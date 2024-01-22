@@ -11,8 +11,10 @@ import Participator from "./views/Participator"
 import Researcher from "./views/Researcher"
 import QuestionnaireCreatePage from './views/Questionnaire/Create'
 import QuestionnaireFillPage from './views/Questionnaire/Fill'
+import QuestionnaireResultPage from './views/Questionnaire/Result'
 import useSignInStore from '@/views/SignIn/store'
-import Toast from '@/components/Toast'
+import Toast from '@/components/common/PToast'
+import PPromptModal from '@/components/common/PPromptModal'
 import { USER_TYPE } from "@/types/user"
 interface IRouterItem {
   path: string
@@ -63,6 +65,10 @@ const routersMap: IRouterItem[] = [
     path: '/create-questionnaire',
     element: <QuestionnaireCreatePage />
   },
+  {
+    path: '/questionnaire-result/:id',
+    element: <QuestionnaireResultPage />
+  },
 ]
 
 const App: FC = () => {
@@ -92,10 +98,10 @@ const App: FC = () => {
             }
           </Routes>
         </main>
-
+        <SiteFooter />
 
         <Toast />
-        <SiteFooter />
+        <PPromptModal />
       </div>
     </BrowserRouter>
   )

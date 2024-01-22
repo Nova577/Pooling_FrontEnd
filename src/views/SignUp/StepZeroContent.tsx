@@ -11,7 +11,7 @@ import { cn } from '@nextui-org/react'
 import { sendSignUpCodeApi, checkSignUpCodeApi } from '@/apis/user'
 import PMultiPlainInput from "@/components/common/PMultiPlainInput"
 import { getDictionaryApi } from '@/apis/dictionary'
-import { toast } from "@/components/Toast"
+import { toast } from "@/components/common/PToast"
 import { useRequest } from "ahooks"
 import { ISelectOptionItem } from '@/types/global'
 import { formatDirectoryOption } from '@/utils/util'

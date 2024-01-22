@@ -7,7 +7,7 @@ import PButton from "@/components/common/PButton"
 import { useForm } from "react-hook-form"
 import { sendResetPsdCodeApi, checkResetPsdCodeApi, resetPsdApi } from '@/apis/user'
 import { useNavigate } from 'react-router-dom'
-import { toast } from "@/components/Toast"
+import { toast } from "@/components/common/PToast"
 import { sleep } from "@/utils/util"
 
 interface IResetPasswordProps {

@@ -7,13 +7,15 @@ interface Props {
     label: string
     value: string
   }[]
-
+  isRequired?: boolean
   value?: string
   onValueChange?: (value: string) => void
+  onchange?: React.ChangeEventHandler<HTMLInputElement>
+  errorMessage?: string
 }
 
 const PRadioRegularGroup: FC<Props> = (props) => {
-  const { options, value, onValueChange } = props;
+  const { options, isRequired, value, onValueChange, onchange, errorMessage } = props;
 
   return (
     <RadioGroup
@@ -21,6 +23,9 @@ const PRadioRegularGroup: FC<Props> = (props) => {
       value={value}
       orientation="horizontal"
       onValueChange={onValueChange}
+      onChange={onchange}
+      isRequired={isRequired}
+      errorMessage={errorMessage}
     >
       {
         options?.map((it) => {

@@ -282,7 +282,6 @@ const ParticipatorFormFragment = () => {
             />
           )}
         />
-        <PTagsInput />
       </FormRow>
 
       <FormRow label="Other related tags" className="pt-[32px]">

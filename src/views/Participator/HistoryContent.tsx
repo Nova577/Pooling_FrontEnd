@@ -72,7 +72,7 @@ const HistoryContent: FC = () => {
               {
                 historyList.map((it, index) => {
                   return (
-                    <ParticipatorHistoryCard key={index} {...it} />
+                    <ParticipatorHistoryCard key={index} {...it} showStatus />
                   )
                 })
               }

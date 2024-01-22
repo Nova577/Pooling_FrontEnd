@@ -81,8 +81,20 @@ export const getParticipantUserApi = async (id: string): Promise<IParticipantUse
   )
 }
 
+
+export const updateParticipantApi = async (params: IParticipantUserProps) => {
+  const { id, ...otherParams } = params
+  return request.put( `/api/V1/participant/${id}`, otherParams)
+}
+
+
 export const getResearcherUserApi = async (id: string): Promise<IResearcherUserProps> => {
   return request.get(
     `/api/V1/researcher/${id}`,
   )
+}
+
+export const updateResearcherApi = async (params: IResearcherUserProps) => {
+  const { id, ...otherParams } = params
+  return request.put( `/api/V1/researcher/${id}`, otherParams)
 }

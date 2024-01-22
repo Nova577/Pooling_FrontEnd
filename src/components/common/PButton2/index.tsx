@@ -7,9 +7,9 @@ const PButton = forwardRef<HTMLButtonElement, ButtonProps>(function PButton(prop
   return (
     <Button 
       ref={ref} 
-      {...props} 
+      {...props}
       className={clsx(
-        "btn bg-white font-playfair font-bold",
+        "bg-white font-playfair font-bold",
         props.size === 'lg' && ['btn-lg', 'h-[60px] px-[40px] text-[35px]'],
         props.className
       )}

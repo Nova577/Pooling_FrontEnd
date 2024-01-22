@@ -9,3 +9,4 @@ export enum HISTORY_STATUS_MAP {
   'In Progress',
   'Close'
 }
+

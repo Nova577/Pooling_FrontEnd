@@ -10,7 +10,7 @@ import StepZeroContent from "./StepZeroContent"
 import { useForm, FormProvider } from "react-hook-form";
 import { ChARACTER_ENUM } from '@/types/user'
 import { participantSignUpApi, researcherSignUpApi } from '@/apis/user'
-import { toast } from "@/components/Toast"
+import { toast } from "@/components/common/PToast"
 import { sleep } from '@/utils/util'
 
 

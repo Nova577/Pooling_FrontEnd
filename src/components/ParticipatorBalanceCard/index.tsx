@@ -1,16 +1,21 @@
-import { FC, useMemo, useState, useRef } from "react"
+import { FC, useState, useRef, useEffect } from "react"
 import PCard from "../common/PCard"
-import PButton from "../common/PButton"
+import PButton from "../common/PButton2"
 import PMonthPicker from "../common/PMonthPicker"
 import dayjs from 'dayjs'
 import { useRequest } from "ahooks"
-import { getBalanceApi, ICheckItem } from '@/apis/balance'
+import { getBalanceApi, getBalanceBasicApi, ICheckItem } from '@/apis/balance'
 import PScrollContainer from '@/components/common/PScrollContainer'
+import { balanceBasic } from '@/types/user'
+import { prompt } from '@/components/common/PPromptModal'
 
 const ParticipatorBalanceCard: FC = () => {
   const balanceRef = useRef(null);
   const [filterMonthPickValue, setMonthPickValue] = useState(dayjs()) 
   const [balanceItems, setBalanceItems] = useState<ICheckItem[]>([])
+  const [balanceBasic, setBalanceBasic] = useState<balanceBasic>({
+    balance: 0
+  })
   // const [total, setTotal] = useState(0)
 
   const { run } = useRequest(getBalanceApi, {
@@ -20,20 +25,47 @@ const ParticipatorBalanceCard: FC = () => {
     },
   })
 
-  useMemo(() => {
-    const date = dayjs(filterMonthPickValue).format('YYYY-MM')
+  useRequest(getBalanceBasicApi, {
+    onSuccess: (data) => {
+      setBalanceBasic(data || {})
+    }
+  })
+
+  const freshList = (value: dayjs.Dayjs) => {
+    const date = dayjs(value).format('YYYY-MM')
     run(date)
-  }, [filterMonthPickValue, run])
+  }
 
   const handleFilterMonthPickerChange = (newValue: dayjs.Dayjs) => {
     setMonthPickValue(newValue)
+    freshList(newValue)
+  }
+  
+  useEffect(() => {
+    freshList(filterMonthPickValue)
+  }, [])
+
+  const goWithdraw = () => {
+    prompt?.current?.show({
+      content: 'Features Coming Soon…',
+      contentClassName: 'flex justify-center items-center',
+      footer: <div className="flex justify-end">
+        <PButton 
+          className="!bg-[#F0E8E3] !w-[100px] h-[33px] text-[20px] font-playfair" 
+          radius="full" size="sm" 
+          onClick={() => prompt?.current?.close()}
+        >
+          OK
+        </PButton>
+      </div>
+    })
   }
 
   return (
     <PCard className="bg-[#EFE8E4] w-[800px]" bodyClass="px-[50px]">
       <div className="px-[25px] flex justify-between items-center">
         <p className="text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">$118.40</p>
-        <PButton className="text-[25px]" size="md" round>withdraw</PButton>
+        <PButton className="text-[25px]" size="md" onClick={() => goWithdraw()}>withdraw</PButton>
       </div>
 
       <div className="px-[25px] flex justify-between">
@@ -41,7 +73,10 @@ const ParticipatorBalanceCard: FC = () => {
           <PMonthPicker value={filterMonthPickValue} onChange={handleFilterMonthPickerChange} />
         </div>
 
-        <p className="text-end text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;85.77</p>
+        <p className="text-end text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">
+          <span>$</span>
+          <span className="ml-[20px]">{balanceBasic.balance}</span>
+        </p>
       </div>
 
       <PScrollContainer ref={balanceRef} className="mt-[12px] px-[25px] h-[520px]">

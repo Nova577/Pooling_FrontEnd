@@ -11,7 +11,7 @@ export interface IQuestionsItem {
 export interface IQuestionnaireData {
   id?: string
   name: string
-  desc?: string // TODO
+  description: string
   timeInfo: {
     dueDate: string
     dueTime: string
@@ -19,6 +19,35 @@ export interface IQuestionnaireData {
   }
   eassayQuestions: IQuestionsItem[]
   choiceQuestions: IQuestionsItem[]
+}
+
+export interface IAnswerItem {
+  number?: number
+  answer: string | string[]
+}
+
+export interface IAnswerQuestionnaireReq {
+  eassayQuestions: IAnswerItem[]
+  choiceQuestions: IAnswerItem[]
+}
+
+interface IResultRespond {
+  id: string
+  name: string
+  eassayQuestions: Array<{
+    number: number
+    question: string
+    answers: string[]
+  }>
+  choiceQuestions: Array<{
+    number: number
+    question: string
+    answers: Array<{
+      option: string
+      ratio: number
+      count: number
+    }>
+  }>
 }
 
 export const getQuestionnaireApi = async (id: string): Promise<IQuestionnaireData> => {
@@ -33,4 +62,13 @@ export const createQuestionnaireApi = async (params: IQuestionnaireData) => {
 export const updateQuestionnaireApi = async (params: IQuestionnaireData) => {
   const { id, ...otherParams } = params
   return request.put( `/api/V1/questionnaire/${id}`, otherParams)
+}
+
+export const answerQuestionnaireApi = async (params: { id: string, data: IAnswerQuestionnaireReq }) => {
+  const { id, data } = params
+  return request.post( `/api/V1/questionnaire/answer/${id}`, data)
+}
+
+export const getQuestionnaireResultApi = async (id?: string): Promise<IResultRespond> => {
+  return request.get( `/api/V1/questionnaire/result/${id}`)
 }

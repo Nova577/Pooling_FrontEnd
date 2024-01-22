@@ -58,7 +58,7 @@ const ResearchCard: FC<Props> = (props) => {
               <span className="opacity-95 text-neutral-900 text-xl font-normal font-playfair leading-relaxed">{ name }</span>
             </div>
 
-            <div className="pt-[10px] flex gap-[10px] overflow-x-scroll">
+            <div className="pt-[10px] flex gap-[10px]">
               { 
                 tags?.map((it, index) => {
                   return (

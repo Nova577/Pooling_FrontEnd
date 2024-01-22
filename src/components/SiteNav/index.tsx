@@ -5,7 +5,7 @@ import PButton from "../common/PButton"
 import useSignInStore from '@/views/SignIn/store'
 import { signOutApi } from '@/apis/user'
 import { ls, sleep } from '@/utils/util'
-import { toast } from '@/components/Toast/index'
+import { toast } from '@/components/common/PToast/index'
 
 const SiteNav: FC = () => {
   const navigate = useNavigate()

@@ -1,34 +1,43 @@
-import { FC } from "react"
+import { FC, forwardRef } from "react"
 import clsx from 'clsx'
 import PlusIcon from '@/components/common/Icons/Plus'
 import MinusIcon from '@/components/common/Icons/Minus'
+
+interface ISubtractorEvent {
+  target: {
+    value: number
+  }
+}
 
 interface Props {
   minValue?: number;
   maxValue?: number;
   value?: number
   className?: string;
-  onValueChange?: (value: number) => void;
   label?: string
+  onChange?: (event: ISubtractorEvent) => void
 }
 
-const PAdderSubtractor: FC<Props> = (props) => {
-  const { className, minValue = 1, maxValue, onValueChange, label, value=0 } = props
+
+
+const PAdderSubtractor: FC<Props>= forwardRef((props, ref) => {
+  const { className, minValue = 1, maxValue, onChange, label, value=0 } = props
 
   const handleMinus = () => {
     if (value <= minValue) return
     const newValue = value - 1
-    onValueChange?.(newValue)
+    onChange?.({ target: { value: newValue } })
   }
 
   const handlePlus = () => {
     if (maxValue && value >= maxValue) return
     const newValue = value + 1
-    onValueChange?.(newValue)
+    onChange?.({ target: { value: newValue } })
   }
 
   return (
     <div 
+      ref={ref}
       className={
         clsx(
           'flex items-center select-none',
@@ -59,6 +68,6 @@ const PAdderSubtractor: FC<Props> = (props) => {
       </span>
     </div>
   )
-}
+})
 
 export default PAdderSubtractor

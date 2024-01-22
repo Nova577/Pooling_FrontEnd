@@ -16,7 +16,7 @@ interface ParticipatorStore {
 }
 
 const useParticipatorStore = create<ParticipatorStore>((set) => ({
-  currentMenu: ParticipatorMenuItemType.HISTORY,
+  currentMenu: ParticipatorMenuItemType.PROFILE_EDIT,
   setCurrentMenu: (newCurrentMenu) => set(() => ({ currentMenu:  newCurrentMenu }))
 }))
 

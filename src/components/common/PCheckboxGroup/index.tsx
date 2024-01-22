@@ -12,13 +12,14 @@ interface Props {
   }[]
 
   value?: string[]
-  
+  isRequired?: boolean
   onChange?: (e: CheckboxChangeProps) => void
+  errorMessage?: string
 }
 
 
 const PCheckboxGroup: FC<Props> = (props) => {
-  const { options, value, onChange } = props;
+  const { options, value, onChange, isRequired, errorMessage } = props;
 
   const Icon = () => {
     return <span 
@@ -32,6 +33,8 @@ const PCheckboxGroup: FC<Props> = (props) => {
       value={value}
       orientation="horizontal"
       onChange={onChange}
+      isRequired={isRequired}
+      errorMessage={errorMessage}
     >
       {
         options?.map((it) => {
@@ -47,7 +50,7 @@ const PCheckboxGroup: FC<Props> = (props) => {
             >
               <span className="text-[21px] color-[#5F5B58] font-playfair">{ it.label }</span>
             </Checkbox>
-          )
+          ) 
         })
       }
     </CheckboxGroup>

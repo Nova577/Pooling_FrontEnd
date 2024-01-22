@@ -4,23 +4,34 @@ import PTag from "../common/PTag"
 import ResearchCardDetailModal from "../ResearchCardDetailModal"
 import { useBoolean } from "ahooks"
 import { HISTORY_STATUS_MAP } from '@/types/global'
+import UserIcon from '@/components/common/Icons/User'
+import BadgeIcon from '@/components/common/Icons/Badge'
+import ClockIcon from '@/components/common/Icons/Clock'
 
 interface Props {
   img?: string
   name?: string
   preference?: string[]
   status?: string
+  showStatus?: boolean
+  headCount?: number
+  reward?: number
+  showBaseInfo?: boolean
+  position?: string
 }
 
 const defaultPreferences = [] as string[]
-const ParticipatorHistoryCard: FC<Props> = (props) => {
+const ParticipatorHistoryCard: FC<Props> = (props) => {  
   const {
     img = '',
     name = '',
     preference = defaultPreferences,
     status = '',
+    showStatus,
+    headCount = 0,
+    reward = 0,
+    showBaseInfo
   } = props
-
 
   const [
     detailModalIsOpen,
@@ -52,31 +63,59 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
             )
           }
 
-          <div className="pt-6 pr-6 flex-1">
-            <p className="text-neutral-900 text-[25px] font-bold font-playfair leading-8">
+          <div className="pt-[14px] pr-6 flex-1 relative">
+            <p className="text-neutral-900 text-[25px] font-bold font-playfair leading-[26px]">
               { name }
             </p>
 
-            <div className="pt-[15px] flex gap-[10px]">
+            <div className="pt-[12px] flex gap-[10px]">
               {
-                preference.map((it, index) => {
+                preference.slice(0, 3).map((it, index) => {
                   return (
-                    <PTag key={it + index} size="sm" className="bg-[#E3D3C9]">{ it }</PTag>
+                    <PTag key={it + index} size="sm" className="!bg-[#E3D3C9] !h-[15px] !text-[10px]">
+                      <span>{ it }</span>
+                    </PTag>
                   )
                 })
               }
             </div>
 
-            <div className="pt-2 flex justify-end">
-              <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
-                { HISTORY_STATUS_MAP[+status as number] }
-              </span>
+           {
+            showBaseInfo && <div>
+              <div className="flex items-center mt-[10px]">
+                <UserIcon />
+                <span className="text-[10px] text-[#141414] ml-[10px] font-playfair">{ headCount }</span>
+              </div>
+              <div className="flex items-center mt-[10px]">
+                <BadgeIcon />
+                <span className="text-[10px] text-[#141414] ml-[10px] font-playfair">{ reward } $</span>
+              </div>
+              {/* TODO No such field */}
+              <div className="flex items-center mt-[10px]">
+                <ClockIcon color="#E3D3C9" w="12" h="12" />
+                <span className="text-[10px] text-[#141414] ml-[10px] font-playfair">20 min</span>
+              </div>
             </div>
+           }
+
+            {
+              showStatus && <div className="absolute w-full flex justify-end top-[112px] right-[30px]">
+                <span className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
+                  { HISTORY_STATUS_MAP[+status as number] }
+                </span>
+              </div>
+            }
           </div>
         </div>
       </PCard>
 
-      <ResearchCardDetailModal isOpen={detailModalIsOpen} type="closed" onWillCauseClose={handleDetailModalWillCauseClose} />
+      <ResearchCardDetailModal 
+        isOpen={detailModalIsOpen} 
+        type="closed" 
+        {...props}
+        onWillCauseClose={handleDetailModalWillCauseClose} 
+
+      />
     </>
   )
 }
