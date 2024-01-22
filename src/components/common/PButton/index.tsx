@@ -1,21 +1,22 @@
 import { CSSProperties, FC } from "react"
 import clsx from 'clsx'
 
-export interface PButtonProps extends Omit<React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'type'> {
+export interface PButtonProps extends Omit<React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'styleType'> {
   style?: CSSProperties
   className?: string
-  type?: 'default' | 'ghost' | 'primary' | 'neutral'
+  styleType?: 'default' | 'ghost' | 'primary' | 'neutral'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
   squareRound?: boolean
   round?: boolean
+  isLoading?: boolean
 }
 
 const PButton: FC<PButtonProps> = (props) => {
   const {
     className,
     style,
-    type = 'default',
+    styleType = 'default',
     size = 'md',
     round = false,
     squareRound = false,
@@ -35,10 +36,10 @@ const PButton: FC<PButtonProps> = (props) => {
           size === 'sm' && ['btn-sm'],
           size === 'xl' && ['h-[4.5rem]', 'px-8', 'text-[2rem]'],
           size === 'lg' && ['btn-lg'],
-          type === 'default' && ['bg-white'],
-          type === 'primary' && ['btn-primary'],
-          type === 'ghost' && ['btn-ghost'],
-          type === 'neutral' && ['btn-neutral, bg-neutral-900', 'text-white', 'hover:bg-neutral-900'],
+          styleType === 'default' && ['bg-white'],
+          styleType === 'primary' && ['btn-primary'],
+          styleType === 'ghost' && ['btn-ghost'],
+          styleType === 'neutral' && ['btn-neutral, bg-neutral-900', 'text-white', 'hover:bg-neutral-900'],
           {
             'rounded-full': round,
             'rounded-[1.25rem]': squareRound,

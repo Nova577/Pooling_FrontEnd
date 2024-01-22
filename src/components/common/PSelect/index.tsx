@@ -1,4 +1,4 @@
-import { FC, ComponentProps } from "react"
+import { ComponentProps, ChangeEventHandler, forwardRef } from "react"
 import { Select, SelectItem, SlotsToClasses, cn } from '@nextui-org/react'
 
 export type OnSelectionChangeKeys = Parameters<Exclude<ComponentProps<typeof Select>['onSelectionChange'], undefined>>[0]
@@ -10,22 +10,33 @@ interface Props {
     label: string
     value: string
   }[]
-  value?: string
   classNames?: SlotsToClasses<"description" | "errorMessage" | "label" | "base" | "value" | "mainWrapper" | "trigger" | "innerWrapper" | "selectorIcon" | "spinner" | "listboxWrapper" | "listbox" | "popoverContent" | "helperWrapper"> | undefined
   onSelectionChange?: (keys: OnSelectionChangeKeys) => void
+  onChange?: ChangeEventHandler<HTMLSelectElement> | undefined
+  selectedKeys?: "all" | Iterable<string> 
+  defaultSelectedKeys?: "all" | Iterable<string> 
+  selectionMode?: 'single' | 'multiple'
+  errorMessage?: string
 }
-const PSelect: FC<Props> = (props) => {
+
+
+const PSelect= forwardRef<HTMLSelectElement, Props>((props, ref) => {
   const {
     label,
     placeholder,
     options,
-    value = '',
     classNames,
-    onSelectionChange
+    selectedKeys,
+    onChange,
+    onSelectionChange,
+    defaultSelectedKeys,
+    selectionMode,
+    errorMessage
   } = props
 
   return (
     <Select
+      ref={ref}
       classNames={{
         ...classNames,
         trigger: cn(
@@ -39,8 +50,12 @@ const PSelect: FC<Props> = (props) => {
       }}
       label={label}
       placeholder={placeholder}
-      selectedKeys={new Set([value])}
+      selectedKeys={selectedKeys}
       onSelectionChange={onSelectionChange}
+      onChange={onChange}
+      defaultSelectedKeys={defaultSelectedKeys}
+      selectionMode={selectionMode}
+      errorMessage={errorMessage}
       listboxProps={{
         itemClasses: {
           base: [
@@ -62,6 +77,6 @@ const PSelect: FC<Props> = (props) => {
       }
     </Select>
   )
-}
+})
 
 export default PSelect

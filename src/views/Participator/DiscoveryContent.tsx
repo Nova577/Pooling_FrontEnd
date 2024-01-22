@@ -1,38 +1,71 @@
 import PInput from "@/components/common/PInput2"
-import { FC } from "react"
-import ResearchCard from "@/components/ResearchCard"
+import { FC, useState, useMemo, useRef, useCallback } from "react"
+// import ResearchCard from "@/components/ResearchCard"
 import searchIconSrc from '@/assets/search_icon.svg'
-import testPortraitImgSrc from '@/assets/portrait-dark-skinned.avif'
+import ParticipatorHistoryCard from "@/components/ParticipatorHistoryCard"
+import { getFeedApi, IResearchItem } from '@/apis/project'
+import { useRequest, useScroll } from "ahooks"
 
-const items = [
-  { key: 'k0', fee: '30$', school: 'Harvard University', status: 'online', tags: ['Usability', 'High pay', 'Consumer Electronic'], time: '20-25Minutes', title: 'Usability Research', imgSrc: testPortraitImgSrc },
-  { key: 'k1', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k2', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k3', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2', 'tag3'], time: 'time', title: 'title' },
-  { key: 'k4', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k5', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k6', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k7', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k8', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k9', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k10', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k11', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k12', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k13', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k14', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-  { key: 'k15', fee: '30$', school: 'school', status: 'online', tags: ['tag1', 'tag2'], time: 'time', title: 'title' },
-]
+const DEFAULT_LIMIT = 10
 
 const DiscoveryContent: FC = () => {
+  const historyRef = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState(0)
+  const [isBottom, setIsBottom] = useState(false)
+  const [isAll, setIsAll] = useState(false)  
+  const [historyList, setHistoryList] = useState<IResearchItem[]>([])
+
+  // TODO change api
+  const { run } = useRequest(() => getFeedApi({ offset, limit: DEFAULT_LIMIT }), {
+    onSuccess(data) {
+      const list = data?.researchList || []
+      
+      setIsAll(list.length < DEFAULT_LIMIT)
+      if (offset === 0) {
+        setHistoryList(list)
+      } else {
+        setHistoryList((originList) => [...originList, ...list])
+      }
+
+      setOffset(offset + DEFAULT_LIMIT)
+    },
+    cacheKey: `history_list_${offset}`,
+  })
+
+  const scroll = useScroll(historyRef, () => {
+    return !isAll
+  })
+
+  const scrollMethod = useCallback((top: number) => {
+    if (!historyRef.current) return
+
+    const scrollHeight = historyRef.current?.scrollHeight
+    const clientHeight = historyRef.current?.clientHeight
+
+    if (top + clientHeight >= scrollHeight - 50) {
+      if (isBottom) return
+      setIsBottom(true)
+      run()
+    } else {
+      setIsBottom(false)
+    }
+  }, [isBottom, run])
+
+  useMemo(() => {
+    if (!isAll && scroll?.top) {
+      scrollMethod(scroll.top)
+    }
+  }, [scroll?.top, scrollMethod, isAll])
+
   return (
     <div className="max-w-5xl">
       <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
 
       <div className="mt-[20px] pr-[20px] grid grid-cols-1 gap-y-5 gap-x-[30px] max-h-[680px] overflow-y-scroll xl:grid-cols-2">
         {
-          items.map((it) => {
+          historyList.map((it, index) => {
             return (
-              <ResearchCard {...it} />
+              <ParticipatorHistoryCard key={index} {...it} showBaseInfo position="discovery" />
             )
           })
         }

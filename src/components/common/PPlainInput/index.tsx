@@ -1,19 +1,23 @@
-import { FC } from "react"
+import { FC, forwardRef } from "react"
 import { Input, InputProps, cn } from '@nextui-org/react'
 
 interface Props extends InputProps {
   className?: string
+  value?: string
 }
 
-const PPlainInput: FC<Props> = (props) => {
+const PPlainInput: FC<Props> = forwardRef((props, ref) => {
   const {
     classNames,
+    value,
     ...otherProps
   } = props
 
   return (
 
     <Input
+      ref={ref}
+      value={value}
       classNames={{
         base: cn('w-[30px] h-[28px]', classNames?.base),
         inputWrapper: cn(
@@ -34,6 +38,6 @@ const PPlainInput: FC<Props> = (props) => {
     //   {...otherProps}
     // />
   )
-}
+})
 
 export default PPlainInput

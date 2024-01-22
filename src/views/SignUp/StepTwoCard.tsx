@@ -28,7 +28,7 @@ const StepTwoCard: FC = () => {
       </p>
 
       <div className="flex justify-center">
-        <PButton className="font-normal px-16 text-[27px]" size="lg" round>I agree. Create an account now.</PButton>
+        <PButton className="font-normal px-16 text-[27px]" size="lg" round type="submit">I agree. Create an account now.</PButton>
       </div>
     </PCard>
   )

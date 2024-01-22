@@ -1,166 +1,234 @@
 import PCard from "@/components/common/PCard"
 import PAvatar from "@/components/common/PAvatar"
-import maleAvatarSrc from '@/assets/male_avatar.png'
 import { FC, useState } from "react"
 import FormRow from "@/views/SignUp/FormRow"
-import PInput from "@/components/common/PInput"
-import PSelect, { OnSelectionChangeKeys } from "@/components/common/PSelect"
+import PInput from "@/components/common/PInput2"
+import PSelect from "@/components/common/PSelect"
 import PTagsInput from '@/components/common/PTagsInput'
-import PRadioGroup from "../common/PRadioGroup"
 import PTextarea from "../common/PTextarea"
+import { useForm, Controller } from 'react-hook-form'
+import { useRequest } from "ahooks"
+import { getDictionaryApi } from '@/apis/dictionary'
+import { formatDirectoryOption } from '@/utils/util'
+import { ISelectOptionItem } from '@/types/global'
+import PButton from "../common/PButton2"
+import { updateParticipantApi } from '@/apis/user'
+import useSignInStore from '@/views/SignIn/store'
+import { toast } from "../common/PToast"
 
-interface ProfileFormValue {
+interface IParticipatorProfile {
+  avatar?: string,
   firstName: string
   lastName: string
-  industry: string
-  position: string
+  section: string
+  occupation: string
   pets: string[]
-  medicalHistory: string[]
-  otherRelatedTags: string[]
-  describe: string
+  medicalHistory?: string[]
+  other?: string[]
+  description?: string
 }
 
-const initProfileFormValue: ProfileFormValue = {
-  describe: '',
-  firstName: '',
-  industry: '',
-  lastName: '',
-  position: '',
-  medicalHistory: [],
-  otherRelatedTags: [],
-  pets: [],
+const rules = {
+  firstName: {
+    required: 'Please enter your first name', 
+  },
+  lastName: {
+    required: 'Please enter your last name', 
+  },
+  section: {
+    required: 'Please select section'
+  },
+  occupation: {
+    required: 'Please select occupation'
+  },
 }
+
 
 const ParticipatorProfileEditCard: FC = () => {
-  const [formValue, setFormValue] = useState(initProfileFormValue)
-  const [petRadioGroupValue, setPetRadioGroupValue] = useState<'yes' | 'no'>('yes')
-  const [medicalHistoryGroupValue, setMedicalHistoryGroupValue] = useState<'yes' | 'no'>('yes')
+  const [sectionOptions, setSectionOptions] = useState<ISelectOptionItem[]>([])
+  const [occupationOptions, setOccupationOptions] = useState<ISelectOptionItem[]>([])
+  const userInfo = useSignInStore(state=> state.userInfo) || {}
 
-  const handleFirstNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValue((prev) => ({ ...prev, firstName: e.target.value }))
-  }
+  const { register, formState: { errors }, control, setValue, handleSubmit } = useForm<IParticipatorProfile>({
+    mode: 'onBlur',
+  })
 
-  const handleLastNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValue((prev) => ({ ...prev, lastName: e.target.value }))
-  }
+  useRequest(() => getDictionaryApi('Section'), {
+    onSuccess(data) {
+      if (data?.section) {
+        setSectionOptions(formatDirectoryOption(data.section))
+      }
+    }
+  })
 
-  const handleIndustrySelectSelectionChange = (newValueSet: OnSelectionChangeKeys) => {
-    // Should not be here
-    if (newValueSet === 'all') return
+  useRequest(() => getDictionaryApi('Occupation'), {
+    onSuccess(data) {
+      if (data?.occupation) {
+        setOccupationOptions(formatDirectoryOption(data.occupation))
+      }
+    }
+  })
 
-    setFormValue((prev) => ({ ...prev, industry: Array.from(newValueSet)[0] as string }))
-  }
-
-  const handlePositionSelectSelectionChange= (newValueSet: OnSelectionChangeKeys) => {
-    // Should not be here
-    if (newValueSet === 'all') return
-
-    setFormValue((prev) => ({ ...prev, position: Array.from(newValueSet)[0] as string }))
-  }
-
-  const handlePetRadioGroupChange = (e: React.FormEvent<HTMLDivElement>) => {
-    setPetRadioGroupValue((e.target as HTMLInputElement).value as 'yes' | 'no')
-    setFormValue((prev) => ({ ...prev, pets: [] }))
-  }
-
-  const handleMedicalHistoryGroupValueChange = (e: React.FormEvent<HTMLDivElement>) => {
-    setMedicalHistoryGroupValue((e.target as HTMLInputElement).value as 'yes' | 'no')
-    setFormValue((prev) => ({ ...prev, medicalHistory: [] }))
-  }
-
-  const handlePetTagsInputChange = (newValue: string[]) => {
-    setFormValue((prev) => ({ ...prev, pets: newValue }))
-  }
-
-  const handleMedicalHistoryTagsInputChange = (newValue: string[]) => {
-    setFormValue((prev) => ({ ...prev, medicalHistory: newValue }))
-  }
-
-  const handleOtherRelatedTagsTagsInputChange = (newValue: string[]) => {
-    setFormValue((prev) => ({ ...prev, otherRelatedTags: newValue }))
+  const { loading: saveLoading, run: saveRun } = useRequest(updateParticipantApi, {
+    manual: true,
+    onSuccess: () => {
+      toast?.current?.info('Modify successfully')
+    }
+  })
+ 
+  const onSubmit = (values: IParticipatorProfile) => {
+    saveRun({ id: userInfo?.id, ...values })
   }
 
   return (
     <PCard className="h-[800px] w-[800px] px-[90px] py-[36px] bg-[#EFE8E4]" bodyClass="p-0">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex">
-          <PAvatar imgSrc={maleAvatarSrc} className="w-[160px] h-[160px] shrink-0" />
+          <PAvatar imgSrc={userInfo.avatar} className="w-[160px] h-[160px] shrink-0" />
 
           <div className="ml-[40px] flex-1">
-            <div className="text-[#565352] text-lg font-bold font-playfair leading-normal">E-mail : researcher@pooling.tools</div>
-            <div className="pt-[15px] text-[#565352] text-lg font-bold font-playfair leading-normal">Account Number : 865198251</div>
+            <div className="text-[#565352] text-lg font-bold font-playfair leading-normal">
+              E-mail : {userInfo.email}
+            </div>
+            <div className="pt-[15px] text-[#565352] text-lg font-bold font-playfair leading-normal">
+              ID : {userInfo.id}
+            </div>
 
             <FormRow className="pt-[40px]">
-              <PInput className="w-[200px]" label="First Name" value={formValue.firstName} onChange={handleFirstNameInputChange} />
-              <PInput className="w-[200px]" label="Last Name" value={formValue.lastName} onChange={handleLastNameInputChange} />
+              <PInput 
+                className="w-[200px]"
+                label="First name" 
+                isRequired
+                defaultValue={userInfo.firstName}
+                errorMessage={errors.firstName && errors.firstName.message}
+                {...register("firstName", rules.firstName)}
+              />
+              <PInput 
+                className="w-[200px]"
+                label="Last name" 
+                isRequired
+                defaultValue={userInfo.lastName}
+                errorMessage={errors.lastName && errors.lastName.message}
+                {...register("lastName", rules.lastName)}
+              />
             </FormRow>
           </div>
         </div>
 
 
         <FormRow className="pt-[40px]">
-          <PSelect
-            label="Industry"
-            placeholder=" "
-            options={[
-              { key: 'k0', label: 'label0', value: 'v0' },
-              { key: 'k1', label: 'label1', value: 'v1' },
-              { key: 'k2', label: 'label2', value: 'v2' },
-              { key: 'k3', label: 'label3', value: 'v3' },
-            ]}
-            value={formValue.industry}
-            onSelectionChange={handleIndustrySelectSelectionChange}
+          <Controller
+            control={control}
+            name="section"
+            defaultValue={userInfo.section}
+            rules={rules.section}
+            render={({ field }) => (
+              <PSelect 
+                selectionMode="single"
+                label="Section" 
+                placeholder="" 
+                options={sectionOptions}
+                selectedKeys={new Set([field.value])}
+                classNames={{
+                  mainWrapper: 'relative',
+                  helperWrapper: 'absolute bottom-[-24px]'
+                }}
+                errorMessage={errors.section && errors.section?.message}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (!value) return
+                  setValue('section', value)
+                }}
+              />
+            )}
           />
-
-          <PSelect
-            label="Position"
-            placeholder=" "
-            options={[
-              { key: 'k0', label: 'label0', value: 'v0' },
-              { key: 'k1', label: 'label1', value: 'v1' },
-              { key: 'k2', label: 'label2', value: 'v2' },
-              { key: 'k3', label: 'label3', value: 'v3' },
-            ]}
-            value={formValue.position}
-            onSelectionChange={handlePositionSelectSelectionChange}
+          <Controller
+            control={control}
+            name="occupation"
+            defaultValue={userInfo.occupation}
+            rules={rules.occupation}
+            render={({ field }) => (
+              <PSelect 
+                label="Occupation" 
+                placeholder="" 
+                options={occupationOptions}
+                selectedKeys={new Set([field.value])}
+                classNames={{
+                  mainWrapper: 'relative',
+                  helperWrapper: 'absolute bottom-[-24px]'
+                }}
+                errorMessage={errors.occupation && errors.occupation?.message}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (!value) return
+                  setValue('occupation', value)
+                }}
+              />
+            )}
           />
         </FormRow>
         
         <FormRow className="pt-[32px]" label="Pets">
-          <div className="w-[160px] shrink-0">
-            <PRadioGroup
-              options={[{ label: 'Yes', value: 'yes' }, { label: 'No', value: 'no' }]}
-              value={petRadioGroupValue}
-              onChange={handlePetRadioGroupChange}
-            />
-          </div>
-
           <div className="flex-1">
-            <PTagsInput disabled={petRadioGroupValue === 'no'} value={formValue.pets} onChange={handlePetTagsInputChange} />
+            <Controller
+              control={control}
+              name="pets"
+              defaultValue={userInfo.tags?.pets || []}
+              render={({ field }) => (
+                <PTagsInput 
+                  value={field.value} 
+                  onChange={(value) => {
+                    setValue('pets', value)
+                  }} 
+                />
+              )}
+            />
           </div>
         </FormRow>
 
         <FormRow className="pt-[32px]" label="Medical history">
-          <div className="w-[160px] shrink-0">
-            <PRadioGroup
-              options={[{ label: 'Yes', value: 'yes' }, { label: 'No', value: 'no' }]}
-              value={medicalHistoryGroupValue}
-              onChange={handleMedicalHistoryGroupValueChange}
-            />
-          </div>
-
-          <div className="flex-1">
-            <PTagsInput  disabled={medicalHistoryGroupValue === 'no'} value={formValue.medicalHistory} onChange={handleMedicalHistoryTagsInputChange} />
-          </div>
+          <Controller
+            control={control}
+            defaultValue={userInfo.tags?.medicalHistory || []}
+            name="medicalHistory"
+            render={({ field }) => (
+              <PTagsInput 
+                value={field.value} 
+                onChange={(value) => {
+                  setValue('medicalHistory', value)
+                }} 
+              />
+            )}
+          />
         </FormRow>
 
         <FormRow className="pt-[32px]" label="Other related tags">
-          <PTagsInput value={formValue.otherRelatedTags} onChange={handleOtherRelatedTagsTagsInputChange}  />
+          <Controller
+            control={control}
+            name="other"
+            defaultValue={userInfo.tags?.other || []}
+            render={({ field }) => (
+              <PTagsInput 
+                value={field.value} 
+                onChange={(value) => {
+                  setValue('other', value)
+                }} 
+              />
+            )}
+          />
         </FormRow>
 
         <FormRow className="pt-[32px]" label="Describe Yourself">
-          <PTextarea minRows={5} />
+          <PTextarea
+            minRows={5}
+            defaultValue={userInfo.description}
+            {...register("description")}
+          />
         </FormRow>
+
+        <div className="flex justify-end">
+          <PButton className="mt-[10px] w-[100px] h-[40px] text-[25px]" size="md" radius="full" type="submit" isLoading={saveLoading}>Save</PButton>
+        </div>
       </form>
     </PCard>
   )

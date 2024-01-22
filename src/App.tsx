@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SiteNav from "./components/SiteNav"
 import Home from "./views/Home"
@@ -11,29 +11,97 @@ import Participator from "./views/Participator"
 import Researcher from "./views/Researcher"
 import QuestionnaireCreatePage from './views/Questionnaire/Create'
 import QuestionnaireFillPage from './views/Questionnaire/Fill'
+import QuestionnaireResultPage from './views/Questionnaire/Result'
+import useSignInStore from '@/views/SignIn/store'
+import Toast from '@/components/common/PToast'
+import PPromptModal from '@/components/common/PPromptModal'
+import { USER_TYPE } from "@/types/user"
+interface IRouterItem {
+  path: string
+  element: JSX.Element
+  access?: string[]
+}
 
+const routersMap: IRouterItem[] = [
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />
+  },
+  {
+    path: '/sign-in',
+    element: <SignIn />
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />
+  },
+  {
+    path: '/welcome',
+    element: <Welcome />
+  },
+  {
+    path: '/participator',
+    element: <Participator />,
+    access: [USER_TYPE.PARTICIPATOR]
+  },
+  {
+    path: '/researcher',
+    element: <Researcher />,
+    access: [USER_TYPE.RESEARCHER]
+  },
+  {
+    path: '/fill-questionnaire/:id',
+    element: <QuestionnaireFillPage />
+  },
+  {
+    path: '/create-questionnaire/:id',
+    element: <QuestionnaireCreatePage />
+  },
+  {
+    path: '/create-questionnaire',
+    element: <QuestionnaireCreatePage />
+  },
+  {
+    path: '/questionnaire-result/:id',
+    element: <QuestionnaireResultPage />
+  },
+]
 
 const App: FC = () => {
+  const getInitUserInfo = useSignInStore((state) => state.getInitUserInfo)
+  const userInfo = useSignInStore(state=> state.userInfo)
+
+  useEffect(() => {
+    getInitUserInfo()
+  }, [])
+  
   return (
     <BrowserRouter>
       <div className="h-full flex flex-col">
         <SiteNav />
 
-        <main className="pt-[45px] flex-auto">
+        <main className="pt-[45px] flex-auto w-[1500px] mx-auto">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/participator" element={<Participator />} />
-            <Route path="/researcher" element={<Researcher />} />
-            <Route path="/create-questionnaire/:id" element={<QuestionnaireCreatePage />} />
-            <Route path="/fill-questionnaire/:id" element={<QuestionnaireFillPage />} />
+            {
+              routersMap.map((router: IRouterItem) => {
+                const { path, element, access } = router
+                
+                return (
+                  (!access || (userInfo?.type && access.includes(userInfo.type))) 
+                    && <Route path={path} element={element} key={path} />
+                )
+              })
+            }
           </Routes>
         </main>
-
         <SiteFooter />
+
+        <Toast />
+        <PPromptModal />
       </div>
     </BrowserRouter>
   )

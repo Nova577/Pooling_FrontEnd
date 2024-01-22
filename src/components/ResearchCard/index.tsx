@@ -10,7 +10,7 @@ import { useBoolean } from "ahooks"
 
 interface Props {
   imgSrc?: string
-  title?: string
+  name?: string
   tags?: string[]
   school?: string
   status?: string
@@ -26,7 +26,7 @@ const ResearchCard: FC<Props> = (props) => {
     status,
     tags,
     time,
-    title
+    name
   } = props
 
   const [researchCardDetailModalIsOpen, { setTrue: setResearchCardDetailModalIsOpenTrue, setFalse: setResearchCardDetailModalIsOpenFalse }] = useBoolean(false)
@@ -55,10 +55,10 @@ const ResearchCard: FC<Props> = (props) => {
           
           <div className="flex-1 overflow-hidden">
             <div className="pt-[14px]">
-              <span className="opacity-95 text-neutral-900 text-xl font-normal font-playfair leading-relaxed">{ title }</span>
+              <span className="opacity-95 text-neutral-900 text-xl font-normal font-playfair leading-relaxed">{ name }</span>
             </div>
 
-            <div className="pt-[10px] flex gap-[10px] overflow-x-scroll">
+            <div className="pt-[10px] flex gap-[10px]">
               { 
                 tags?.map((it, index) => {
                   return (
