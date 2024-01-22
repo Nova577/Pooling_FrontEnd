@@ -1,10 +1,9 @@
 import PAvatar from "@/components/common/PAvatar"
 import PCard from "@/components/common/PCard"
 import { FC } from "react"
-import maleAvatarSrc from '@/assets/male_avatar.png'
 import PMenu from "@/components/common/PMenu"
 import useParticipatorStore, { ParticipatorMenuItemType } from "./store"
-
+import useSignInStore from '@/views/SignIn/store'
 
 const menuItems = [
   { key: ParticipatorMenuItemType.DISCOVERY, label: 'Discovery' },
@@ -16,6 +15,7 @@ const menuItems = [
 
 const MenuCard: FC = () => {
   const { currentMenu, setCurrentMenu } = useParticipatorStore()
+  const userInfo = useSignInStore(state=> state.userInfo) || {}
 
   const handleMenuItemClick = (menuKey: string) => {
     setCurrentMenu(menuKey as ParticipatorMenuItemType)
@@ -24,10 +24,12 @@ const MenuCard: FC = () => {
   return (
     <PCard className="w-[350px] bg-[#E8DED7]" bodyClass="p-[40px]">
       <div className="mt-[20px]">
-        <div className="flex justify-between items-center">
-          <PAvatar imgSrc={maleAvatarSrc} />
+        <div className="flex items-center">
+          <PAvatar imgSrc={userInfo.avatar} />
 
-          <div className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">Will Edison</div>
+          <div className="ml-[34px] text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
+            {userInfo.firstName} {userInfo.lastName}
+          </div>
         </div>
 
         <div className="mt-6">

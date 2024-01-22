@@ -59,5 +59,5 @@ export const ls = {
 }
 
 export const formatDirectoryOption = (arr?: Array<{name: string; number: string}>) => {
-  return arr ? arr.map(it => ({ value: it.number, key: it.number, label: it.name })) : []
+  return arr ? arr.map(it => ({ value: it.name, key: it.name, label: it.name })) : []
 }

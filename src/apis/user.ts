@@ -76,9 +76,7 @@ export const researcherSignUpApi = async (params: IResearcherUserProps) => {
 }
 
 export const getParticipantUserApi = async (id: string): Promise<IParticipantUserProps> => {
-  return request.get(
-    `/api/V1/participant/${id}`,
-  )
+  return request.get(`/api/V1/participant/${id}`)
 }
 
 

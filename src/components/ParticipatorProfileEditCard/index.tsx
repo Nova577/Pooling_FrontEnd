@@ -1,6 +1,5 @@
 import PCard from "@/components/common/PCard"
 import PAvatar from "@/components/common/PAvatar"
-import maleAvatarSrc from '@/assets/male_avatar.png'
 import { FC, useState } from "react"
 import FormRow from "@/views/SignUp/FormRow"
 import PInput from "@/components/common/PInput2"
@@ -13,31 +12,20 @@ import { getDictionaryApi } from '@/apis/dictionary'
 import { formatDirectoryOption } from '@/utils/util'
 import { ISelectOptionItem } from '@/types/global'
 import PButton from "../common/PButton2"
-import { updateParticipantApi, getParticipantUserApi } from '@/apis/user'
+import { updateParticipantApi } from '@/apis/user'
 import useSignInStore from '@/views/SignIn/store'
 import { toast } from "../common/PToast"
 
 interface IParticipatorProfile {
   avatar?: string,
-  firstName?: string
-  lastName?: string
-  section?: string
-  occupation?: string
-  pets?: string[]
+  firstName: string
+  lastName: string
+  section: string
+  occupation: string
+  pets: string[]
   medicalHistory?: string[]
   other?: string[]
   description?: string
-}
-
-const initProfileFormValue: IParticipatorProfile = {
-  firstName: '',
-  lastName: '',
-  section: '',
-  occupation: '',
-  medicalHistory: [],
-  other: [],
-  pets: [],
-  description: '',
 }
 
 const rules = {
@@ -59,26 +47,10 @@ const rules = {
 const ParticipatorProfileEditCard: FC = () => {
   const [sectionOptions, setSectionOptions] = useState<ISelectOptionItem[]>([])
   const [occupationOptions, setOccupationOptions] = useState<ISelectOptionItem[]>([])
-  const userInfo = useSignInStore(state=> state.userInfo)
+  const userInfo = useSignInStore(state=> state.userInfo) || {}
 
   const { register, formState: { errors }, control, setValue, handleSubmit } = useForm<IParticipatorProfile>({
     mode: 'onBlur',
-    defaultValues: initProfileFormValue,
-  })
-
-  useRequest(() => getParticipantUserApi(userInfo!.id!), {
-    onSuccess: (data: IParticipatorProfile) => {
-      console.log('updateParticipantApi', data);
-      // if(data && Object.keys(initProfileFormValue).length > 0) {
-      // for(const key in initProfileFormValue){
-      //   console.log('key', key, data[key]);
-        
-      //   // setValue(key, data[key]);
-      // }
-      // }
-      // setValue([data])
-    },
-    ready: !!userInfo?.id,
   })
 
   useRequest(() => getDictionaryApi('Section'), {
@@ -98,8 +70,8 @@ const ParticipatorProfileEditCard: FC = () => {
   })
 
   const { loading: saveLoading, run: saveRun } = useRequest(updateParticipantApi, {
-    onSuccess: data => {
-      console.log('updateParticipantApi', data);
+    manual: true,
+    onSuccess: () => {
       toast?.current?.info('Modify successfully')
     }
   })
@@ -112,17 +84,22 @@ const ParticipatorProfileEditCard: FC = () => {
     <PCard className="h-[800px] w-[800px] px-[90px] py-[36px] bg-[#EFE8E4]" bodyClass="p-0">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex">
-          <PAvatar imgSrc={maleAvatarSrc} className="w-[160px] h-[160px] shrink-0" />
+          <PAvatar imgSrc={userInfo.avatar} className="w-[160px] h-[160px] shrink-0" />
 
           <div className="ml-[40px] flex-1">
-            <div className="text-[#565352] text-lg font-bold font-playfair leading-normal">E-mail : researcher@pooling.tools</div>
-            <div className="pt-[15px] text-[#565352] text-lg font-bold font-playfair leading-normal">Account Number : 865198251</div>
+            <div className="text-[#565352] text-lg font-bold font-playfair leading-normal">
+              E-mail : {userInfo.email}
+            </div>
+            <div className="pt-[15px] text-[#565352] text-lg font-bold font-playfair leading-normal">
+              ID : {userInfo.id}
+            </div>
 
             <FormRow className="pt-[40px]">
               <PInput 
                 className="w-[200px]"
                 label="First name" 
                 isRequired
+                defaultValue={userInfo.firstName}
                 errorMessage={errors.firstName && errors.firstName.message}
                 {...register("firstName", rules.firstName)}
               />
@@ -130,6 +107,7 @@ const ParticipatorProfileEditCard: FC = () => {
                 className="w-[200px]"
                 label="Last name" 
                 isRequired
+                defaultValue={userInfo.lastName}
                 errorMessage={errors.lastName && errors.lastName.message}
                 {...register("lastName", rules.lastName)}
               />
@@ -142,11 +120,11 @@ const ParticipatorProfileEditCard: FC = () => {
           <Controller
             control={control}
             name="section"
-            defaultValue={''}
+            defaultValue={userInfo.section}
             rules={rules.section}
-            
             render={({ field }) => (
               <PSelect 
+                selectionMode="single"
                 label="Section" 
                 placeholder="" 
                 options={sectionOptions}
@@ -167,7 +145,7 @@ const ParticipatorProfileEditCard: FC = () => {
           <Controller
             control={control}
             name="occupation"
-            defaultValue={''}
+            defaultValue={userInfo.occupation}
             rules={rules.occupation}
             render={({ field }) => (
               <PSelect 
@@ -195,6 +173,7 @@ const ParticipatorProfileEditCard: FC = () => {
             <Controller
               control={control}
               name="pets"
+              defaultValue={userInfo.tags?.pets || []}
               render={({ field }) => (
                 <PTagsInput 
                   value={field.value} 
@@ -210,6 +189,7 @@ const ParticipatorProfileEditCard: FC = () => {
         <FormRow className="pt-[32px]" label="Medical history">
           <Controller
             control={control}
+            defaultValue={userInfo.tags?.medicalHistory || []}
             name="medicalHistory"
             render={({ field }) => (
               <PTagsInput 
@@ -226,6 +206,7 @@ const ParticipatorProfileEditCard: FC = () => {
           <Controller
             control={control}
             name="other"
+            defaultValue={userInfo.tags?.other || []}
             render={({ field }) => (
               <PTagsInput 
                 value={field.value} 
@@ -240,6 +221,7 @@ const ParticipatorProfileEditCard: FC = () => {
         <FormRow className="pt-[32px]" label="Describe Yourself">
           <PTextarea
             minRows={5}
+            defaultValue={userInfo.description}
             {...register("description")}
           />
         </FormRow>

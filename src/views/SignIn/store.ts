@@ -18,12 +18,12 @@ const useSignInStore = create<IUserStore>((set, get) => ({
     if (!id || !type) return
 
     let info: IUserInfo = {}
-    if (type === '0') {
+    if (+type === 0) {
       info = await getParticipantUserApi(id)
-    } else if (type === 1) {
+    } else if (+type === 1) {
       info = await getResearcherUserApi(id)
     }
-    set(() => ({ userInfo: { id, type, ...info } }))
+    set(() => ({ userInfo: { id, type, ...info, avatar: info.avatar } }))
   },
   setUserInfo: (userInfo: IUserInfo) => {
     const oldInfo = get().userInfo || {}

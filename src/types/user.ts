@@ -68,6 +68,7 @@ export interface IResearcherUserProps {
 
 export interface IUserInfo {
   id?: string
+  avatar?: string
   type?: USER_TYPE
   email?: string
   firstName?: string
@@ -87,6 +88,7 @@ export interface IUserInfo {
   relatedLinks?: string[]
   section?: string
   occupation?: string
+  description?: string
 }
 
 

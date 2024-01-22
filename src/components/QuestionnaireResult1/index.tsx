@@ -1,6 +1,6 @@
 import PCard from "@/components/common/PCard"
 import PTitle from "@/components/common/PTitle"
-import { FC } from "react"
+import { FC, useState } from "react"
 import PButton from "@/components/common/PButton"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import { useRequest } from "ahooks"
@@ -37,10 +37,18 @@ const data1 = [
   },
 ]
 
+interface  IResultItem {
+
+}
+
 const QuestionnaireResult: FC = () => {
   const { id } = useParams()
+  const [resultItems, setResultItems] = useState([])
 
   useRequest(() => getQuestionnaireResultApi(id), {
+    onSuccess() {
+      
+    },
     ready: !!id
   })
 

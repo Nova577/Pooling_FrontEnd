@@ -1,10 +1,8 @@
 import PCard from "@/components/common/PCard"
 import PTitle from "@/components/common/PTitle"
 import PAvatar from "@/components/common/PAvatar"
-import maleAvatarSrc from '@/assets/male_avatar.png'
 import { FC, useState } from "react"
 import FormRow from "@/views/SignUp/FormRow"
-// import PInput from "@/components/common/PInput2"
 import PSelect from "@/components/common/PSelect"
 import PTagsInput from '@/components/common/PTagsInput'
 import PTextarea from '@/components/common/PTextarea'
@@ -16,27 +14,27 @@ import { formatDirectoryOption } from '@/utils/util'
 import { ISelectOptionItem } from '@/types/global'
 import useSignInStore from '@/views/SignIn/store'
 import { toast } from "../common/PToast"
-import { getResearcherUserApi, updateResearcherApi } from '@/apis/user'
+import { updateResearcherApi } from '@/apis/user'
 
 interface IResearchProfile {
   avatar?: string
-  email?: string
-  institute?: string
-  title?: string
-  researchFields?: string[]
-  relatedLinks?: string[]
-  other?: string[]
-  description?: string
+  email: string
+  institute: string
+  title: string
+  researchFields: string[]
+  relatedLinks: string[]
+  other: string[]
+  description: string
 }
 
-const initResearchFormValue: IResearchProfile = {
-  institute: '',
-  title: '',
-  researchFields: [],
-  other: [],
-  relatedLinks: [],
-  description: '',
-}
+// const initResearchFormValue: IResearchProfile = {
+//   institute: '',
+//   title: '',
+//   researchFields: [],
+//   other: [],
+//   relatedLinks: [],
+//   description: '',
+// }
 
 const rules = {
   institute: {
@@ -50,28 +48,11 @@ const rules = {
 const ResearchProfileEdit: FC = () => {
   const { register, formState: { errors }, control, setValue, handleSubmit } = useForm<IResearchProfile>({
     mode: 'onBlur',
-    defaultValues: initResearchFormValue,
   })
 
   const [instituteOptions, setInstituteOptions] = useState<ISelectOptionItem[]>([])
   const [titleOptions, setTitleOptions] = useState<ISelectOptionItem[]>([])
-  const userInfo = useSignInStore(state=> state.userInfo)
-
-  useRequest(() => getResearcherUserApi(userInfo!.id!), {
-    onSuccess: (data: IResearchProfile) => {
-      console.log('getResearcherUserApi', data);
-      // if(data && Object.keys(initProfileFormValue).length > 0) {
-      // for(const key in initProfileFormValue){
-      //   console.log('key', key, data[key]);
-        
-      //   // setValue(key, data[key]);
-      // }
-      // }
-      // setValue([data])
-    },
-    ready: !!userInfo?.id,
-  })
-
+  const userInfo = useSignInStore(state=> state.userInfo) || {}
 
   useRequest(() => getDictionaryApi('Institute'), {
     onSuccess(data) {
@@ -90,8 +71,8 @@ const ResearchProfileEdit: FC = () => {
   })
 
   const { loading: saveLoading, run: saveRun } = useRequest(updateResearcherApi, {
-    onSuccess: data => {
-      console.log('updateParticipantApi', data);
+    manual: true,
+    onSuccess: () => {
       toast?.current?.info('Modify successfully')
     }
   })
@@ -105,11 +86,15 @@ const ResearchProfileEdit: FC = () => {
     <PCard className="h-[800px] w-[800px] px-[90px] py-[36px] bg-[#F1E8E3]" bodyClass="p-0">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex">
-          <PAvatar imgSrc={maleAvatarSrc} className="w-[160px] h-[160px] shrink-0" />
+          <PAvatar imgSrc={userInfo.avatar} className="w-[160px] h-[160px] shrink-0" />
 
           <div className="ml-[40px] flex-1 flex flex-col justify-center">
-            <PTitle className="opacity-80 text-[18px] leading-6">E-mail : researcher@pooling.tools</PTitle>
-            <PTitle className="opacity-80 text-[18px] leading-6 mt-[15px]">Account Number : 865198251</PTitle>
+            <PTitle className="opacity-80 text-[18px] leading-6">
+              E-mail : {userInfo.email}
+            </PTitle>
+            <PTitle className="opacity-80 text-[18px] leading-6 mt-[15px]">
+              ID : {userInfo.id}
+            </PTitle>
 
 
             {/* <FormRow className="pt-[0px] mt-[40px]">
@@ -124,7 +109,7 @@ const ResearchProfileEdit: FC = () => {
           <Controller
             control={control}
             name="institute"
-            defaultValue={''}
+            defaultValue={userInfo.institute}
             rules={rules.institute}
             render={({ field }) => (
               <PSelect 
@@ -149,7 +134,7 @@ const ResearchProfileEdit: FC = () => {
             control={control}
             name="title"
             rules={rules.title}
-            defaultValue={''}
+            defaultValue={userInfo.title}
             render={({ field }) => (
               <PSelect 
                 selectionMode="single"
@@ -175,6 +160,7 @@ const ResearchProfileEdit: FC = () => {
         <FormRow className="pt-[32px]" label="Research Fields">
           <Controller
             control={control}
+            defaultValue={userInfo.tags?.researchFields}
             name="researchFields"
             render={({ field }) => (
               <PTagsInput 
@@ -191,6 +177,7 @@ const ResearchProfileEdit: FC = () => {
           <Controller
             control={control}
             name="relatedLinks"
+            defaultValue={userInfo.relatedLinks}
             render={({ field }) => (
               <PTagsInput 
                 value={field.value} 
@@ -206,6 +193,7 @@ const ResearchProfileEdit: FC = () => {
           <Controller
             control={control}
             name="other"
+            defaultValue={userInfo.tags?.other}
             render={({ field }) => (
               <PTagsInput 
                 value={field.value} 
@@ -220,6 +208,7 @@ const ResearchProfileEdit: FC = () => {
         <FormRow  className="pt-[32px]" label="Describe Yourself">
           <PTextarea
             minRows={5}
+            defaultValue={userInfo.description}
             {...register("description")}
           />
         </FormRow>
