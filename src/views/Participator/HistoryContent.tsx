@@ -11,23 +11,26 @@ const DEFAULT_LIMIT = 10
 
 const HistoryContent: FC = () => {
   const historyRef = useRef<HTMLDivElement>(null)
-  const [offset, setOffset] = useState(0)
+  const [keyword, setKeyword] = useState<string>('')
+  const key = useRef<string>('')
+  const offset = useRef<number>(0)
   const [isBottom, setIsBottom] = useState(false)
   const [historyList, setHistoryList] = useState<IResearchItem[]>([])
   const [isAll, setIsAll] = useState(false)  
   
-  const { run } = useRequest(() => getHistoryApi({ offset, limit: DEFAULT_LIMIT }), {
+  
+  const { run } = useRequest(() => getHistoryApi({ offset: offset.current, key: key.current, limit: DEFAULT_LIMIT }), {
     onSuccess(data) {
       const list = data?.researchList || []
       
       setIsAll(list.length < DEFAULT_LIMIT)
-      if (offset === 0) {
+      if (offset.current === 0) {
+        historyRef?.current && historyRef.current.scrollTo(0, 0)
         setHistoryList(list)
       } else {
         setHistoryList((originList) => [...originList, ...list])
       }
-
-      setOffset(offset + DEFAULT_LIMIT)
+      offset.current = offset.current + DEFAULT_LIMIT
     },
     cacheKey: `history_list_${offset}`,
   })
@@ -57,10 +60,27 @@ const HistoryContent: FC = () => {
     }
   }, [scroll?.top, scrollMethod, isAll])
 
+  const handleKeyPress = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      offset.current = 0
+      key.current = keyword
+
+      run()
+    }
+  }
 
   return (
     <div>
-      <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
+      <PInput 
+        placeholder="Searching Keyword Here..." 
+        startContent={<img className="pr-[10px]" 
+        src={searchIconSrc} />} 
+        value={keyword}
+        onValueChange={(value) => {
+          setKeyword(value)
+        }}
+        onKeyPress={handleKeyPress}
+      />
 
       <div className="pt-[20px]">
         <PCard className="bg-white" bodyClass="p-0">
