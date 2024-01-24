@@ -96,7 +96,7 @@ const ResearchCard: FC<Props> = (props) => {
       </PCard>
       
       <ResearchCardDetailModal
-        title="Usability Research"
+        name="Usability Research"
         fee="$10"
         school="school"
         status="status"

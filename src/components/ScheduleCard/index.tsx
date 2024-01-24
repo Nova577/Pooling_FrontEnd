@@ -4,7 +4,7 @@ import PCard from "@/components/common/PCard"
 import TimelineCard from "@/components/TimelineCard"
 import { getScheduleApi } from '@/apis/project'
 import { useRequest, useScroll } from "ahooks"
-import { useState, useRef, useCallback, useMemo, FC } from 'react'
+import { useState, useRef, useCallback, useMemo, FC, useEffect } from 'react'
 import { IQuestionsItem } from '@/apis/questionnaire'
 import PScrollContainer from '@/components/common/PScrollContainer'
 import clsx from "clsx"
@@ -50,6 +50,8 @@ const ScheduleCard: FC<IProps> = (props) => {
     position
   } = props
 
+  const isSchedule = position === PositionType.SCHEDULE
+
   const scheduleRef = useRef<HTMLDivElement>(null)
   const [scheduleList, setScheduleList] = useState<IScheduleItem[]>([])
   const [keyword, setKeyword] = useState<string>('')
@@ -59,7 +61,7 @@ const ScheduleCard: FC<IProps> = (props) => {
   const [isAll, setIsAll] = useState(false)  
 
   const { run } = useRequest(() => getScheduleApi({ limit: DEFAULT_LIMIT, offset: offset.current, key: key.current }), {
-    
+
     onSuccess(data) {
       const { appointments = [], questionnaire = [] } = data || {}
       const newAppointments = appointments.map(it => {
@@ -122,38 +124,74 @@ const ScheduleCard: FC<IProps> = (props) => {
   return (
     <div className="max-w-5xl min-w-[768px]">
       {
-        position && (
-          <PInput 
-            placeholder="Searching Keyword Here..." 
-            startContent={<img className="pr-[10px]" 
-            src={searchIconSrc} />} 
-            value={keyword}
-            onValueChange={(value) => {
-              setKeyword(value)
-            }}
-            onKeyPress={handleKeyPress}
-          />
+        position === PositionType.SCHEDULE && (
+          <div className="pb-[20px]">
+            <PInput 
+              placeholder="Searching Keyword Here..." 
+              startContent={<img className="pr-[10px]" 
+              src={searchIconSrc} />} 
+              value={keyword}
+              onValueChange={(value) => {
+                setKeyword(value)
+              }}
+              onKeyPress={handleKeyPress}
+            />
+          </div>
         )
       }
 
-      <div className="pt-[20px]">
-        <PCard className="bg-[#F7F4F1]" bodyClass="py-0 px-6 my-9 max-h-[880px] overflow-auto" >
-          <PScrollContainer className="h-[820px]" ref={scheduleRef}>
-            <div className="pt-[20px]">
+      <div>
+        <PCard 
+          className={isSchedule ? "bg-[#F7F4F1]" : "w-[500px] h-[400px] bg-[#F1E8E3] box-border"}
+          bodyClass={isSchedule ? "py-0 px-6 my-9 max-h-[880px] overflow-auto" : "pt-[25px] pb-[15px] box-border pl-[30px] pr-[15px]"}
+        >
+          {
+            position === PositionType.DASHBOARD && <i className="fi fi-rr-calendar-check text-[30px] text-[#7A7371] h-[40px]"></i>
+          }
+          <PScrollContainer 
+            className={isSchedule ? "h-[820px]" :  "h-[315px]"} 
+            ref={scheduleRef}
+            size={isSchedule ? 'md' : "sm"}
+          >
+            <div>
               {
                 scheduleList.map((it, index) => (
-                  <div key={index} className="h-[100px] w-full relative">
-                    <div className="absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%]  w-[30px] h-[30px] bg-[#DBC6B9] rounded-full flex justify-center items-center">
-                      <span className="w-[13px] h-[13px] bg-[#fff] rounded-full"></span>
+                  <div key={index} className={clsx(
+                    "w-full relative",
+                    isSchedule ? 'h-[100px]' : 'h-[50px]',
+                  )}>
+                    
+                    <div className={clsx(
+                      "absolute top-0 left-0 w-full h-[135px] flex justify-center items-center",
+                      !isSchedule && 'h-[65px]',
+                    )}>
+                      <div className={clsx(
+                        "bg-[#DBC6B9] rounded-full flex justify-center items-center w-[30px] h-[30px]",
+                        !isSchedule && 'scale-50',
+                      )}
+                      >
+                        <span className={clsx(
+                          "bg-[#fff] rounded-full w-[13px] h-[13px]",
+                        )}></span>
+                      </div>
                     </div>
-                    <div className={clsx("w-[420px] h-[135px] absolute top-2/4 translate-y-[-50%]", index % 2 === 0 ? 'left-2/4 ml-[35px]' : 'right-2/4 mr-[35px]')}>
-                      <TimelineCard 
-                        className="h-full"
-                        {...it}
-                        title={it.name}
-                        dateString={`${dayjs(it.fullTime).format('MMM D')} th`}
-                        type={it.type === 'appointment' ? TimelineCardType.APPOINTMENT : TimelineCardType.QUESTIONNAIRE }
-                      />
+
+                    <div className={clsx(
+                      "absolute w-full flex",
+                      index % 2 === 0 ? 'justify-end' : 'justify-start',
+                      
+                    )}>
+                      <div className={
+                        isSchedule ?  "w-[420px] h-[135px]" :  "w-[203px] h-[65px]"
+                      }>
+                        <TimelineCard 
+                          className='h-full'
+                          {...it}
+                          isSchedule={isSchedule}
+                          dateString={`${dayjs(it.fullTime).format('MMM D')} th`}
+                          type={it.type === 'appointment' ? TimelineCardType.APPOINTMENT : TimelineCardType.QUESTIONNAIRE }
+                        />
+                      </div>
                     </div>
                   </div>
                 ))

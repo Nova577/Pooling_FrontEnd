@@ -4,20 +4,25 @@ import PTag from "@/components/common/PTag"
 import ResearchCardDetailModal from "@/components/ResearchCardDetailModal"
 import clsx from "clsx"
 import { useBoolean } from "ahooks"
+import { HISTORY_STATUS_MAP } from '@/types/global'
 
 interface Props {
-  imgSrc?: string
-  title?: string
+  img?: string
+  name?: string
+  preference?: string[]
   tags?: string[]
   status?: string
   className?: string
 }
 
+const defaultPreferences = [] as string[]
+
 const defaultTags = [] as string[]
 const ResearchCard: FC<Props> = (props) => {
   const {
-    imgSrc = '',
-    title = '',
+    img = '',
+    name = '',
+    preference = defaultPreferences,
     tags = defaultTags,
     status = '',
     className,
@@ -44,23 +49,23 @@ const ResearchCard: FC<Props> = (props) => {
       <PCard className={clsx("bg-[#E9DBD3] overflow-hidden w-[490px]", className)} bodyClass="p-0" onClick={handleClick}>
         <div className="flex gap-[10px]">
           {
-            imgSrc
+            img
             ? (
-              <img className="h-[135px] w-[155px] rounded-r-full shrink-0 object-cover" src={imgSrc} />
+              <img className="h-[135px] w-[155px] rounded-r-full shrink-0 object-cover" src={img} />
             )
             : (
               <div className="h-[135px] w-[155px] rounded-r-full shrink-0" />
             )
           }
 
-          <div className="pt-6 pr-6">
+          <div className="pt-6 pr-6 flex-1">
             <p className="text-neutral-900 text-[20px] font-bold font-playfair leading-8">
-              { title }
+              { name }
             </p>
 
             <div className="pt-[15px] flex gap-[10px]">
               {
-                tags.map((it, index) => {
+                preference.slice(0, 3).map((it, index) => {
                   return (
                     <PTag key={it + index} size="sm" className="text-[14px]">{ it }</PTag>
                   )
@@ -68,9 +73,9 @@ const ResearchCard: FC<Props> = (props) => {
               }
             </div>
 
-            <div className="pt-2 flex justify-end">
+            <div className="w-full pt-2 flex justify-end">
               <span className="text-neutral-900 text-xl font-bold font-playfair !text-[15px]">
-                { status }
+                { HISTORY_STATUS_MAP[+status as number] }
               </span>
             </div>
           </div>

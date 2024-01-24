@@ -5,31 +5,34 @@ import searchIconSrc from '@/assets/search_icon.svg'
 import ParticipatorHistoryCard from "@/components/ParticipatorHistoryCard"
 import { getFeedApi, IResearchItem } from '@/apis/project'
 import { useRequest, useScroll } from "ahooks"
+import PScrollContainer from '@/components/common/PScrollContainer'
 
 const DEFAULT_LIMIT = 10
 
 const DiscoveryContent: FC = () => {
   const historyRef = useRef<HTMLDivElement>(null)
-  const [offset, setOffset] = useState(0)
+  const [keyword, setKeyword] = useState<string>('')
+  const key = useRef<string>('')
+  const offset = useRef<number>(0)
   const [isBottom, setIsBottom] = useState(false)
   const [isAll, setIsAll] = useState(false)  
   const [historyList, setHistoryList] = useState<IResearchItem[]>([])
 
-  // TODO change api
-  const { run } = useRequest(() => getFeedApi({ offset, limit: DEFAULT_LIMIT }), {
+  const { run } = useRequest(() => getFeedApi({ offset: offset.current, key: key.current, limit: DEFAULT_LIMIT }), {
     onSuccess(data) {
       const list = data?.researchList || []
       
       setIsAll(list.length < DEFAULT_LIMIT)
-      if (offset === 0) {
+      if (offset.current === 0) {
+        historyRef?.current && historyRef.current.scrollTo(0, 0)
         setHistoryList(list)
       } else {
         setHistoryList((originList) => [...originList, ...list])
       }
 
-      setOffset(offset + DEFAULT_LIMIT)
+      offset.current = offset.current + DEFAULT_LIMIT
     },
-    cacheKey: `history_list_${offset}`,
+    cacheKey: `flow_list_${offset}`,
   })
 
   const scroll = useScroll(historyRef, () => {
@@ -57,18 +60,44 @@ const DiscoveryContent: FC = () => {
     }
   }, [scroll?.top, scrollMethod, isAll])
 
+
+  const handleKeyPress = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      offset.current = 0
+      key.current = keyword
+
+      run()
+    }
+  }
+
   return (
     <div className="max-w-5xl">
-      <PInput placeholder="Searching Keyword Here..." startContent={<img className="pr-[10px]" src={searchIconSrc} />} />
+      <PInput 
+        placeholder="Searching Keyword Here..." 
+        startContent={<img className="pr-[10px]" 
+        src={searchIconSrc} />} 
+        value={keyword}
+        onValueChange={(value) => {
+          setKeyword(value)
+        }}
+        onKeyPress={handleKeyPress}
+      />
 
-      <div className="mt-[20px] pr-[20px] grid grid-cols-1 gap-y-5 gap-x-[30px] max-h-[680px] overflow-y-scroll xl:grid-cols-2">
-        {
-          historyList.map((it, index) => {
-            return (
-              <ParticipatorHistoryCard key={index} {...it} showBaseInfo position="discovery" />
-            )
-          })
-        }
+      <div className="pt-[20px]">
+        <PScrollContainer 
+          ref={historyRef} 
+          className="h-[680px] mr-[20px] !pr-[15px]"
+        >
+          <div className="grid grid-cols-2 gap-[25px]">
+            {
+              historyList.map((it, index) => {
+                return (
+                  <ParticipatorHistoryCard key={index} {...it} showBaseInfo position="discovery" />
+                )
+              })
+            }
+          </div>
+        </PScrollContainer>
       </div>
     </div>
   )

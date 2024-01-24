@@ -10,3 +10,7 @@ export enum HISTORY_STATUS_MAP {
   'Close'
 }
 
+export enum PositionType {
+  DASHBOARD = 'dashboard',
+  SCHEDULE = 'schedule'
+}

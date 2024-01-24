@@ -17,19 +17,29 @@ export enum TimelineCardType {
 
 interface Props {
   id?: string
-  title?: string
+  isSchedule: boolean
+  name?: string
   dateString?: string
   type?: TimelineCardType
   className?: string
+  timeInfo?: {
+    date?: string
+    StartTime?: string
+    EndTime?: string
+    dueDate?: string
+    dueTime?: string
+    timeLimit?: number
+  }
+  meetingInfo?: React.ReactNode
+  description?: React.ReactNode
 }
 
 const TimelineCard: FC<Props> = (props) => {
   const navigate = useNavigate()
 
-  const { id, title = '', dateString, type, className } = props
+  const { id, name = '', dateString, timeInfo, meetingInfo, description, type, className, isSchedule } = props
 
   const [detailModalIsOpen, { setFalse: setDetailModalIsOpenFalse, setTrue: setDetailModalIsOpenTrue }] = useBoolean(false)
-
 
   const handleClick = () => {
     if (!id) return
@@ -56,19 +66,29 @@ const TimelineCard: FC<Props> = (props) => {
   return (
     <>
       <PCard
-        className={clsx("bg-[#EDE2DB] border-2 border-transparent active:border-[#C1BFBD] cursor-pointer",  className)}
-        bodyClass="w-full py-[18px] px-[30px] gap-0"
+        className={clsx(
+          "bg-[#EDE2DB] border-2 border-transparent active:border-[#C1BFBD] cursor-pointer", 
+          !isSchedule && 'rounded-xl',
+          className,
+        )}
+        bodyClass={clsx(
+          "w-full gap-0 ",
+          isSchedule ? 'py-[18px] px-[30px]' : 'px-[13px] py-[10px]'
+        )}
         onClick={handleClick}
       >
         <h3 
-          className="text-neutral-900 text-[25px] font-bold font-playfair leading-[33px] truncate"
+          className={clsx(
+            "text-neutral-900 font-bold font-playfair  truncate",
+            isSchedule ? 'text-[25px] leading-[33px]' : 'text-[11px] leading-[15px]'
+          )}
         >
-          { title }
+          { name }
         </h3>
 
-        <div className="mt-[20px] flex gap-[20px] ">
-          <PTag className="py-4 flex gap-[10px] bg-[#F6F1ED]" size="sm">
-            <CalendarIcon />
+        <div className={clsx("flex", isSchedule ? 'mt-[20px] gap-[20px]' : 'mt-[10px] gap-[10px]')}>
+          <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+            <CalendarIcon w={isSchedule ? 20 : 10} />
 
             {
               dateString && <span>{ dateString }</span>
@@ -77,8 +97,8 @@ const TimelineCard: FC<Props> = (props) => {
 
           {
             type === TimelineCardType.APPOINTMENT && (
-              <PTag className="py-4 flex gap-[10px] bg-[#F6F1ED]" size="sm">
-                <AppointmentIcon />
+              <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+                <AppointmentIcon w={isSchedule ? 20 : 10} />
 
                 <span>
                   Appointment
@@ -89,8 +109,8 @@ const TimelineCard: FC<Props> = (props) => {
 
           {
             type === TimelineCardType.QUESTIONNAIRE && (
-              <PTag className="py-4 flex gap-[10px] bg-[#F6F1ED]" size="sm">
-                <QuestionnaireIcon />
+              <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+                <QuestionnaireIcon w={isSchedule ? 20 : 10} />
 
                 <span>
                   Questionnaire
@@ -104,6 +124,12 @@ const TimelineCard: FC<Props> = (props) => {
       <ParticipatorScheduleDetailModal 
         onWillCauseClose={handleDetailModalWillCauseClose} 
         isOpen={detailModalIsOpen}
+        name={name}
+        dateString={dateString}
+        startTime={timeInfo?.StartTime}
+        endTime={timeInfo?.EndTime}
+        meetingInfo={ meetingInfo }
+        description={description}
       />
     </>
   )

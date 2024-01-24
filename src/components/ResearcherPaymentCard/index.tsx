@@ -12,7 +12,7 @@ import { balanceBasic } from '@/types/user'
 import { prompt } from '@/components/common/PPromptModal'
 
 const ResearcherPaymentCard: FC = () => {
-  const balanceRef = useRef(null);
+  const balanceRef = useRef<HTMLDivElement>(null);
   const [filterMonthPickValue, setMonthPickValue] = useState(dayjs()) 
   const [balanceItems, setBalanceItems] = useState<ICheckItem[]>([])
   const [balanceBasic, setBalanceBasic] = useState<balanceBasic>({
@@ -35,11 +35,8 @@ const ResearcherPaymentCard: FC = () => {
   const freshList = (value: dayjs.Dayjs) => {
     const date = dayjs(value).format('YYYY-MM')
     run(date)
-    console.log('balanceRef', balanceRef);
     
-    if (balanceRef?.current) {
-      balanceRef.current.scrollTop = 0
-    }
+    balanceRef.current && balanceRef.current.scrollTo(0, 0)
   }
 
   const handleFilterMonthPickerChange = (newValue: dayjs.Dayjs) => {
@@ -72,7 +69,6 @@ const ResearcherPaymentCard: FC = () => {
     <PCard className="bg-[#EFE8E4] w-[800px] h-[800]" bodyClass="pl-[75px] pr-[50px]">
       <div className="pr-[25px] flex justify-between items-center">
         <PTitle className="text-30px !text-[#141414] leading-[40px] !opacity-100">Payment Methods</PTitle>
-        {/* TODO */}
         <PButton className="text-[25px]" size="md" radius="full" onClick={() => handleAddNew()}>Add New</PButton>
       </div>
 
@@ -85,6 +81,7 @@ const ResearcherPaymentCard: FC = () => {
         <PButton className="text-[25px]" size="md" radius="full">Delete</PButton>
       </div>
 
+      {/* TODO */}
       <div className="pr-[25px] flex justify-between items-end mt-[10px]">
         <PCard className="w-[500px] h-[70px] bg-[#F9F6F4]" bodyClass="flex flex-row px-[30px] py-[10px]">
           <h3 className="w-[100px] font-playfair text-[25px] text-[#141414] font-bold leading-[33.32px]">Master</h3>

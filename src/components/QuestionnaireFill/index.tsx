@@ -74,7 +74,9 @@ const QuestionnaireFill: FC = () => {
             radius="full" size="sm" 
             onClick={() => {
               prompt?.current?.close()
-              navigate('/')
+              navigate('/', {
+                replace: true
+              })
             }}
           >
             OK
@@ -195,7 +197,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={it.answer as string}
-                              rules={{ required: 'Please enter the answer' }}
+                              rules={it.required ? { required: 'Please enter the answer' } : {}}
                               render={({ field }) => (
                                 <PInput 
                                   className='!h-[50px]' 
@@ -211,7 +213,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={[]}
-                              rules={{ required: 'Please select the answer' }}
+                              rules={it.required ? { required: 'Please select the answer' } : {}}
                               render={({ field }) => (
                                 <PCheckboxGroup 
                                   value={field.value as string[]}
@@ -227,7 +229,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={''}
-                              rules={{ required: 'Please select the answer' }}
+                              rules={it.required ? { required: 'Please select the answer' } : {}}
                               render={({ field }) => (
                                 <PRadioRegularGroup 
                                   isRequired

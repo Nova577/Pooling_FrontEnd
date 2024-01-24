@@ -46,7 +46,7 @@ const routersMap: IRouterItem[] = [
   {
     path: '/participator',
     element: <Participator />,
-    access: [USER_TYPE.PARTICIPATOR]
+    // access: [USER_TYPE.PARTICIPATOR]
   },
   {
     path: '/researcher',
