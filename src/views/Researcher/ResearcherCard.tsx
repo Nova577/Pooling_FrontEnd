@@ -4,26 +4,18 @@ import PTag from "@/components/common/PTag"
 import ResearchCardDetailModal from "@/components/ResearchCardDetailModal"
 import clsx from "clsx"
 import { useBoolean } from "ahooks"
-import { HISTORY_STATUS_MAP } from '@/types/global'
+import { HISTORY_STATUS_MAP, ResearchCardPosition, IResearchItem } from '@/types/global'
 
-interface Props {
+interface Props extends IResearchItem {
   img?: string
-  name?: string
-  preference?: string[]
-  tags?: string[]
-  status?: string
   className?: string
 }
 
-const defaultPreferences = [] as string[]
-
-const defaultTags = [] as string[]
 const ResearchCard: FC<Props> = (props) => {
   const {
     img = '',
     name = '',
-    preference = defaultPreferences,
-    tags = defaultTags,
+    preference = [],
     status = '',
     className,
   } = props
@@ -82,7 +74,12 @@ const ResearchCard: FC<Props> = (props) => {
         </div>
       </PCard>
 
-      <ResearchCardDetailModal isOpen={detailModalIsOpen} type="closed" onWillCauseClose={handleDetailModalWillCauseClose} />
+      <ResearchCardDetailModal 
+        isOpen={detailModalIsOpen} 
+        {...props}
+        position={ResearchCardPosition.DASHBOARD}
+        onWillCauseClose={handleDetailModalWillCauseClose} 
+      />
     </>
   )
 }

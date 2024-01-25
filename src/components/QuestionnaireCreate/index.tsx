@@ -13,11 +13,13 @@ import dayjs from 'dayjs'
 import DatePicker from "react-datepicker";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks'
-import { getQuestionnaireApi, IQuestionnaireData, createQuestionnaireApi, updateQuestionnaireApi } from '@/apis/questionnaire'
+import { getQuestionnaireApi, createQuestionnaireApi, updateQuestionnaireApi } from '@/apis/questionnaire'
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm, FormProvider, useFieldArray, Controller } from "react-hook-form"
 import PMultiPlainInput from "@/components/common/PMultiPlainInput"
 import { toast } from '@/components/common/PToast/index'
+import { IQuestionnaireData } from '@/types/global'
+
 // import Datepicker1 from "react-tailwindcss-datepicker"; 
 
 const defaultOptionNum = 3

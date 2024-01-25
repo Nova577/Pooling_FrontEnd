@@ -1,11 +1,11 @@
 import PInput from "@/components/common/PInput2"
 import { FC, useState, useMemo, useRef, useCallback } from "react"
-// import ResearchCard from "@/components/ResearchCard"
 import searchIconSrc from '@/assets/search_icon.svg'
 import ParticipatorHistoryCard from "@/components/ParticipatorHistoryCard"
-import { getFeedApi, IResearchItem } from '@/apis/project'
+import { getFeedApi } from '@/apis/project'
 import { useRequest, useScroll } from "ahooks"
 import PScrollContainer from '@/components/common/PScrollContainer'
+import { ResearchCardPosition, IResearchItem } from '@/types/global'
 
 const DEFAULT_LIMIT = 10
 
@@ -92,7 +92,11 @@ const DiscoveryContent: FC = () => {
             {
               historyList.map((it, index) => {
                 return (
-                  <ParticipatorHistoryCard key={index} {...it} showBaseInfo position="discovery" />
+                  <ParticipatorHistoryCard 
+                    key={index} {...it} 
+                    showBaseInfo 
+                    position={ResearchCardPosition.DISCOVERY}
+                  />
                 )
               })
             }

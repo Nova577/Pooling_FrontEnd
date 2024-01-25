@@ -5,7 +5,8 @@ import PCard from "@/components/common/PCard"
 import ParticipatorHistoryCard from "@/components/ParticipatorHistoryCard"
 import PScrollContainer from '@/components/common/PScrollContainer'
 import { useRequest, useScroll } from "ahooks"
-import { getHistoryApi, IResearchItem } from '@/apis/project'
+import { getHistoryApi } from '@/apis/project'
+import { ResearchCardPosition, IResearchItem } from '@/types/global'
 
 const DEFAULT_LIMIT = 10
 
@@ -92,7 +93,12 @@ const HistoryContent: FC = () => {
               {
                 historyList.map((it, index) => {
                   return (
-                    <ParticipatorHistoryCard key={index} {...it} showStatus />
+                    <ParticipatorHistoryCard 
+                      key={index} 
+                      {...it} 
+                      showStatus 
+                      position={ResearchCardPosition.HISTORY}
+                    />
                   )
                 })
               }

@@ -1,27 +1,11 @@
 import request from '@/utils/request'
-import { IQuestionnaireData } from './questionnaire'
+import { IQuestionnaireData } from '@/types/global'
+import { IResearchRes, IAppointmentRes } from '@/types/global'
+
 interface ISearchParams {
   offset: number
   limit: number
   key?: string
-}
-
-export interface IResearchItem {
-  id: string
-  name: string
-  picture_id: string
-  headCount: number
-  reward: number
-  documents: Array<{ name: string; id: string }>
-  questionnaire_id: string
-  appointment_id: string
-  cooperators: string[]
-  description: string
-  status: string
-}
-
-interface IResearchRes {
-  researchList: IResearchItem[]
 }
 
 interface IScheduleRes {
@@ -64,4 +48,11 @@ export const getScheduleApi = async (params: ISearchParams): Promise<IScheduleRe
     offset: String(params.offset),
   }})
 }
+
+
+export const getAppointmentApi = async (id?: string): Promise<IAppointmentRes> => {
+  return request.get(`/api/V1/appointment/${id}`)
+}
+
+
 

@@ -1,25 +1,6 @@
 import request from '@/utils/request'
+import { IQuestionnaireData } from '@/types/global'
 
-export interface IQuestionsItem {
-  number?: number
-  question?: string
-  options?: string[]
-  choice?: number
-  required?: boolean
-}
-
-export interface IQuestionnaireData {
-  id?: string
-  name: string
-  description: string
-  timeInfo: {
-    dueDate: string
-    dueTime: string
-    timeLimit: number
-  }
-  eassayQuestions: IQuestionsItem[]
-  choiceQuestions: IQuestionsItem[]
-}
 
 export interface IAnswerItem {
   number?: number

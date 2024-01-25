@@ -5,19 +5,14 @@ import TimelineCard from "@/components/TimelineCard"
 import { getScheduleApi } from '@/apis/project'
 import { useRequest, useScroll } from "ahooks"
 import { useState, useRef, useCallback, useMemo, FC, useEffect } from 'react'
-import { IQuestionsItem } from '@/apis/questionnaire'
 import PScrollContainer from '@/components/common/PScrollContainer'
+import { SchedulePositionType, IQuestionsItem } from '@/types/global'
 import clsx from "clsx"
 import dayjs from "dayjs"
 
 export enum TimelineCardType {
   QUESTIONNAIRE = 'Questionnaire',
   APPOINTMENT = 'Appointment'
-}
-
-export enum PositionType {
-  DASHBOARD = 'dashboard',
-  SCHEDULE = 'schedule'
 }
 
 interface IScheduleItem {
@@ -40,7 +35,7 @@ interface IScheduleItem {
 }
 
 interface IProps {
-  position: PositionType
+  position: SchedulePositionType
 }
 
 const DEFAULT_LIMIT = 10
@@ -50,7 +45,7 @@ const ScheduleCard: FC<IProps> = (props) => {
     position
   } = props
 
-  const isSchedule = position === PositionType.SCHEDULE
+  const isSchedule = position === SchedulePositionType.SCHEDULE
 
   const scheduleRef = useRef<HTMLDivElement>(null)
   const [scheduleList, setScheduleList] = useState<IScheduleItem[]>([])
@@ -124,7 +119,7 @@ const ScheduleCard: FC<IProps> = (props) => {
   return (
     <div className="max-w-5xl min-w-[768px]">
       {
-        position === PositionType.SCHEDULE && (
+        position === SchedulePositionType.SCHEDULE && (
           <div className="pb-[20px]">
             <PInput 
               placeholder="Searching Keyword Here..." 
@@ -146,7 +141,7 @@ const ScheduleCard: FC<IProps> = (props) => {
           bodyClass={isSchedule ? "py-0 px-6 my-9 max-h-[880px] overflow-auto" : "pt-[25px] pb-[15px] box-border pl-[30px] pr-[15px]"}
         >
           {
-            position === PositionType.DASHBOARD && <i className="fi fi-rr-calendar-check text-[30px] text-[#7A7371] h-[40px]"></i>
+            position === SchedulePositionType.DASHBOARD && <i className="fi fi-rr-calendar-check text-[30px] text-[#7A7371] h-[40px]"></i>
           }
           <PScrollContainer 
             className={isSchedule ? "h-[820px]" :  "h-[315px]"} 

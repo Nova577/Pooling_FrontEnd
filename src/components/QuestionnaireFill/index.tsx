@@ -7,12 +7,13 @@ import PRadioRegularGroup from "@/components/common/PRadioRegularGroup"
 import PCheckboxGroup from "@/components/common/PCheckboxGroup"
 import PInput from "@/components/common/PInput2"
 import { useParams, useNavigate } from 'react-router-dom';
-import { getQuestionnaireApi, IQuestionnaireData, IAnswerItem, answerQuestionnaireApi } from '@/apis/questionnaire'
+import { getQuestionnaireApi, IAnswerItem, answerQuestionnaireApi } from '@/apis/questionnaire'
 import { useRequest, useCountDown } from 'ahooks'
 import { useForm, Controller, useFieldArray } from "react-hook-form"
 import { toast } from '@/components/common/PToast/index'
 import ClockIcon from '@/components/common/Icons/Clock'
 import { prompt } from '@/components/common/PPromptModal'
+import { IQuestionnaireData } from '@/types/global'
 
 interface IChoiceItemProps {
   key: string | number

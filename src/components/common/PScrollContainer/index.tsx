@@ -15,7 +15,7 @@ const ResetPassword = forwardRef<HTMLDivElement, Props>((props, ref) => {
     <div 
       className={clsx(
         "w-full",
-        "min-h-[100px]",
+        "min-h-[60px]",
         "overflow-y-auto",
         "overflow-x-hidden",
         "pr-[15px]",

@@ -3,11 +3,11 @@ import PCard from '@/components/common/PCard'
 import PScrollContainer from '@/components/common/PScrollContainer'
 import MatterIcon from '@/components/common/Icons/Matter'
 import PButton from '@/components/common/PButton'
-import testPortraitImgSrc from '@/assets/portrait-dark-skinned.avif'
 import ResearchCard from './ResearcherCard'
-import ScheduleCard, { PositionType } from '@/components/ScheduleCard'
-import { getHistoryApi, IResearchItem } from '@/apis/project'
+import ScheduleCard from '@/components/ScheduleCard'
+import { getHistoryApi } from '@/apis/project'
 import { useRequest, useScroll } from "ahooks"
+import { SchedulePositionType, IResearchItem } from '@/types/global'
 
 const DEFAULT_LIMIT = 10
 
@@ -94,10 +94,10 @@ const DashBoardContent: FC = () => {
 
         {/* <PCard className='w-[500px] h-[400px] bg-[#F1E8E3] box-border' bodyClass='pt-[25px] pb-[15px] box-border pl-[30px] pr-[15px]'>
           <i className="fi fi-rr-calendar-check text-[30px] text-[#7A7371] h-[40px]"></i>
-          <ScheduleCard position={PositionType.DASHBOARD} />
+          <ScheduleCard position={SchedulePositionType.DASHBOARD} />
         </PCard> */}
         <div className='w-[500px]'>
-          <ScheduleCard position={PositionType.DASHBOARD} />
+          <ScheduleCard position={SchedulePositionType.DASHBOARD} />
         </div>
       </div>
 
@@ -123,11 +123,6 @@ const DashBoardContent: FC = () => {
                     <ResearchCard 
                       key={index} 
                       {...it}
-                      
-                      // imgSrc={it.imgSrc} 
-                      // title={it.title} 
-                      // tags={it.tags} 
-                      // status={it.status}
                     />
                   )
                 })
