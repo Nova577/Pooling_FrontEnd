@@ -72,16 +72,17 @@ const NewQuestionnaireCard: FC<Props> = () => {
       <PCard className="bg-[#E9DDD5]" bodyClass="px-unit-10 pt-unit-8 pb-[18px]">
         <div className="w-[768px]">
           <form className="h-full w-full">
-            <div className="w-full grid grid-cols-3 gap-8">
-              <div className="col-span-2">
-                <PInput className="h-unit-10" placeholder="Add Research Name" value={newQuestionnaireFormValue.researchName} onChange={handleResearchNameInputChange} />
+            <div className="w-full grid grid-cols-3 gap-unit-4">
+              <div className="h-[188px] col-span-2 flex flex-col gap-unit-4">
+                <PInput className="h-unit-10 col-span-2" placeholder="Add Research Name" value={newQuestionnaireFormValue.researchName} onChange={handleResearchNameInputChange} />
+
+                <div className="flex gap-4">
+                  <PInput className="h-unit-10" startContent={<i className="fi fi-rr-users-alt text-2xl text-[#848280] translate-y-[2px]" />} placeholder="Head Count" value={newQuestionnaireFormValue.headCountStr} onChange={handleHeadCountInputChange} />
+                  <PInput className="h-unit-10" startContent={<i className="fi fi-br-badge text-2xl text-[#848280] translate-y-[2px]" />} placeholder="Reward for Each" />
+                </div>
               </div>
 
               <PImageUpload />
-
-              <PInput className="h-unit-10" startContent={<i className="fi fi-rr-users-alt text-2xl text-[#848280] translate-y-[2px]" />} placeholder="Head Count" value={newQuestionnaireFormValue.headCountStr} onChange={handleHeadCountInputChange} />
-
-              <PInput className="h-unit-10" startContent={<i className="fi fi-br-badge text-2xl text-[#848280] translate-y-[2px]" />} placeholder="Reward for Each" />
             </div>
 
             <FormRow label="Subproject">
