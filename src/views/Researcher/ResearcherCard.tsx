@@ -38,7 +38,7 @@ const ResearchCard: FC<Props> = (props) => {
   
   return (
     <>
-      <PCard className={clsx("bg-[#E9DBD3] overflow-hidden w-[490px]", className)} bodyClass="p-0" onClick={handleClick}>
+      <PCard className={clsx("bg-[#E9DBD3] overflow-hidden w-[490px] cursor-pointer", className)} bodyClass="p-0" onClick={handleClick}>
         <div className="flex gap-[10px]">
           {
             img
