@@ -1,9 +1,8 @@
 import { FC, PropsWithChildren } from "react"
-import { Modal, ModalBody, ModalContent, ModalFooter, SlotsToClasses } from '@nextui-org/react'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, SlotsToClasses } from '@nextui-org/react'
 
 interface Props extends PropsWithChildren {
   className?: string
-  classNames?: ModalProps['classNames']
 
   header?: React.ReactNode
   footer?: React.ReactNode
@@ -14,7 +13,7 @@ interface Props extends PropsWithChildren {
 }
 
 const PModal: FC<Props> = (props) => {
-  const { children, footer, isOpen, classNames, onWillCauseClose } = props
+  const { children, footer, isOpen, classNames, header, className, onWillCauseClose } = props
 
   return (
     <Modal
