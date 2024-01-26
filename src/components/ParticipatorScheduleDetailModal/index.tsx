@@ -33,7 +33,6 @@ const ParticipatorScheduleDetailModal: FC<Props> = (props) => {
 
   const getTimeFormat = (time?: string) => {
     if (!time) return '00:00'
-    console.log("time.split(':').slice(0, 2).join(':')", time.split(':').slice(0, 2).join(':'));
     
     return time.split(':').slice(0, 2).join(':')
   }

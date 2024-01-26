@@ -87,7 +87,7 @@ const TimelineCard: FC<Props> = (props) => {
         </h3>
 
         <div className={clsx("flex", isSchedule ? 'mt-[20px] gap-[20px]' : 'mt-[10px] gap-[10px]')}>
-          <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+          <PTag className={clsx("flex gap-[10px] !bg-[#F6F1ED]", isSchedule ? 'py-4' : '!min-w-[52px] !h-[17px] !text-[8px]')} size="sm">
             <CalendarIcon w={isSchedule ? 20 : 10} />
 
             {
@@ -97,7 +97,7 @@ const TimelineCard: FC<Props> = (props) => {
 
           {
             type === TimelineCardType.APPOINTMENT && (
-              <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+              <PTag className={clsx("flex gap-[10px] !bg-[#F6F1ED]", isSchedule ? 'py-4' : '!min-w-[52px] !h-[17px] !text-[8px]')} size="sm">
                 <AppointmentIcon w={isSchedule ? 20 : 10} />
 
                 <span>
@@ -109,7 +109,7 @@ const TimelineCard: FC<Props> = (props) => {
 
           {
             type === TimelineCardType.QUESTIONNAIRE && (
-              <PTag className={clsx("flex gap-[10px] bg-[#F6F1ED]", isSchedule ? 'py-4' : 'min-w-[52px] !h-[17px] text-[8px]')} size="sm">
+              <PTag className={clsx("flex gap-[10px] !bg-[#F6F1ED]", isSchedule ? 'py-4' : '!min-w-[52px] !h-[17px] !text-[8px]')} size="sm">
                 <QuestionnaireIcon w={isSchedule ? 20 : 10} />
 
                 <span>

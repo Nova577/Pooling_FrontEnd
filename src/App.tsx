@@ -46,7 +46,7 @@ const routersMap: IRouterItem[] = [
   {
     path: '/participator',
     element: <Participator />,
-    // access: [USER_TYPE.PARTICIPATOR]
+    access: [USER_TYPE.PARTICIPATOR]
   },
   {
     path: '/researcher',
@@ -59,15 +59,17 @@ const routersMap: IRouterItem[] = [
   },
   {
     path: '/create-questionnaire/:id',
-    element: <QuestionnaireCreatePage />
+    element: <QuestionnaireCreatePage />,
+    access: [USER_TYPE.RESEARCHER]
   },
   {
     path: '/create-questionnaire',
-    element: <QuestionnaireCreatePage />
+    element: <QuestionnaireCreatePage />,
+    access: [USER_TYPE.RESEARCHER]
   },
   {
     path: '/questionnaire-result/:id',
-    element: <QuestionnaireResultPage />
+    element: <QuestionnaireResultPage />,
   },
 ]
 
