@@ -14,6 +14,8 @@ interface Props {
 }
 
 const initValue = [] as string[]
+
+// TODO: ForwardRef it
 const TagsInput: FC<Props> = (props) => {
   const { 
     value = initValue,
@@ -74,6 +76,12 @@ const TagsInput: FC<Props> = (props) => {
     onChange?.(value.concat(inputValue))
   }
 
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter' && e.key !== 'NumpadEnter') return
+
+    e.preventDefault()
+  }
+
   const handleDelete = (index: number) => {
     const newValue = value.filter((_, i) => i !== index)
     onChange?.(newValue)
@@ -116,7 +124,7 @@ const TagsInput: FC<Props> = (props) => {
             && (
               <div ref={editingContentRef}>
                 <PTag className="cursor-pointer" >
-                  <PInput ref={tagInputRef} className="!bg-white" size="xs" disabled={disabled} onKeyUp={handleInputKeyUp} />
+                  <PInput ref={tagInputRef} className="!bg-white" size="xs" disabled={disabled} onKeyUp={handleInputKeyUp} onKeyDown={handleInputKeyDown} />
                 </PTag>
               </div>
             )

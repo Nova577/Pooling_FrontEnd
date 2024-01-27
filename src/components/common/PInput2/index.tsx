@@ -1,11 +1,11 @@
 import { Input, InputProps, cn } from '@nextui-org/react'
-import { FC, forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 interface Props extends InputProps  {
 
 }
 
-const PInput: FC<Props> = forwardRef((props, ref) => {
+const PInput= forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <Input
       classNames={{

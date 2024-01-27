@@ -7,6 +7,7 @@ export interface PButtonProps extends Omit<React.DetailedHTMLProps<React.ButtonH
   styleType?: 'default' | 'ghost' | 'primary' | 'neutral'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
+  htmlType?: Omit<React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'styleType'>['type']
   squareRound?: boolean
   round?: boolean
   isLoading?: boolean

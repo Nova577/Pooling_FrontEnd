@@ -90,10 +90,11 @@ const App: FC = () => {
               routersMap.map((router: IRouterItem) => {
                 const { path, element, access } = router
                 
-                return (
-                  (!access || (userInfo?.type && access.includes(userInfo.type))) 
-                    && <Route path={path} element={element} key={path} />
-                )
+                // return (
+                //   (!access || (userInfo?.type && access.includes(userInfo.type))) 
+                //     && <Route path={path} element={element} key={path} />
+                // )
+                return <Route path={path} element={element} key={path} />
               })
             }
           </Routes>
