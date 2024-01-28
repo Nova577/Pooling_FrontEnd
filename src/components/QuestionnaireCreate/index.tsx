@@ -10,15 +10,16 @@ import PPlainInput from "@/components/common/PPlainInput"
 import QuestionnaireCreateItem, { dataItemProps } from '@/components/QuestionnaireCreateItem'
 import PTextarea from '@/components/common/PTextarea'
 import dayjs from 'dayjs'
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks'
-import { getQuestionnaireApi, IQuestionnaireData, createQuestionnaireApi, updateQuestionnaireApi } from '@/apis/questionnaire'
+import { getQuestionnaireApi, createQuestionnaireApi, updateQuestionnaireApi } from '@/apis/questionnaire'
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm, FormProvider, useFieldArray, Controller } from "react-hook-form"
 import PMultiPlainInput from "@/components/common/PMultiPlainInput"
 import { toast } from '@/components/common/PToast/index'
-// import Datepicker1 from "react-tailwindcss-datepicker"; 
+import { IQuestionnaireData } from '@/types/global'
+import Datepicker from "react-tailwindcss-datepicker"; 
 
 const defaultOptionNum = 3
 const defaultSelectNum = 1
@@ -65,7 +66,7 @@ interface ICreateForm {
 const defaultCreateForm = {
   name: 'Untitled Questionnaire',
   description: '',
-  dueDate: `${dayjs().add(1, 'day').format('YYYY MMM DD')}`,
+  dueDate: `${dayjs().add(1, 'day')}`,
   dueTime: ['12', '00'],
   timeLimit: '10',
   questionItems: defaultOptions
@@ -74,9 +75,6 @@ const defaultCreateForm = {
 const rules = {
   name: {
     required: 'Please enter the questionnaire name'
-  },
-  description: {
-    required: 'Please enter the questionnaire description'
   },
   dueTime: {
     required: true,
@@ -137,11 +135,11 @@ const QuestionnaireCreate: FC = () => {
       })
       newItems = newItems.map((it, index) => ({ ...it, id: `${+new Date() + index}` }))
         .sort((a, b) => a.number! - b.number!)
-      
+      // `${dayjs(timeInfo?.dueDate).format('YYYY MMM DD')}`
       setQuestionnaireForm({
         name,
         description,
-        dueDate: `${dayjs(timeInfo?.dueDate).format('YYYY MMM DD')}`,
+        dueDate: timeInfo?.dueDate,
         dueTime: timeInfo?.dueTime.split(':').slice(0, 2) || ['00', '00'],
         timeLimit: timeInfo?.timeLimit + '',
         questionItems: newItems
@@ -224,10 +222,11 @@ const QuestionnaireCreate: FC = () => {
       updateRun({ id, ...params })
     }
   }
-  
+
   return (
     <div className="flex justify-center">
       <PCard className="w-[1060px] h-[900px] px-[80px] pr-[20px] py-[24px] pb-[30px] bg-[#F1E8E3]" bodyClass="p-0">
+        
         <FormProvider  {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -254,7 +253,6 @@ const QuestionnaireCreate: FC = () => {
               control={control}
               name="description"
               defaultValue={questionnaireForm.description}
-              rules={rules.description}
               render={({ field }) => (
                 <PTextarea 
                   classNames={{
@@ -279,20 +277,44 @@ const QuestionnaireCreate: FC = () => {
                     name="dueDate"
                     defaultValue={questionnaireForm.dueDate}
                     render={({ field }) => (
-                      <DatePicker
-                        customInput={
-                          <div className="w-[200px] font-playfair !bg-[#F9F5F3] rounded-full !h-[50px] px-[20px] cursor-pointer flex items-center">
-                            <CalenderIcon />
-                            <span className="ml-[10px] text-[20px] font-normal">{ field.value }th</span>
-                          </div>
-                        }
-                        selected={new Date(field.value!)}
-                        dateFormat="YYYY MMM DD"
-                        value={field.value}
-                        onChange={(date: Date) => {
-                          setValue('dueDate', dayjs(date).format('YYYY MMM DD'))
-                        }}
-                      />
+                      // <DatePicker 
+                      //   customInput={
+                      //     <div className="w-[200px] font-playfair !bg-[#F9F5F3] rounded-full !h-[50px] px-[20px] cursor-pointer flex items-center">
+                      //       <CalenderIcon />
+                      //       <span className="ml-[10px] text-[20px] font-normal">{ field.value }th</span>
+                      //     </div>
+                      //   }
+                      //   selected={new Date(field.value!)}
+                      //   dateFormat="YYYY MMM DD"
+                      //   value={field.value}
+                      //   onChange={(date: Date) => {
+                      //     setValue('dueDate', dayjs(date).format('YYYY MMM DD'))
+                      //   }}
+                      // />
+                      <div className="w-[200px] font-playfair !bg-[#F9F5F3] rounded-full !h-[50px] cursor-pointer relative">
+                        <div className="absolute top-2/4 translate-y-[-50%] left-[20px]">
+                          <CalenderIcon />
+                        </div>
+                        <div className="w-full h-full">
+                          <Datepicker 
+                            useRange={false} 
+                            asSingle={true}  
+                            value={{ 
+                              startDate: field.value,
+                              endDate: field.value
+                            }} 
+                            inputClassName="pl-[55px] pr-[20px] w-full h-full bg-transparent font-playfair outline-none"
+                            containerClassName="h-full"
+                            toggleClassName="hidden"
+                            onChange={(values) => {
+                              if (typeof values?.startDate === 'string') {
+                                setValue('dueDate', values?.startDate)
+                              }
+                            }} 
+                            displayFormat={"YYYY MMM DD"} 
+                          />
+                        </div>
+                      </div>
                     )}
                   />
                 </div>

@@ -60,15 +60,17 @@ const routersMap: IRouterItem[] = [
   },
   {
     path: '/create-questionnaire/:id',
-    element: <QuestionnaireCreatePage />
+    element: <QuestionnaireCreatePage />,
+    access: [USER_TYPE.RESEARCHER]
   },
   {
     path: '/create-questionnaire',
-    element: <QuestionnaireCreatePage />
+    element: <QuestionnaireCreatePage />,
+    access: [USER_TYPE.RESEARCHER]
   },
   {
     path: '/questionnaire-result/:id',
-    element: <QuestionnaireResultPage />
+    element: <QuestionnaireResultPage />,
   },
   {
     path: '/new-questionnaire',

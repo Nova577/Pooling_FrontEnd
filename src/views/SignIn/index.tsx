@@ -38,6 +38,7 @@ const signRules = {
 const SignIn: FC = () => {
   // const [isLoading, setIsLoading] = useState(false)
   const setUserInfo = useSignInStore(state => state.setUserInfo)
+  const getInitUserInfo = useSignInStore((state) => state.getInitUserInfo)
   const navigate = useNavigate()
   const liveInLeftDays = useSignUpStore(state => state.liveInLeftDays)
 
@@ -60,6 +61,7 @@ const SignIn: FC = () => {
       } else if (type === USER_TYPE.RESEARCHER) {
         path = '/researcher'
       }
+      getInitUserInfo()
       navigate(path, {
         replace: true
       })

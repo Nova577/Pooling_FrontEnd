@@ -14,7 +14,7 @@ interface ResearcherStore {
 }
 
 const useResearcherStore = create<ResearcherStore>((set) => ({
-  currentMenu: ResearcherMenuItemType.PROFILE_EDIT,
+  currentMenu: ResearcherMenuItemType.DASHBOARD,
   setCurrentMenu: (newCurrentMenu) => set(() => ({ currentMenu:  newCurrentMenu }))
 }))
 

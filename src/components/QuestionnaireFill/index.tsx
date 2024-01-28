@@ -7,12 +7,13 @@ import PRadioRegularGroup from "@/components/common/PRadioRegularGroup"
 import PCheckboxGroup from "@/components/common/PCheckboxGroup"
 import PInput from "@/components/common/PInput2"
 import { useParams, useNavigate } from 'react-router-dom';
-import { getQuestionnaireApi, IQuestionnaireData, IAnswerItem, answerQuestionnaireApi } from '@/apis/questionnaire'
+import { getQuestionnaireApi, IAnswerItem, answerQuestionnaireApi } from '@/apis/questionnaire'
 import { useRequest, useCountDown } from 'ahooks'
 import { useForm, Controller, useFieldArray } from "react-hook-form"
 import { toast } from '@/components/common/PToast/index'
 import ClockIcon from '@/components/common/Icons/Clock'
 import { prompt } from '@/components/common/PPromptModal'
+import { IQuestionnaireData } from '@/types/global'
 
 interface IChoiceItemProps {
   key: string | number
@@ -91,7 +92,9 @@ const QuestionnaireFill: FC = () => {
             radius="full" size="sm" 
             onClick={() => {
               prompt?.current?.close()
-              navigate('/')
+              navigate('/', {
+                replace: true
+              })
             }}
           >
             OK
@@ -212,7 +215,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={it.answer as string}
-                              rules={{ required: 'Please enter the answer' }}
+                              rules={it.required ? { required: 'Please enter the answer' } : {}}
                               render={({ field }) => (
                                 <PInput 
                                   className='!h-[50px]' 
@@ -228,7 +231,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={[]}
-                              rules={{ required: 'Please select the answer' }}
+                              rules={it.required ? { required: 'Please select the answer' } : {}}
                               render={({ field }) => (
                                 <PCheckboxGroup 
                                   value={field.value as string[]}
@@ -244,7 +247,7 @@ const QuestionnaireFill: FC = () => {
                               control={control}
                               name={`questions.${index}.answer`}
                               defaultValue={''}
-                              rules={{ required: 'Please select the answer' }}
+                              rules={it.required ? { required: 'Please select the answer' } : {}}
                               render={({ field }) => (
                                 <PRadioRegularGroup 
                                   isRequired

@@ -10,9 +10,12 @@ import { balanceBasic } from '@/types/user'
 import { prompt } from '@/components/common/PPromptModal'
 
 const ParticipatorBalanceCard: FC = () => {
-  const balanceRef = useRef(null);
+  const balanceRef = useRef<HTMLDivElement>(null);
   const [filterMonthPickValue, setMonthPickValue] = useState(dayjs()) 
-  const [balanceItems, setBalanceItems] = useState<ICheckItem[]>([])
+  const [balanceInfo, setBalanceMonthInfo] = useState<{ total: number, items: ICheckItem[] }>({
+    items: [],
+    total: 0
+  })
   const [balanceBasic, setBalanceBasic] = useState<balanceBasic>({
     balance: 0
   })
@@ -21,7 +24,8 @@ const ParticipatorBalanceCard: FC = () => {
   const { run } = useRequest(getBalanceApi, {
     manual: true,
     onSuccess(data) {
-      setBalanceItems(data.check || [])
+      const { total = 0, check: items = [] } = data
+      setBalanceMonthInfo({ total, items })
     },
   })
 
@@ -34,6 +38,8 @@ const ParticipatorBalanceCard: FC = () => {
   const freshList = (value: dayjs.Dayjs) => {
     const date = dayjs(value).format('YYYY-MM')
     run(date)
+
+    balanceRef.current && balanceRef.current.scrollTo(0, 0)
   }
 
   const handleFilterMonthPickerChange = (newValue: dayjs.Dayjs) => {
@@ -64,7 +70,10 @@ const ParticipatorBalanceCard: FC = () => {
   return (
     <PCard className="bg-[#EFE8E4] w-[800px]" bodyClass="px-[50px]">
       <div className="px-[25px] flex justify-between items-center">
-        <p className="text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">$118.40</p>
+        <p className="text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">
+          <span>$</span>
+          <span className="ml-[20px]">{balanceBasic.balance}</span>
+        </p>
         <PButton className="text-[25px]" size="md" onClick={() => goWithdraw()}>withdraw</PButton>
       </div>
 
@@ -75,14 +84,14 @@ const ParticipatorBalanceCard: FC = () => {
 
         <p className="text-end text-neutral-900 text-[50px] font-normal font-playfair leading-[66px]">
           <span>$</span>
-          <span className="ml-[20px]">{balanceBasic.balance}</span>
+          <span className="ml-[20px]">{balanceInfo.total}</span>
         </p>
       </div>
 
       <PScrollContainer ref={balanceRef} className="mt-[12px] px-[25px] h-[520px]">
         <div className="flex flex-col gap-[20px]">
           {
-            balanceItems.map((it, index) => {
+            balanceInfo.items.map((it, index) => {
               return (
                 <div key={index} className="h-[70px] py-[15px] px-[20px] rounded-3xl flex justify-between items-center bg-[#F9F6F4]">
                   <div className="text-neutral-900 text-[25px] font-bold font-playfair leading-[40px]">

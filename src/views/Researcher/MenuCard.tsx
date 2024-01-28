@@ -22,10 +22,17 @@ const MenuCard: FC = () => {
   return (
     <PCard className="w-[350px] bg-[#E8DED7]" bodyClass="p-[40px]">
       <div className="mt-[20px]">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center">
           <PAvatar imgSrc={userInfo.avatar} />
 
-          <div className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">Will Edison</div>
+          <div className="ml-[34px]">
+            <div className="text-neutral-900 text-xl font-bold font-playfair leading-relaxed">
+              {userInfo.firstName} {userInfo.lastName}
+            </div>
+            <p className="font-playfair text-[10px] leading-none mt-[10px]">
+              {userInfo.description}
+            </p>
+          </div>
         </div>
 
         <div className="mt-6">

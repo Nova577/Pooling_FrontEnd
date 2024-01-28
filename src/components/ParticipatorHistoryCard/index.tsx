@@ -6,7 +6,7 @@ import { useBoolean } from "ahooks"
 import { HISTORY_STATUS_MAP } from '@/types/global'
 import UserIcon from '@/components/common/Icons/User'
 import BadgeIcon from '@/components/common/Icons/Badge'
-import ClockIcon from '@/components/common/Icons/Clock'
+import { ResearchCardPosition } from '@/types/global'
 
 interface Props {
   img?: string
@@ -16,8 +16,10 @@ interface Props {
   showStatus?: boolean
   headCount?: number
   reward?: number
+  questionnaire_id: string
+  appointment_id: string
   showBaseInfo?: boolean
-  position?: string
+  position?: ResearchCardPosition
 }
 
 const defaultPreferences = [] as string[]
@@ -30,7 +32,7 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
     showStatus,
     headCount = 0,
     reward = 0,
-    showBaseInfo
+    showBaseInfo,
   } = props
 
   const [
@@ -90,11 +92,10 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
                 <BadgeIcon />
                 <span className="text-[10px] text-[#141414] ml-[10px] font-playfair">{ reward } $</span>
               </div>
-              {/* TODO No such field */}
-              <div className="flex items-center mt-[10px]">
+              {/* <div className="flex items-center mt-[10px]">
                 <ClockIcon color="#E3D3C9" w="12" h="12" />
                 <span className="text-[10px] text-[#141414] ml-[10px] font-playfair">20 min</span>
-              </div>
+              </div> */}
             </div>
            }
 
@@ -111,7 +112,6 @@ const ParticipatorHistoryCard: FC<Props> = (props) => {
 
       <ResearchCardDetailModal 
         isOpen={detailModalIsOpen} 
-        type="closed" 
         {...props}
         onWillCauseClose={handleDetailModalWillCauseClose} 
 
