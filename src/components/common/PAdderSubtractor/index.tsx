@@ -37,7 +37,6 @@ const PAdderSubtractor: FC<Props>= forwardRef((props, ref) => {
 
   return (
     <div 
-      ref={ref}
       className={
         clsx(
           'flex items-center select-none',

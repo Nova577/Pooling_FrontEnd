@@ -21,6 +21,23 @@ interface IChoiceItemProps {
   label: string 
 }
 
+interface IQuestionItemProps {
+  answer: string | string[]
+  options?: IChoiceItemProps[]
+  multiChoiceValue?: string[]
+  singleChoiceValue?: string
+  number?: number
+  question?: string
+  choice?: number
+  required?: boolean
+  type?: string
+  optionNum?: number
+}
+interface IQuestionnaireInfo {
+  name: string,
+  desc?: string
+  questions: IQuestionItemProps[]
+}
 
 interface IQuestionItemProps {
   answer: string | string[]

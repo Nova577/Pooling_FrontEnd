@@ -13,7 +13,6 @@ import { participantSignUpApi, researcherSignUpApi } from '@/apis/user'
 import { toast } from "@/components/common/PToast"
 import { sleep } from '@/utils/util'
 
-
 const SignUp: FC = () => {
   const { currentStep, switchToNextStep, switchToPrevStep } = useSignUpStore(state => ({ 
     currentStep: state.currentStep,  
