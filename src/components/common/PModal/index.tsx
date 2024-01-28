@@ -1,7 +1,10 @@
 import { FC, PropsWithChildren } from "react"
-import { Modal, ModalBody, ModalContent, ModalFooter, SlotsToClasses } from '@nextui-org/react'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, SlotsToClasses } from '@nextui-org/react'
 
 interface Props extends PropsWithChildren {
+  className?: string
+
+  header?: React.ReactNode
   footer?: React.ReactNode
   isOpen?: boolean
   classNames?: SlotsToClasses<"wrapper" | "base" | "backdrop" | "header"  | "body"  | "footer"  | "closeButton"> | undefined
@@ -10,10 +13,11 @@ interface Props extends PropsWithChildren {
 }
 
 const PModal: FC<Props> = (props) => {
-  const { children, footer, isOpen, classNames, onWillCauseClose } = props
+  const { children, footer, isOpen, classNames, header, className, onWillCauseClose } = props
 
   return (
     <Modal
+      className={className}
       classNames={{
         base: 'max-w-[520px] p-0 rounded-[30px] shadow-none',
         body: 'pt-7 gap-0',
@@ -26,6 +30,15 @@ const PModal: FC<Props> = (props) => {
       shouldBlockScroll
     >
       <ModalContent>
+        {
+          header
+          && (
+            <ModalHeader>
+             { header }
+            </ModalHeader>
+          )
+        }
+
         <ModalBody>
           { children }
         </ModalBody>

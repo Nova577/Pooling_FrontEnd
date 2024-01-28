@@ -127,6 +127,7 @@ const SignIn: FC = () => {
 
             <FormRow>
               <PInput 
+                type="password"
                 isRequired
                 errorMessage={errors.password && errors.password.message}
                 {...register("password", signRules.password)}

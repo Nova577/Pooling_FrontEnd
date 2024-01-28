@@ -16,6 +16,7 @@ import useSignInStore from '@/views/SignIn/store'
 import Toast from '@/components/common/PToast'
 import PPromptModal from '@/components/common/PPromptModal'
 import { USER_TYPE } from "@/types/user"
+import NewQuestionnaire from "./views/NewQuestionnaire"
 interface IRouterItem {
   path: string
   element: JSX.Element
@@ -69,6 +70,11 @@ const routersMap: IRouterItem[] = [
     path: '/questionnaire-result/:id',
     element: <QuestionnaireResultPage />
   },
+  {
+    path: '/new-questionnaire',
+    element: <NewQuestionnaire />,
+    access: [USER_TYPE.RESEARCHER]
+  }
 ]
 
 const App: FC = () => {

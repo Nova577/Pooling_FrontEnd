@@ -168,9 +168,9 @@ const StepZeroContent: FC<IStepZeroProps> = ({ className, setCodeIsCorrect }) =>
         </FormRow>
 
         <PTitle className="mt-[38px]">Password</PTitle>
-
+        
         <FormRow>
-          <PInput 
+          <PInput
             type="password" 
             label="Choose a password" 
             placeholder="At least 8 characters"
