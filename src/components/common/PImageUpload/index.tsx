@@ -1,20 +1,17 @@
-import { FC, useRef, useState } from "react"
+import { useState, forwardRef } from "react"
 import imgUploadIcon from '@/assets/img_upload_icon.svg'
 import { Image } from "@nextui-org/react"
 import UploadCore from "../UploadCore"
 
 interface Props {
-  value?: string
-  onChange?: (newValue: string) => void
+  value?: File | null
+  onChange?: (newValue: File) => void
 }
 
-const PImageUpload: FC<Props> = (props) => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const [previewImgSrc, setPreviewImgSrc] = useState('')
+const PImageUpload = forwardRef<HTMLInputElement, Props>(function PImageUpload (props, ref) {
+  const { onChange, value } = props
 
-  const handleClick = () => {
-    fileInputRef.current?.click()
-  }
+  const [previewImgSrc, setPreviewImgSrc] = useState('')
 
   const onImageFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = e.target;
@@ -39,12 +36,12 @@ const PImageUpload: FC<Props> = (props) => {
     }
     reader.readAsDataURL(file)
 
-    
+    onChange?.(file)
   };
 
   return (
-    <UploadCore accept="image/*" onChange={onImageFileInputChange}>
-      <div className="h-full w-full rounded-2xl bg-[#F6F1EE] cursor-pointer" onClick={handleClick}>
+    <UploadCore ref={ref} accept="image/*" value={value} onChange={onImageFileInputChange}>
+      <div className="h-full w-full rounded-2xl bg-[#F6F1EE] cursor-pointer">
         {
           previewImgSrc
           ? (
@@ -63,6 +60,6 @@ const PImageUpload: FC<Props> = (props) => {
       </div>
     </UploadCore>
   )
-}
+})
 
 export default PImageUpload

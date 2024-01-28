@@ -17,11 +17,11 @@ interface SubProject {
 
 interface NewQuestionnaireFormValue {
   researchName: string
-  relevantPicture: string
+  relevantPicture: File | null
   headCount: number
   rewardForEach: string
   subProjects: SubProject[]
-  relatedDocuments: string[]
+  relatedDocuments: File[]
   addCooperators: string[]
   intervieweesPreference: string[]
   researchDescription: string
@@ -31,7 +31,7 @@ const initNewQuestionnaireFormValue: NewQuestionnaireFormValue = {
   researchName: '',
   headCount: 0,
   rewardForEach: '',
-  relevantPicture: '',
+  relevantPicture: null,
   subProjects: [],
   relatedDocuments: [],
   addCooperators: [],
@@ -45,6 +45,8 @@ interface Props {
 } 
 
 const NewQuestionnaireCard: FC<Props> = () => {
+  const [newMeetingModalType, setNewMeetingModalType] = useState<'save' | 'submit'>('save')
+
   const [
     isNewMeetingModalOpen,
     {
@@ -60,15 +62,37 @@ const NewQuestionnaireCard: FC<Props> = () => {
   const {
     register,
     control,
+    getValues,
+    setValue,
+    watch,
     handleSubmit
   } = useForm<NewQuestionnaireFormValue>({ defaultValues: initNewQuestionnaireFormValue })
 
   const handleSaveButtonClick = () => {
+    setNewMeetingModalType('save')
     setIsNewMeetingModalOpenTrue()
   }
 
+  // TODO: submit
   const onSubmit = (formValue: NewQuestionnaireFormValue) => {
-    console.log(formValue)
+    setNewMeetingModalType('submit')
+    setIsNewMeetingModalOpenTrue()
+  }
+
+  const handleRelatedDocumentInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length !== 1) {
+      return
+    }
+    const file = e.target.files[0]
+
+    setValue('relatedDocuments', watch('relatedDocuments').concat(file))
+  }
+  
+  const handleRelatedDocumentFileItemDelete = (index: number) => {
+    const relatedDocuments = watch('relatedDocuments')
+    const newValue = relatedDocuments.slice(0, index).concat(relatedDocuments.slice(index + 1, relatedDocuments.length))
+
+    setValue('relatedDocuments', newValue)
   }
 
   return (
@@ -138,7 +162,30 @@ const NewQuestionnaireCard: FC<Props> = () => {
 
             <FormRow label="Related Document">
               <div className="mt-3 grid grid-cols-3 gap-unit-10">
-                <UploadCore>
+                {
+                  getValues('relatedDocuments')
+                  .map((it, i) => {
+                    return (
+                      <div className="relative" key={i}>
+                        <PInput
+                          className="h-unit-10 pointer-events-none"
+                          classNames={{
+                            input: 'placeholder:text-black'
+                          }}
+                          placeholder={it.name}
+                          startContent={<i className="fi fi-rr-file-invoice text-2xl text-[#848280] translate-y-[2px]" />}
+                        />
+
+                        <div className="w-5 h-5 absolute -right-1 -top-1 flex justify-center items-center bg-white rounded-full cursor-pointer" onClick={handleRelatedDocumentFileItemDelete.bind(null, i)}>
+                          <i className="fi fi-rr-cross-small leading-none" />
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+
+                
+                <UploadCore onChange={handleRelatedDocumentInputChange}>
                   <div className="cursor-pointer">
                     <PInput
                       className="h-unit-10 pointer-events-none"
@@ -194,6 +241,8 @@ const NewQuestionnaireCard: FC<Props> = () => {
       </PCard>
 
       <NewQuestionnaireCardNewMeetingModal
+        meetingName={getValues().researchName}
+        type={newMeetingModalType}
         isOpen={isNewMeetingModalOpen}
         onWillCauseClose={handleNewMeetingModalWillCauseClose}
       />

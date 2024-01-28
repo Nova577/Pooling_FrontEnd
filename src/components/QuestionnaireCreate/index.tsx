@@ -279,7 +279,7 @@ const QuestionnaireCreate: FC = () => {
                     name="dueDate"
                     defaultValue={questionnaireForm.dueDate}
                     render={({ field }) => (
-                      <DatePicker 
+                      <DatePicker
                         customInput={
                           <div className="w-[200px] font-playfair !bg-[#F9F5F3] rounded-full !h-[50px] px-[20px] cursor-pointer flex items-center">
                             <CalenderIcon />

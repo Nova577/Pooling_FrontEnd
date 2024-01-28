@@ -1,31 +1,44 @@
-import { FC, PropsWithChildren, useRef } from "react"
+import { PropsWithChildren, forwardRef, useRef } from "react"
 
 interface Props extends PropsWithChildren {
-  value?: any
+  value?: File | null
   accept?: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const UploadCore: FC<Props> = (props) => {
+const UploadCore = forwardRef<HTMLInputElement, Props>(function UploadCore(props, ref) {
   const { 
     children,
     accept,
     onChange 
   } = props
 
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const innerRef = useRef<HTMLInputElement>(null)
 
   const handleClick = () => {
-    fileInputRef.current?.click()
+    innerRef.current?.click()
   }
 
   return (
     <div onClick={handleClick}>
       { children }
 
-      <input ref={fileInputRef} className="hidden" type="file" accept={accept} onChange={onChange} />
+      <input
+        ref={r => {
+          if (ref) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (ref as any).current = r
+          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (innerRef as any).current = r
+        }}
+        className="hidden"
+        type="file"
+        accept={accept}
+        onChange={onChange}
+      />
     </div>
   )
-}
+})
 
 export default UploadCore

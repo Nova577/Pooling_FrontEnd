@@ -1,0 +1,7 @@
+.p_time_picker :global(.react-time-picker__inputGroup) {
+  min-width: unset;
+}
+
+.p_time_picker :global(.react-time-picker__wrapper) {
+  border: none;
+}
