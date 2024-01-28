@@ -2,9 +2,9 @@ import NewQuestionnaireCard from "@/components/NewQuestionnaireCard"
 
 const NewQuestionnaire = () => {
   return (
-    <div>
+    <section className="min-h-[1035px] flex justify-center items-center">
       <NewQuestionnaireCard />
-    </div>
+    </section>
   )
 }
 
